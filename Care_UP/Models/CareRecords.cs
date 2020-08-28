@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Web;
+
+namespace Care_UP.Models
+{
+    public class CareRecords
+    {
+        [Key]
+        [Display(Name = "編號")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Display(Name = "詳細日期ID")]
+        public int DetailedDateId { get; set; }
+
+        [Display(Name = "病患心情")]
+        public string Mood{ get; set; }
+
+        [Display(Name = "建立時間")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public string InitDate { get; set; }
+
+        [Display(Name = "修改時間")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public string EditDate { get; set; }
+
+        [Display(Name = "是否填寫")]
+        public WhetherType Whether { get; set; }
+    }
+}
