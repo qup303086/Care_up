@@ -75,17 +75,16 @@ namespace Care_UP.Models
         [Display(Name = "星星")]
         public int Star { get; set; }
 
-        [Display(Name = "是否已給薪資")]
-        public WhetherType Whether { get; set; }
-
+        [Display(Name = "訂單取消理由")]
+        public string Cancel { get; set; }
 
         [Display(Name = "建立時間")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public string InitDate { get; set; }
+        public DateTime? InitDate { get; set; }
 
         [Display(Name = "修改時間")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public string EditDate { get; set; }
+        public DateTime? EditDate { get; set; }
 
         [Display(Name = "訂單狀態")]
         public OrderType Status { get; set; }

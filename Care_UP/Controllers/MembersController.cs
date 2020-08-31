@@ -12,6 +12,7 @@ using Care_UP.Models;
 
 namespace Care_UP.Controllers
 {
+    [RoutePrefix("Login")]
     public class MembersController : ApiController
     {
         private Model1 db = new Model1();
@@ -72,17 +73,23 @@ namespace Care_UP.Controllers
 
         // POST: api/Members
         [ResponseType(typeof(Members))]
-        public IHttpActionResult PostMembers(Members members)
+        [Route("Register")]
+        [HttpPost]
+        public HttpResponseMessage PostMembers(Members members)
         {
+            ModelState.Remove("PasswordSalt"); //不驗證
+            
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Request.CreateResponse(HttpStatusCode.OK,new { result = "不完整" });
             }
-
+            members.PasswordSalt = Utility.CreateSalt(); //產生密碼鹽
+            members.Password = Utility.GenerateHashWithSalt(members.Password, members.PasswordSalt);//密碼+密碼鹽
+            members.InitDate = DateTime.Now;
             db.Members.Add(members);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = members.Id }, members);
+            return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" }); 
         }
 
         // DELETE: api/Members/5

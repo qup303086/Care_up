@@ -16,13 +16,13 @@ namespace Care_UP.Models
 
         [Display(Name = "Email")]
         [MaxLength(length: 50)]//設定長度
-        [Required(ErrorMessage = "{0}必填")]//{0}=[指定display(name)]不給null
+        [Required(ErrorMessage = "{0}必填")]
         [DataType(DataType.EmailAddress)]
         [EmailAddress(ErrorMessage = "格式錯誤")]
         public string Email { get; set; }
 
         [Display(Name = "密碼")]
-        [StringLength(100, ErrorMessage = "{0}長度至少為{2}個字,不可超過{1}個字", MinimumLength = 4)]
+        [StringLength(10, ErrorMessage = "{0}長度至少為{2}個字,不可超過{1}個字",MinimumLength = 6)]
         [Required(ErrorMessage = "{0}必填")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -40,6 +40,7 @@ namespace Care_UP.Models
         public DateTime? EditDate { set; get; }
         
         [Display(Name = "身分")]
+        
         public IdType  Status { get; set; }
 
 

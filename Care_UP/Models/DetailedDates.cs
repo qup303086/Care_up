@@ -16,11 +16,14 @@ namespace Care_UP.Models
 
         [Display(Name = "訂單ID")]
         public int OrderId { get; set; }
+        [Display(Name = "照護紀錄")]
+        public string CareRecord { get; set; }
 
         [Display(Name = "日期")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? NowDateTime { set; get; }
-         
-     
+
+
+
     }
 }
