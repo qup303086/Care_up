@@ -18,5 +18,8 @@ namespace Care_UP.Models
         [MaxLength(length: 50)]//設定長度
         [Required(ErrorMessage = "{0}必填")]
         public string City{ get; set; }
+
+        public virtual ICollection<Locations> Locations { get; set; }
+
     }
 }

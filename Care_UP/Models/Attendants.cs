@@ -14,12 +14,23 @@ namespace Care_UP.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]//流水號
         public int Id { get; set; }
 
-        public int MemberId { get; set; }
-        [ForeignKey(" MemberId")]
-        [Display(Name = "帳號ID")]
-        public virtual Members Members { set; get; }
-        
-        public int LocationsId { get; set; }
+        [Display(Name = "Email")]
+        [MaxLength(length: 50)]//設定長度
+        [Required(ErrorMessage = "{0}必填")]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress(ErrorMessage = "格式錯誤")]
+        public string Email { get; set; }
+
+        [Display(Name = "密碼")]
+        [StringLength(10, ErrorMessage = "{0}長度至少為{2}個字,不可超過{1}個字", MinimumLength = 6)]
+        [Required(ErrorMessage = "{0}必填")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Display(Name = "密碼鹽")]
+        public string PasswordSalt { get; set; }
+
+        public int LocationId { get; set; }
         [ForeignKey("LocationId")]
         [Display(Name = "地區ID")]
         public virtual Locations Locations { set; get; }
@@ -74,5 +85,6 @@ namespace Care_UP.Models
         [Required(ErrorMessage = "{0}必填")]
         public string Status { get; set; }
 
+        public virtual ICollection<Orders> Orders { get; set; }
     }
 }

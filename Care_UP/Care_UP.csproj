@@ -176,6 +176,10 @@
     <Compile Include="Migrations\202009010236381_MigrationName.Designer.cs">
       <DependentUpon>202009010236381_MigrationName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009010930419_CareUp.cs" />
+    <Compile Include="Migrations\202009010930419_CareUp.Designer.cs">
+      <DependentUpon>202009010930419_CareUp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Locations.cs" />
     <Compile Include="Models\Attendants.cs" />
@@ -279,6 +283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009010236381_MigrationName.resx">
       <DependentUpon>202009010236381_MigrationName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009010930419_CareUp.resx">
+      <DependentUpon>202009010930419_CareUp.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

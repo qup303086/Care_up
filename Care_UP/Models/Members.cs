@@ -38,10 +38,6 @@ namespace Care_UP.Models
         [Display(Name = "修改時間")]
         public DateTime? EditDate { set; get; }
         
-        [Display(Name = "身分")]
-        
-        public string  Status { get; set; }
-
-
+        public virtual ICollection<Elders> Elders { get; set; }
     }
 }
