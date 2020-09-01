@@ -19,10 +19,10 @@ namespace Care_UP.Models
         [Display(Name = "帳號ID")]
         public virtual Members Members { set; get; }
         
-        public int AreaId { get; set; }
-        [ForeignKey("AreaId")]
+        public int LocationsId { get; set; }
+        [ForeignKey("LocationId")]
         [Display(Name = "地區ID")]
-        public virtual Areas Areas { set; get; }
+        public virtual Locations Locations { set; get; }
 
         [Display(Name = "姓名")]
         [MaxLength(length: 50)]

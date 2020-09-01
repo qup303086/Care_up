@@ -177,7 +177,7 @@
       <DependentUpon>202009010236381_MigrationName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Areas.cs" />
+    <Compile Include="Models\Locations.cs" />
     <Compile Include="Models\Attendants.cs" />
     <Compile Include="Models\CareRecords.cs" />
     <Compile Include="Models\Cities.cs" />

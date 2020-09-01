@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Care_UP.Models
 {
-    public class Areas
+    public class Locations
     {
         [Key]//強制主鍵
         [Display(Name = "編號")]//欄位名稱

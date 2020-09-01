@@ -17,5 +17,12 @@ namespace Care_UP.Models
         {
         }
         public virtual DbSet<Care_UP.Models.Members> Members { get; set; }
+        public virtual DbSet<Care_UP.Models.Attendants> Attendants { get; set; }
+        public virtual DbSet<Care_UP.Models.DetailedDates> DetailedDates { get; set; }
+        public virtual DbSet<Care_UP.Models.CareRecords> CareRecords { get; set; }
+        public virtual DbSet<Care_UP.Models.Elders> Elders { get; set; }
+        public virtual DbSet<Care_UP.Models.Locations> Locations { get; set; }
+        public virtual DbSet<Care_UP.Models.Cities> Cities { get; set; }
+        public virtual DbSet<Care_UP.Models.Orders> Orders { get; set; }
     }
 }
