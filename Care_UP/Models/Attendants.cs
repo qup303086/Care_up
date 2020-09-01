@@ -14,37 +14,42 @@ namespace Care_UP.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]//流水號
         public int Id { get; set; }
 
-
-        [Display(Name = "帳號ID")]
         public int MemberId { get; set; }
-
-        [Display(Name = "地區ID")]
+        [ForeignKey(" MemberId")]
+        [Display(Name = "帳號ID")]
+        public virtual Members Members { set; get; }
+        
         public int AreaId { get; set; }
-        //[ForeignKey("AreaId")]
+        [ForeignKey("AreaId")]
+        [Display(Name = "地區ID")]
+        public virtual Areas Areas { set; get; }
 
         [Display(Name = "姓名")]
-        [MaxLength(length: 50)]//設定長度
+        [MaxLength(length: 50)]
         [Required(ErrorMessage = "{0}必填")]
         public string Name { get; set; }
 
         [Display(Name = "日薪")]
-        [MaxLength(length: 50)]//設定長度
+        [MaxLength(length: 50)]
         [Required(ErrorMessage = "{0}必填")]
         public string Salary { get; set; }
 
         [Display(Name = "匯款帳號")]
-        [MaxLength(length: 50)]//設定長度
+        [MaxLength(length: 50)]
         [Required(ErrorMessage = "{0}必填")]
         public string Account { get; set; }
 
         [Display(Name = "提供服務")]
         [Required(ErrorMessage = "{0}必填")] 
-        public ServiceItemsType Service { get; set; }
+        public string Service { get; set; }
 
         [Display(Name = "資格文件")]
-        [MaxLength(length: 50)]//設定長度
+        [MaxLength(length: 50)]
         [Required(ErrorMessage = "{0}必填")]
         public string File { get; set; }
+
+        [Display(Name = "服務時段")]
+        public string ServiceTime { get; set; }
 
         [Display(Name = "經驗")]
         [Required(ErrorMessage = "{0}必填")]
@@ -66,7 +71,6 @@ namespace Care_UP.Models
         public DateTime? EditDate { set; get; }
 
         [Display(Name = "是否開啟基本資料")]
-        [MaxLength(length: 50)]//設定長度
         [Required(ErrorMessage = "{0}必填")]
         public string Status { get; set; }
 

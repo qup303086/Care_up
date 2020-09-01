@@ -14,9 +14,12 @@ namespace Care_UP.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Display(Name = "訂單ID")]
         public int OrderId { get; set; }
-      
+        [ForeignKey("OrderId")]
+        [Display(Name = "訂單ID")]
+        public virtual Orders Orders { set; get; }
+
+
         [Display(Name = "照護紀錄")]
         public string CareRecord { get; set; }
 

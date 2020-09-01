@@ -14,10 +14,14 @@ namespace Care_UP.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]//流水號
         public int Id { get; set; }
 
+ 
+        public int CityId { get; set; }
+        [ForeignKey("CityId")]
         [Display(Name = "城市Id")]
-        [MaxLength(length: 50)]//設定長度
         [Required(ErrorMessage = "{0}必填")]
-        public int City { get; set; }
+        public virtual Cities Cities { set; get; }
+       
+       
 
         [Display(Name = "地區")]
         [MaxLength(length: 50)]//設定長度

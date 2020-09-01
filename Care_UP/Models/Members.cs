@@ -40,7 +40,7 @@ namespace Care_UP.Models
         
         [Display(Name = "身分")]
         
-        public IdType  Status { get; set; }
+        public string  Status { get; set; }
 
 
     }

@@ -14,8 +14,10 @@ namespace Care_UP.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Display(Name = "詳細日期ID")]
-        public int DetailedDateId { get; set; }
+      public int DetailedDateId { get; set; }
+        [ForeignKey("DetailedDateId")]
+        [Display(Name = "訂單詳細日期")]
+        public virtual DetailedDates DetailedDates { set; get; }
 
         [Display(Name = "病患心情")]
         public string Mood{ get; set; }
@@ -28,6 +30,6 @@ namespace Care_UP.Models
         public string EditDate { get; set; }
 
         [Display(Name = "是否填寫")]
-        public WhetherType Whether { get; set; }
+        public string Whether { get; set; }
     }
 }
