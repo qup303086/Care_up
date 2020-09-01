@@ -8,11 +8,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Security;
 using Care_UP.Models;
 
 namespace Care_UP.Controllers
 {
-    [RoutePrefix("Login")]
+    [RoutePrefix("Member")]
     public class MembersController : ApiController
     {
         private Model1 db = new Model1();
@@ -90,6 +91,44 @@ namespace Care_UP.Controllers
             db.SaveChanges();
 
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" }); 
+        }
+
+        [Route("Login")]
+        [HttpPost]
+        [ResponseType(typeof(Members))]
+        [AllowAnonymous]
+        public IHttpActionResult Login(Members login)
+        {
+            ModelState.Remove("Status");
+            ModelState.Remove("PasswordSalt");
+            if (ModelState.IsValid)
+            {
+                using (db)
+                {
+                    Members memberAccount = db.Members.FirstOrDefault(x => x.Email == login.Email);
+                    if (memberAccount == null)
+                    {
+                        return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "無此帳號" });
+                    }
+                    else
+                    {
+                        string psw = Utility.GenerateHashWithSalt(login.Password,memberAccount.PasswordSalt);
+                        Members memeber = db.Members.FirstOrDefault(x => x.Email == memberAccount.Email && x.Password == psw);
+                        if (memeber == null)
+                        {
+                            return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼錯誤" });
+                        }
+                        else
+                        {
+                            return Ok();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "帳密格式不符" });
+            }
         }
 
         // DELETE: api/Members/5

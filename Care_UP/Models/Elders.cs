@@ -21,6 +21,9 @@ namespace Care_UP.Models
         [Display(Name = "姓名")]
         public string Name { get; set; }
 
+        [Display(Name = "地址")]
+        public string Address { get; set; }
+
         [Display(Name = "性別")]
         public GenderType Gender { set; get; }
 
@@ -51,7 +54,6 @@ namespace Care_UP.Models
 
 
         [Display(Name = "修改時間")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? EditDate { set; get; }
 
     }

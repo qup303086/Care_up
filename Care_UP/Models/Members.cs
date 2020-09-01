@@ -36,7 +36,6 @@ namespace Care_UP.Models
 
 
         [Display(Name = "修改時間")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? EditDate { set; get; }
         
         [Display(Name = "身分")]

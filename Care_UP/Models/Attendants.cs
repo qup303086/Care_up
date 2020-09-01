@@ -37,12 +37,25 @@ namespace Care_UP.Models
         [Required(ErrorMessage = "{0}必填")]
         public string Account { get; set; }
 
+        [Display(Name = "提供服務")]
+        [Required(ErrorMessage = "{0}必填")] 
+        public ServiceItemsType Service { get; set; }
 
         [Display(Name = "資格文件")]
         [MaxLength(length: 50)]//設定長度
         [Required(ErrorMessage = "{0}必填")]
         public string File { get; set; }
 
+        [Display(Name = "經驗")]
+        [Required(ErrorMessage = "{0}必填")]
+        public string Experience { get; set; }
+
+
+        [Display(Name = "開始時間")]
+        public DateTime? StartDateTime { set; get; }
+
+        [Display(Name = "結束時間")]
+        public DateTime? EndDateTime{ set; get; }
 
         [Display(Name = "建立時間")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -50,7 +63,6 @@ namespace Care_UP.Models
 
 
         [Display(Name = "修改時間")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? EditDate { set; get; }
 
         [Display(Name = "是否開啟基本資料")]

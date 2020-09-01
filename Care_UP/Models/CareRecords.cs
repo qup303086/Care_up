@@ -25,7 +25,6 @@ namespace Care_UP.Models
         public string InitDate { get; set; }
 
         [Display(Name = "修改時間")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public string EditDate { get; set; }
 
         [Display(Name = "是否填寫")]

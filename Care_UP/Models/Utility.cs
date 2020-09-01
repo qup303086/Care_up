@@ -42,19 +42,6 @@ namespace Care_UP.Models
             return Convert.ToBase64String(buffer);
         }
         /// <summary>
-        /// 密碼加密
-        /// </summary>
-        /// <param name="password">密碼明碼</param>
-        /// <returns>Hash後密碼</returns>
-        public static string CreateHash(string password)
-        {
-            string salt = CreateSalt();
-            string saltAndPassword = String.Concat(password, salt);
-            string hashedPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(saltAndPassword, "SHA1");
-            hashedPassword = string.Concat(hashedPassword, salt);
-            return hashedPassword;
-        }
-        /// <summary>
         /// Computes a salted hash of the password and salt provided and returns as a base64 encoded string.
         /// </summary>
         /// <param name="password">The password to hash.</param>

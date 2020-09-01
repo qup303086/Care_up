@@ -24,7 +24,6 @@ namespace Care_UP.Models
         public int AttendantId { get; set; }
 
         [Display(Name = "開始日期")]
-       
         public DateTime? StartDate { set; get; }
 
         [Display(Name = "結束日期")]
@@ -83,7 +82,6 @@ namespace Care_UP.Models
         public DateTime? InitDate { get; set; }
 
         [Display(Name = "修改時間")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? EditDate { get; set; }
 
         [Display(Name = "訂單狀態")]

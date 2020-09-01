@@ -8,9 +8,16 @@ namespace Care_UP.Models
 
     public enum IdType
     {
-        家屬= 1,
-        照服員= 2,
-        
+        家屬 = 1,
+        照服員 = 2,
+
+    }
+
+    public enum WhetherType
+    {
+        否 = 0,
+        是 = 1,
+
     }
     public enum GenderType
     {
@@ -51,9 +58,10 @@ namespace Care_UP.Models
         服務進行中 = 22, //照服員照顧中
         待評價 = 13, //家屬已評價
         待收款 = 23,//照服員等待收款
+        未收款 = 24,
         已取消 = 01,
         已完成 = 02,
-        中斷=03,
-        待退款=04,
+        中斷 = 03,
+        待退款 = 04,
     }
 }
