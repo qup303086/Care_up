@@ -79,10 +79,10 @@ namespace Care_UP.Controllers
         public HttpResponseMessage PostMembers(Members members)
         {
             ModelState.Remove("PasswordSalt"); //不驗證
-            
+
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse(HttpStatusCode.OK,new { result = "不完整" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "不完整" });
             }
             members.PasswordSalt = Utility.CreateSalt(); //產生密碼鹽
             members.Password = Utility.GenerateHashWithSalt(members.Password, members.PasswordSalt);//密碼+密碼鹽
@@ -90,10 +90,10 @@ namespace Care_UP.Controllers
             db.Members.Add(members);
             db.SaveChanges();
 
-            return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" }); 
+            return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
         }
 
-        [Route("Login")]
+        [Route("MemberLogin")]
         [HttpPost]
         [ResponseType(typeof(Members))]
         [AllowAnonymous]
@@ -112,7 +112,7 @@ namespace Care_UP.Controllers
                     }
                     else
                     {
-                        string psw = Utility.GenerateHashWithSalt(login.Password,memberAccount.PasswordSalt);
+                        string psw = Utility.GenerateHashWithSalt(login.Password, memberAccount.PasswordSalt);
                         Members memeber = db.Members.FirstOrDefault(x => x.Email == memberAccount.Email && x.Password == psw);
                         if (memeber == null)
                         {
@@ -120,7 +120,8 @@ namespace Care_UP.Controllers
                         }
                         else
                         {
-                            return Ok();
+                            string token = new Token().GenerateToken(login.Id, login.Email);
+                            return Ok(token);
                         }
                     }
                 }
