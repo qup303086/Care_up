@@ -50,16 +50,7 @@ namespace Care_UP.Controllers
         [HttpPost]
         public HttpResponseMessage PostMembers(Attendants attendants)
         {
-<<<<<<< HEAD
-            ModelState.Remove("PasswordSalt"); //不驗證
-
-            if (!ModelState.IsValid)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = "不完整" });
-=======
-            try
-            {
-                ModelState.Remove("PasswordSalt");
+            ModelState.Remove("PasswordSalt");
                 ModelState.Remove("Name");
                 ModelState.Remove("Salary");
                 ModelState.Remove("Account");
@@ -78,57 +69,48 @@ namespace Care_UP.Controllers
                 db.Attendants.Add(attendants);
 
                 db.SaveChanges();
->>>>>>> b4b092fcd31bf0922ca84d255a3512d597062a22
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = ex.ToString() });
 
-<<<<<<< HEAD
-=======
-            }
->>>>>>> b4b092fcd31bf0922ca84d255a3512d597062a22
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
         }
 
-        [Route("MemberLogin")]
-        [HttpPost]
-        [ResponseType(typeof(Members))]
-        [AllowAnonymous]
-        public IHttpActionResult Login(Members login)
-        {
-            ModelState.Remove("Status");
-            ModelState.Remove("PasswordSalt");
-            if (ModelState.IsValid)
-            {
-                using (db)
-                {
-                    Members memberAccount = db.Members.FirstOrDefault(x => x.Email == login.Email);
-                    if (memberAccount == null)
-                    {
-                        return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "無此帳號" });
-                    }
-                    else
-                    {
-                        string psw = Utility.GenerateHashWithSalt(login.Password, memberAccount.PasswordSalt);
-                        Members memeber = db.Members.FirstOrDefault(x => x.Email == memberAccount.Email && x.Password == psw);
-                        if (memeber == null)
-                        {
-                            return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼錯誤" });
-                        }
-                        else
-                        {
-                            string token = new Token().GenerateToken(login.Id, login.Email);
-                            return Ok(token);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "帳密格式不符" });
-            }
-        }
+        //[Route("MemberLogin")]
+        //[HttpPost]
+        //[ResponseType(typeof(Members))]
+        //[AllowAnonymous]
+        //public IHttpActionResult Login(Members login)
+        //{
+        //    ModelState.Remove("Status");
+        //    ModelState.Remove("PasswordSalt");
+        //    if (ModelState.IsValid)
+        //    {
+        //        using (db)
+        //        {
+        //            Members memberAccount = db.Members.FirstOrDefault(x => x.Email == login.Email);
+        //            if (memberAccount == null)
+        //            {
+        //                return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "無此帳號" });
+        //            }
+        //            else
+        //            {
+        //                string psw = Utility.GenerateHashWithSalt(login.Password, memberAccount.PasswordSalt);
+        //                Members memeber = db.Members.FirstOrDefault(x => x.Email == memberAccount.Email && x.Password == psw);
+        //                if (memeber == null)
+        //                {
+        //                    return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼錯誤" });
+        //                }
+        //                else
+        //                {
+        //                    string token = new Token().GenerateToken(login.Id, login.Email);
+        //                    return Ok(token);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "帳密格式不符" });
+        //    }
+        //}
 
         // DELETE: api/Members/5
         [ResponseType(typeof(Members))]
