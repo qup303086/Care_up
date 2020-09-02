@@ -19,7 +19,6 @@ namespace Care_UP.Models
         [Required(ErrorMessage = "{0}必填")]
         public string City{ get; set; }
 
-        public virtual ICollection<Locations> Locations { get; set; }
-
+        
     }
 }

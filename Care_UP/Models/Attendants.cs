@@ -22,7 +22,7 @@ namespace Care_UP.Models
         public string Email { get; set; }
 
         [Display(Name = "密碼")]
-        [StringLength(10, ErrorMessage = "{0}長度至少為{2}個字,不可超過{1}個字", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0}長度至少為{2}個字,不可超過{1}個字", MinimumLength = 6)]
         [Required(ErrorMessage = "{0}必填")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -30,40 +30,29 @@ namespace Care_UP.Models
         [Display(Name = "密碼鹽")]
         public string PasswordSalt { get; set; }
 
-        public int LocationId { get; set; }
-        [ForeignKey("LocationId")]
-        [Display(Name = "地區ID")]
-        public virtual Locations Locations { set; get; }
-
         [Display(Name = "姓名")]
         [MaxLength(length: 50)]
-        [Required(ErrorMessage = "{0}必填")]
         public string Name { get; set; }
 
         [Display(Name = "日薪")]
         [MaxLength(length: 50)]
-        [Required(ErrorMessage = "{0}必填")]
         public string Salary { get; set; }
 
         [Display(Name = "匯款帳號")]
         [MaxLength(length: 50)]
-        [Required(ErrorMessage = "{0}必填")]
         public string Account { get; set; }
 
         [Display(Name = "提供服務")]
-        [Required(ErrorMessage = "{0}必填")] 
         public string Service { get; set; }
 
         [Display(Name = "資格文件")]
         [MaxLength(length: 50)]
-        [Required(ErrorMessage = "{0}必填")]
         public string File { get; set; }
 
         [Display(Name = "服務時段")]
         public string ServiceTime { get; set; }
 
         [Display(Name = "經驗")]
-        [Required(ErrorMessage = "{0}必填")]
         public string Experience { get; set; }
 
 
@@ -71,7 +60,7 @@ namespace Care_UP.Models
         public DateTime? StartDateTime { set; get; }
 
         [Display(Name = "結束時間")]
-        public DateTime? EndDateTime{ set; get; }
+        public DateTime? EndDateTime { set; get; }
 
         [Display(Name = "建立時間")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -82,9 +71,8 @@ namespace Care_UP.Models
         public DateTime? EditDate { set; get; }
 
         [Display(Name = "是否開啟基本資料")]
-        [Required(ErrorMessage = "{0}必填")]
         public string Status { get; set; }
 
-        public virtual ICollection<Orders> Orders { get; set; }
+
     }
 }

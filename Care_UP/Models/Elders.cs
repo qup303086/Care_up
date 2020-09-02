@@ -68,6 +68,6 @@ namespace Care_UP.Models
         [Display(Name = "修改時間")]
         public DateTime? EditDate { set; get; }
 
-        public virtual ICollection <Orders> Orders { get; set; }
+       
     }
 }
