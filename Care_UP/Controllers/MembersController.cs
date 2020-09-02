@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 
 namespace Care_UP.Controllers
 {
+    [AllowAnonymous]
     public class MembersController : ApiController
     {
         private Model1 db = new Model1();
@@ -73,44 +74,46 @@ namespace Care_UP.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
         }
 
-        //[Route("MemberLogin")]
-        //[HttpPost]
-        //[ResponseType(typeof(Members))]
-        //[AllowAnonymous]
-        //public IHttpActionResult Login(Members login)
-        //{
-        //    ModelState.Remove("Status");
-        //    ModelState.Remove("PasswordSalt");
-        //    if (ModelState.IsValid)
-        //    {
-        //        using (db)
-        //        {
-        //            Members memberAccount = db.Members.FirstOrDefault(x => x.Email == login.Email);
-        //            if (memberAccount == null)
-        //            {
-        //                return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "無此帳號" });
-        //            }
-        //            else
-        //            {
-        //                string psw = Utility.GenerateHashWithSalt(login.Password, memberAccount.PasswordSalt);
-        //                Members memeber = db.Members.FirstOrDefault(x => x.Email == memberAccount.Email && x.Password == psw);
-        //                if (memeber == null)
-        //                {
-        //                    return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼錯誤" });
-        //                }
-        //                else
-        //                {
-        //                    string token = new Token().GenerateToken(login.Id, login.Email);
-        //                    return Ok(token);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "帳密格式不符" });
-        //    }
-        //}
+        [ResponseType(typeof(Members))]
+        [Route("MemberLogin")]
+        [HttpPost]
+        public HttpResponseMessage Login(Members login)
+        {
+            ModelState.Remove("PasswordSalt");
+            if (ModelState.IsValid)
+            {
+                using (db)
+                {
+                    Members memberAccount = db.Members.FirstOrDefault(x => x.Email == login.Email);
+                    if (memberAccount == null)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, new { message = "無此帳號" });
+                    }
+                    else
+                    {
+                        string psw = Utility.GenerateHashWithSalt(login.Password, memberAccount.PasswordSalt);
+                        Members memeber = db.Members.FirstOrDefault(x => x.Email == memberAccount.Email && x.Password == psw);
+                        if (memeber == null)
+                        {
+                            return Request.CreateResponse(HttpStatusCode.OK, new { message = "密碼錯誤" });
+                        }
+                        else
+                        {
+                            string newToken = new Token().GenerateToken(login.Id, login.Email);
+                            return Request.CreateResponse(HttpStatusCode.OK, new
+                            {
+                                message = "登入成功",
+                                token = newToken
+                            });
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { message = "帳密格式不符" });
+            }
+        }
 
         // DELETE: api/Members/5
         [ResponseType(typeof(Members))]
