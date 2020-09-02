@@ -172,20 +172,29 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202008310226077_addMember.cs" />
-    <Compile Include="Migrations\202008310226077_addMember.Designer.cs">
-      <DependentUpon>202008310226077_addMember.cs</DependentUpon>
+    <Compile Include="Migrations\202009020254244_GoSQL.cs" />
+    <Compile Include="Migrations\202009020254244_GoSQL.Designer.cs">
+      <DependentUpon>202009020254244_GoSQL.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009010236381_MigrationName.cs" />
-    <Compile Include="Migrations\202009010236381_MigrationName.Designer.cs">
-      <DependentUpon>202009010236381_MigrationName.cs</DependentUpon>
+    <Compile Include="Migrations\202009020330353_fix.cs" />
+    <Compile Include="Migrations\202009020330353_fix.Designer.cs">
+      <DependentUpon>202009020330353_fix.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009010930419_CareUp.cs" />
-    <Compile Include="Migrations\202009010930419_CareUp.Designer.cs">
-      <DependentUpon>202009010930419_CareUp.cs</DependentUpon>
+    <Compile Include="Migrations\202009020403086_password.cs" />
+    <Compile Include="Migrations\202009020403086_password.Designer.cs">
+      <DependentUpon>202009020403086_password.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009020538434_attendeant.cs" />
+    <Compile Include="Migrations\202009020538434_attendeant.Designer.cs">
+      <DependentUpon>202009020538434_attendeant.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009020545061_attendeant_edit.cs" />
+    <Compile Include="Migrations\202009020545061_attendeant_edit.Designer.cs">
+      <DependentUpon>202009020545061_attendeant_edit.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Token.cs" />
+    <Compile Include="Models\AttendantLocation.cs" />
     <Compile Include="Models\Locations.cs" />
     <Compile Include="Models\Attendants.cs" />
     <Compile Include="Models\CareRecords.cs" />
@@ -283,14 +292,20 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202008310226077_addMember.resx">
-      <DependentUpon>202008310226077_addMember.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009020254244_GoSQL.resx">
+      <DependentUpon>202009020254244_GoSQL.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009010236381_MigrationName.resx">
-      <DependentUpon>202009010236381_MigrationName.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009020330353_fix.resx">
+      <DependentUpon>202009020330353_fix.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009010930419_CareUp.resx">
-      <DependentUpon>202009010930419_CareUp.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009020403086_password.resx">
+      <DependentUpon>202009020403086_password.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009020538434_attendeant.resx">
+      <DependentUpon>202009020538434_attendeant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009020545061_attendeant_edit.resx">
+      <DependentUpon>202009020545061_attendeant_edit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

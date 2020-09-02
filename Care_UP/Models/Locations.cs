@@ -27,7 +27,6 @@ namespace Care_UP.Models
         [MaxLength(length: 50)]//設定長度
         [Required(ErrorMessage = "{0}必填")]
         public string Area { get; set; }
-        public virtual ICollection<Attendants> Attendants { get; set; }
-
+     
     }
 }

@@ -22,7 +22,7 @@ namespace Care_UP.Models
         public string Email { get; set; }
 
         [Display(Name = "密碼")]
-        [StringLength(10, ErrorMessage = "{0}長度至少為{2}個字,不可超過{1}個字",MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0}長度至少為{2}個字,不可超過{1}個字",MinimumLength = 6)]
         [Required(ErrorMessage = "{0}必填")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -37,7 +37,8 @@ namespace Care_UP.Models
 
         [Display(Name = "修改時間")]
         public DateTime? EditDate { set; get; }
+
         
-        public virtual ICollection<Elders> Elders { get; set; }
+        
     }
 }

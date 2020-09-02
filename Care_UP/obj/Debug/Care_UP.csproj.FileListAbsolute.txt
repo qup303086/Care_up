@@ -194,14 +194,12 @@ C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\zh-Hant\System.Web.Razor.resources.dl
 C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\zh-Hant\System.Web.WebPages.resources.dll
 C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\zh-Hant\System.Web.WebPages.Deployment.resources.dll
 C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\zh-Hant\System.Web.WebPages.Razor.resources.dll
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.addMember.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.GenerateResource.cache
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.CoreCompileInputs.cache
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.CopyComplete
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.dll
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.pdb
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.MigrationName.resources
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csprojAssemblyReference.cache
+<<<<<<< HEAD
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.CareUp.resources
 C:\Users\user\Desktop\Care_up\Care_UP\bin\Care_UP.dll.config
 C:\Users\user\Desktop\Care_up\Care_UP\bin\Care_UP.dll
@@ -309,3 +307,11 @@ C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.csproj.CoreCompileInputs
 C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.csproj.CopyComplete
 C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.dll
 C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.pdb
+=======
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.GoSQL.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.GenerateResource.cache
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.fix.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.password.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.attendeant.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.attendeant_edit.resources
+>>>>>>> b4b092fcd31bf0922ca84d255a3512d597062a22

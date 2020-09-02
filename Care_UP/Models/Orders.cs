@@ -64,6 +64,6 @@ namespace Care_UP.Models
         [Display(Name = "訂單狀態")]
         public string Status { get; set; }
 
-        public virtual ICollection<DetailedDates> DetailedDates { get; set; }
+       
     }
 }

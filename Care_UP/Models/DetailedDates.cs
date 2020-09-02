@@ -28,8 +28,7 @@ namespace Care_UP.Models
         public DateTime? NowDateTime { set; get; }
 
          
-        public virtual ICollection<CareRecords> CareRecords { get; set; }
-
+    
 
     }
 }

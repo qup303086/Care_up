@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -60,6 +61,21 @@ namespace Care_UP.Models
             // return the has as a base 64 encoded string
             return Convert.ToBase64String(hash);
         }
+        #endregion
+
+        #region 搜尋錯誤
+
+        //try { 
+        //    db.SaveChanges();
+        //}
+        //catch (DbEntityValidationException ex)
+        //{
+        //    var entityError = ex.EntityValidationErrors.SelectMany(x => x.ValidationErrors).Select(x => x.ErrorMessage);
+        //    var getFullMessage = string.Join("; ", entityError);
+        //    var exceptionMessage = string.Concat(ex.Message, "errors are: ", getFullMessage);
+
+        //}
+
         #endregion
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,86 +11,83 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Security;
 using Care_UP.Models;
+using Newtonsoft.Json;
 
 namespace Care_UP.Controllers
 {
-    [RoutePrefix("Member")]
     public class MembersController : ApiController
     {
         private Model1 db = new Model1();
 
-        // GET: api/Members
-        public IQueryable<Members> GetMembers()
-        {
-            return db.Members;
-        }
 
-        // GET: api/Members/5
+        // POST: api/Members/
         [ResponseType(typeof(Members))]
-        public IHttpActionResult GetMembers(int id)
-        {
-            Members members = db.Members.Find(id);
-            if (members == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(members);
-        }
-
-        // PUT: api/Members/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutMembers(int id, Members members)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != members.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(members).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MembersExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Members
-        [ResponseType(typeof(Members))]
-        [Route("Register")]
+        [Route("MemberRegister")]
         [HttpPost]
         public HttpResponseMessage PostMembers(Members members)
         {
+            ModelState.Remove("PasswordSalt");
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "不完整" });
+            }
+
+            members.PasswordSalt = Utility.CreateSalt(); //產生密碼鹽
+            members.Password = Utility.GenerateHashWithSalt(members.Password, members.PasswordSalt);//密碼+密碼鹽
+            members.InitDate = DateTime.Now;
+            db.Members.Add(members);
+
+            db.SaveChanges();
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
+        }
+
+
+        // POST: api/Members/
+        [ResponseType(typeof(Members))]
+        [Route("AttendantRegister")]
+        [HttpPost]
+        public HttpResponseMessage PostMembers(Attendants attendants)
+        {
+<<<<<<< HEAD
             ModelState.Remove("PasswordSalt"); //不驗證
 
             if (!ModelState.IsValid)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { result = "不完整" });
-            }
-            members.PasswordSalt = Utility.CreateSalt(); //產生密碼鹽
-            members.Password = Utility.GenerateHashWithSalt(members.Password, members.PasswordSalt);//密碼+密碼鹽
-            members.InitDate = DateTime.Now;
-            db.Members.Add(members);
-            db.SaveChanges();
+=======
+            try
+            {
+                ModelState.Remove("PasswordSalt");
+                ModelState.Remove("Name");
+                ModelState.Remove("Salary");
+                ModelState.Remove("Account");
+                ModelState.Remove("Service");
+                ModelState.Remove("File");
+                ModelState.Remove("ServiceTime");
+                ModelState.Remove("Experience");
+                ModelState.Remove("Status");
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new { result = "不完整" });
+                }
+                attendants.PasswordSalt = Utility.CreateSalt(); //產生密碼鹽
+                attendants.Password = Utility.GenerateHashWithSalt(attendants.Password, attendants.PasswordSalt);//密碼+密碼鹽
+                attendants.InitDate = DateTime.Now;
+                db.Attendants.Add(attendants);
 
+                db.SaveChanges();
+>>>>>>> b4b092fcd31bf0922ca84d255a3512d597062a22
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = ex.ToString() });
+
+<<<<<<< HEAD
+=======
+            }
+>>>>>>> b4b092fcd31bf0922ca84d255a3512d597062a22
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
         }
 
