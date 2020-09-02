@@ -50,6 +50,13 @@ namespace Care_UP.Controllers
         [HttpPost]
         public HttpResponseMessage PostMembers(Attendants attendants)
         {
+<<<<<<< HEAD
+            ModelState.Remove("PasswordSalt"); //不驗證
+
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "不完整" });
+=======
             try
             {
                 ModelState.Remove("PasswordSalt");
@@ -71,16 +78,20 @@ namespace Care_UP.Controllers
                 db.Attendants.Add(attendants);
 
                 db.SaveChanges();
+>>>>>>> b4b092fcd31bf0922ca84d255a3512d597062a22
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { result = ex.ToString() });
 
+<<<<<<< HEAD
+=======
             }
+>>>>>>> b4b092fcd31bf0922ca84d255a3512d597062a22
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
         }
 
-        [Route("Login")]
+        [Route("MemberLogin")]
         [HttpPost]
         [ResponseType(typeof(Members))]
         [AllowAnonymous]
@@ -107,7 +118,8 @@ namespace Care_UP.Controllers
                         }
                         else
                         {
-                            return Ok();
+                            string token = new Token().GenerateToken(login.Id, login.Email);
+                            return Ok(token);
                         }
                     }
                 }

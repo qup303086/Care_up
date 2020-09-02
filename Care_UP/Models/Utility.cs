@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Security;
+using Jose;
 
 namespace Care_UP.Models
 {
