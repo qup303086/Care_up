@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 
 namespace Care_UP.Controllers
 {
+    [AllowAnonymous]
     public class MembersController : ApiController
     {
         private Model1 db = new Model1();
@@ -50,9 +51,7 @@ namespace Care_UP.Controllers
         [HttpPost]
         public HttpResponseMessage PostMembers(Attendants attendants)
         {
-            try
-            {
-                ModelState.Remove("PasswordSalt");
+            ModelState.Remove("PasswordSalt");
                 ModelState.Remove("Name");
                 ModelState.Remove("Salary");
                 ModelState.Remove("Account");
@@ -71,22 +70,15 @@ namespace Care_UP.Controllers
                 db.Attendants.Add(attendants);
 
                 db.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = ex.ToString() });
 
-            }
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
         }
 
-        [Route("Login")]
-        [HttpPost]
         [ResponseType(typeof(Members))]
-        [AllowAnonymous]
-        public IHttpActionResult Login(Members login)
+        [Route("MemberLogin")]
+        [HttpPost]
+        public HttpResponseMessage Login(Members login)
         {
-            ModelState.Remove("Status");
             ModelState.Remove("PasswordSalt");
             if (ModelState.IsValid)
             {
@@ -95,7 +87,7 @@ namespace Care_UP.Controllers
                     Members memberAccount = db.Members.FirstOrDefault(x => x.Email == login.Email);
                     if (memberAccount == null)
                     {
-                        return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "無此帳號" });
+                        return Request.CreateResponse(HttpStatusCode.OK, new { message = "無此帳號" });
                     }
                     else
                     {
@@ -103,18 +95,23 @@ namespace Care_UP.Controllers
                         Members memeber = db.Members.FirstOrDefault(x => x.Email == memberAccount.Email && x.Password == psw);
                         if (memeber == null)
                         {
-                            return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼錯誤" });
+                            return Request.CreateResponse(HttpStatusCode.OK, new { message = "密碼錯誤" });
                         }
                         else
                         {
-                            return Ok();
+                            string newToken = new Token().GenerateToken(login.Id, login.Email);
+                            return Request.CreateResponse(HttpStatusCode.OK, new
+                            {
+                                message = "登入成功",
+                                token = newToken
+                            });
                         }
                     }
                 }
             }
             else
             {
-                return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "帳密格式不符" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { message = "帳密格式不符" });
             }
         }
 
