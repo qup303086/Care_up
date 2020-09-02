@@ -50,44 +50,27 @@ namespace Care_UP.Controllers
         [HttpPost]
         public HttpResponseMessage PostMembers(Attendants attendants)
         {
-<<<<<<< HEAD
-            ModelState.Remove("PasswordSalt"); //不驗證
-
+            ModelState.Remove("PasswordSalt");
+            ModelState.Remove("Name");
+            ModelState.Remove("Salary");
+            ModelState.Remove("Account");
+            ModelState.Remove("Service");
+            ModelState.Remove("File");
+            ModelState.Remove("ServiceTime");
+            ModelState.Remove("Experience");
+            ModelState.Remove("Status");
             if (!ModelState.IsValid)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { result = "不完整" });
-=======
-            try
-            {
-                ModelState.Remove("PasswordSalt");
-                ModelState.Remove("Name");
-                ModelState.Remove("Salary");
-                ModelState.Remove("Account");
-                ModelState.Remove("Service");
-                ModelState.Remove("File");
-                ModelState.Remove("ServiceTime");
-                ModelState.Remove("Experience");
-                ModelState.Remove("Status");
-                if (!ModelState.IsValid)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, new { result = "不完整" });
-                }
-                attendants.PasswordSalt = Utility.CreateSalt(); //產生密碼鹽
-                attendants.Password = Utility.GenerateHashWithSalt(attendants.Password, attendants.PasswordSalt);//密碼+密碼鹽
-                attendants.InitDate = DateTime.Now;
-                db.Attendants.Add(attendants);
-
-                db.SaveChanges();
->>>>>>> b4b092fcd31bf0922ca84d255a3512d597062a22
             }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = ex.ToString() });
+            attendants.PasswordSalt = Utility.CreateSalt(); //產生密碼鹽
+            attendants.Password = Utility.GenerateHashWithSalt(attendants.Password, attendants.PasswordSalt);//密碼+密碼鹽
+            attendants.InitDate = DateTime.Now;
+            db.Attendants.Add(attendants);
 
-<<<<<<< HEAD
-=======
-            }
->>>>>>> b4b092fcd31bf0922ca84d255a3512d597062a22
+            db.SaveChanges();
+
+
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
         }
 
@@ -95,9 +78,8 @@ namespace Care_UP.Controllers
         [HttpPost]
         [ResponseType(typeof(Members))]
         [AllowAnonymous]
-        public IHttpActionResult Login(Members login)
+        public HttpResponseMessage Login(Members login)
         {
-            ModelState.Remove("Status");
             ModelState.Remove("PasswordSalt");
             if (ModelState.IsValid)
             {
@@ -106,7 +88,7 @@ namespace Care_UP.Controllers
                     Members memberAccount = db.Members.FirstOrDefault(x => x.Email == login.Email);
                     if (memberAccount == null)
                     {
-                        return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "無此帳號" });
+                        return Request.CreateResponse(HttpStatusCode.OK, new { message = "無此帳號" });
                     }
                     else
                     {
@@ -114,19 +96,23 @@ namespace Care_UP.Controllers
                         Members memeber = db.Members.FirstOrDefault(x => x.Email == memberAccount.Email && x.Password == psw);
                         if (memeber == null)
                         {
-                            return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼錯誤" });
+                            return Request.CreateResponse(HttpStatusCode.OK, new { message = "密碼錯誤" });
                         }
                         else
                         {
-                            string token = new Token().GenerateToken(login.Id, login.Email);
-                            return Ok(token);
+                            string newToken = new Token().GenerateToken(login.Id, login.Email);
+                            return Request.CreateResponse(HttpStatusCode.OK, new
+                            {
+                                message = "登入成功",
+                                token = newToken
+                            });
                         }
                     }
                 }
             }
             else
             {
-                return (IHttpActionResult)Request.CreateResponse(HttpStatusCode.OK, new { result = "帳密格式不符" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { message = "帳密格式不符" });
             }
         }
 

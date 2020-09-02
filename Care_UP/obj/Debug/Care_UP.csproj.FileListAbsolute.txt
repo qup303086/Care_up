@@ -315,3 +315,8 @@ C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.password.res
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.attendeant.resources
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.attendeant_edit.resources
 >>>>>>> b4b092fcd31bf0922ca84d255a3512d597062a22
+C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.Migrations.GoSQL.resources
+C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.Migrations.fix.resources
+C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.Migrations.password.resources
+C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.Migrations.attendeant.resources
+C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.Migrations.attendeant_edit.resources
