@@ -20,7 +20,7 @@ namespace Care_UP
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            GlobalConfiguration.Configuration.Filters.Add(new JwtAuthFilter());
+            //GlobalConfiguration.Configuration.Filters.Add(new JwtAuthFilter());
 
 
         }
