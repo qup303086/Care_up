@@ -185,6 +185,7 @@
       <DependentUpon>202009010930419_CareUp.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Token.cs" />
     <Compile Include="Models\Locations.cs" />
     <Compile Include="Models\Attendants.cs" />
     <Compile Include="Models\CareRecords.cs" />
