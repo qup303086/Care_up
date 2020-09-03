@@ -318,3 +318,6 @@ C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.Migrations.password.reso
 C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.Migrations.attendeant.resources
 C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.Migrations.attendeant_edit.resources
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.attendant_edit0930.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.Elder_edit.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations._0903test.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations._0903Elder_phone.resources

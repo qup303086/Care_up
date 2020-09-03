@@ -4,11 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace Care_UP.Models
 {
     public class Members
     {
+
         [Key]//強制主鍵
         [Display(Name = "編號")]//欄位名稱
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]//流水號
@@ -38,7 +40,7 @@ namespace Care_UP.Models
         [Display(Name = "修改時間")]
         public DateTime? EditDate { set; get; }
 
-        
-        
+        //[JsonIgnore]
+        //public virtual ICollection<Elders> Elderses { get; set; }
     }
 }
