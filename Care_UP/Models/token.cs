@@ -56,11 +56,14 @@ namespace Care_UP.Models
     //        base.OnActionExecuting(actionContext);
     //    }
 
+
     //    //加例外
     //    public bool WithoutVerifyToken(string requestUri)
     //    {
     //        if (requestUri.EndsWith("/MemberLogin"))
+    //        {
     //            return true;
+    //        }
     //        return false;
     //    }
 

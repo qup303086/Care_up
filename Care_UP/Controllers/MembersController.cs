@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 
 namespace Care_UP.Controllers
 {
+    [AllowAnonymous]
     public class MembersController : ApiController
     {
         private Model1 db = new Model1();
@@ -73,7 +74,6 @@ namespace Care_UP.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
         }
 
-        [ResponseType(typeof(Members))]
         [Route("MemberLogin")]
         [HttpPost]
         public HttpResponseMessage Login(Members login)
@@ -102,6 +102,8 @@ namespace Care_UP.Controllers
                             return Request.CreateResponse(HttpStatusCode.OK, new
                             {
                                 message = "登入成功",
+                                login.Id,
+                                login.Email,
                                 token = newToken
                             });
                         }
@@ -116,7 +118,6 @@ namespace Care_UP.Controllers
 
         [Route("AttendantLogin")]
         [HttpPost]
-        [ResponseType(typeof(Members))]
         public HttpResponseMessage Login(Attendants login)
         {
             ModelState.Remove("PasswordSalt");
@@ -151,6 +152,8 @@ namespace Care_UP.Controllers
                             return Request.CreateResponse(HttpStatusCode.OK, new
                             {
                                 message = "登入成功",
+                                login.Id,
+                                login.Email,
                                 token = newToken
                             });
                         }
