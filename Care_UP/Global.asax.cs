@@ -31,12 +31,5 @@ namespace Care_UP
                 Response.End();
             }
         }
-        protected void Application_BeginRequest()
-        {
-            if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
-            {
-                Response.End();
-            }
-        }
     }
 }

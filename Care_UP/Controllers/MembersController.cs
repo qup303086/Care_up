@@ -46,7 +46,6 @@ namespace Care_UP.Controllers
 
 
         // POST: api/Members/
-        [ResponseType(typeof(Members))]
         [Route("AttendantRegister")]
         [HttpPost]
         public HttpResponseMessage PostMembers(Attendants attendants)
@@ -74,7 +73,6 @@ namespace Care_UP.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
         }
 
-        [ResponseType(typeof(Members))]
         [Route("MemberLogin")]
         [HttpPost]
         public HttpResponseMessage Login(Members login)
@@ -99,10 +97,12 @@ namespace Care_UP.Controllers
                         }
                         else
                         {
-                            string newToken = new Token().GenerateToken(login.Id, login.Email);
+                            string newToken = new Token().GenerateToken(memeber.Id, login.Email);
                             return Request.CreateResponse(HttpStatusCode.OK, new
                             {
                                 message = "登入成功",
+                                memeber.Id,
+                                login.Email,
                                 token = newToken
                             });
                         }
@@ -114,6 +114,57 @@ namespace Care_UP.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, new { message = "帳密格式不符" });
             }
         }
+
+        [Route("AttendantLogin")]
+        [HttpPost]
+        public HttpResponseMessage Login(Attendants login)
+        {
+            ModelState.Remove("PasswordSalt");
+            ModelState.Remove("Name");
+            ModelState.Remove("Salary");
+            ModelState.Remove("Account");
+            ModelState.Remove("Service");
+            ModelState.Remove("File");
+            ModelState.Remove("ServiceTime");
+            ModelState.Remove("Experience");
+            ModelState.Remove("Status");
+            if (ModelState.IsValid)
+            {
+                using (db)
+                {
+                    Attendants attendantsAccount = db.Attendants.FirstOrDefault(x => x.Email == login.Email);
+                    if (attendantsAccount == null)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, new { message = "無此帳號" });
+                    }
+                    else
+                    {
+                        string psw = Utility.GenerateHashWithSalt(login.Password, attendantsAccount.PasswordSalt);
+                        Attendants attendants = db.Attendants.FirstOrDefault(x => x.Email == attendantsAccount.Email && x.Password == psw);
+                        if (attendants == null)
+                        {
+                            return Request.CreateResponse(HttpStatusCode.OK, new { message = "密碼錯誤" });
+                        }
+                        else
+                        {
+                            string newToken = new Token().GenerateToken(attendants.Id, login.Email);
+                            return Request.CreateResponse(HttpStatusCode.OK, new
+                            {
+                                message = "登入成功",
+                                attendants.Id,
+                                login.Email,
+                                token = newToken
+                            });
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { message = "帳密格式不符" });
+            }
+        }
+
 
         // DELETE: api/Members/5
         [ResponseType(typeof(Members))]
