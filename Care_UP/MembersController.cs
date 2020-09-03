@@ -73,61 +73,13 @@ namespace Care_UP.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
         }
 
-        [ResponseType(typeof(Members))]
         [Route("MemberLogin")]
         [HttpPost]
+        [ResponseType(typeof(Members))]
+        [AllowAnonymous]
         public HttpResponseMessage Login(Members login)
         {
             ModelState.Remove("PasswordSalt");
-            if (!ModelState.IsValid)
-            {
-                using (db)
-                {
-                    Members memberAccount = db.Members.FirstOrDefault(x => x.Email == login.Email);
-                    if (memberAccount == null)
-                    {
-                        return Request.CreateResponse(HttpStatusCode.OK, new { message = "無此帳號" });
-                    }
-                    else
-                    {
-                        string psw = Utility.GenerateHashWithSalt(login.Password, memberAccount.PasswordSalt);
-                        Members memeber = db.Members.FirstOrDefault(x => x.Email == memberAccount.Email && x.Password == psw);
-                        if (memeber == null)
-                        {
-                            return Request.CreateResponse(HttpStatusCode.OK, new { message = "密碼錯誤" });
-                        }
-                        else
-                        {
-                            string newToken = new Token().GenerateToken(login.Id, login.Email);
-                            return Request.CreateResponse(HttpStatusCode.OK, new
-                            {
-                                message = "登入成功",
-                                token = newToken
-                            });
-                        }
-                    }
-                }
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, new { message = "帳密格式不符" });
-            }
-        }
-
-        [Route("AttendantLogin")]
-        [HttpPost]
-        [ResponseType(typeof(Members))]
-        public HttpResponseMessage Login(Attendants login)
-        {
-            ModelState.Remove("PasswordSalt");
-            ModelState.Remove("Name");
-            ModelState.Remove("Salary");
-            ModelState.Remove("Account");
-            ModelState.Remove("Service");
-            ModelState.Remove("File");
-            ModelState.Remove("ServiceTime");
-            ModelState.Remove("Experience");
-            ModelState.Remove("Status");
             if (ModelState.IsValid)
             {
                 using (db)
@@ -162,7 +114,6 @@ namespace Care_UP.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, new { message = "帳密格式不符" });
             }
         }
-
 
         // DELETE: api/Members/5
         [ResponseType(typeof(Members))]
