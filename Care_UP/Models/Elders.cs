@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace Care_UP.Models
 {
@@ -14,8 +15,8 @@ namespace Care_UP.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public int MemberId { get; set; }
         [Display(Name = "家屬ID")]
+        public int MemberId { get; set; }
         [ForeignKey("MemberId")]
         public virtual Members Members { set; get; }
 
@@ -49,7 +50,7 @@ namespace Care_UP.Models
         public string Equipment { set; get; }
 
         [Display(Name = "服務項目")]
-        public int ServiceItems { set; get; }
+        public string ServiceItems { set; get; }
 
         [Display(Name = "緊急聯絡人")]
         public string Urgent { set; get; }
@@ -58,8 +59,7 @@ namespace Care_UP.Models
         public string Relationship { set; get; }
 
         [Display(Name = "手機")]
-        [RegularExpression(@"^1[3458][0-9]{9}$", ErrorMessage = "號碼格式不正確")]
-        public int Phone { set; get; }
+        public string Phone { set; get; }
 
         [Display(Name = "建立時間")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
@@ -68,6 +68,6 @@ namespace Care_UP.Models
         [Display(Name = "修改時間")]
         public DateTime? EditDate { set; get; }
 
-       
+
     }
 }
