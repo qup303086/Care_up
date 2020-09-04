@@ -31,6 +31,5 @@ namespace Care_UP
                 Response.End();
             }
         }
-
     }
 }

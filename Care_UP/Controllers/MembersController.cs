@@ -46,7 +46,6 @@ namespace Care_UP.Controllers
 
 
         // POST: api/Members/
-        [ResponseType(typeof(Members))]
         [Route("AttendantRegister")]
         [HttpPost]
         public HttpResponseMessage PostMembers(Attendants attendants)
@@ -79,7 +78,7 @@ namespace Care_UP.Controllers
         public HttpResponseMessage Login(Members login)
         {
             ModelState.Remove("PasswordSalt");
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 using (db)
                 {
@@ -133,7 +132,7 @@ namespace Care_UP.Controllers
             {
                 using (db)
                 {
-                    Members memberAccount = db.Members.FirstOrDefault(x => x.Email == login.Email);
+                    Attendants memberAccount = db.Attendants.FirstOrDefault(x => x.Email == login.Email);
                     if (memberAccount == null)
                     {
                         return Request.CreateResponse(HttpStatusCode.OK, new { message = "無此帳號" });
@@ -141,18 +140,18 @@ namespace Care_UP.Controllers
                     else
                     {
                         string psw = Utility.GenerateHashWithSalt(login.Password, memberAccount.PasswordSalt);
-                        Members memeber = db.Members.FirstOrDefault(x => x.Email == memberAccount.Email && x.Password == psw);
+                        Attendants memeber = db.Attendants.FirstOrDefault(x => x.Email == memberAccount.Email && x.Password == psw);
                         if (memeber == null)
                         {
                             return Request.CreateResponse(HttpStatusCode.OK, new { message = "密碼錯誤" });
                         }
                         else
                         {
-                            string newToken = new Token().GenerateToken(login.Id, login.Email);
+                            string newToken = new Token().GenerateToken(memeber.Id, login.Email);
                             return Request.CreateResponse(HttpStatusCode.OK, new
                             {
                                 message = "登入成功",
-                                login.Id,
+                                memeber.Id,
                                 login.Email,
                                 token = newToken
                             });
@@ -166,31 +165,15 @@ namespace Care_UP.Controllers
             }
         }
 
-
-        // DELETE: api/Members/5
-        [ResponseType(typeof(Members))]
-        public IHttpActionResult DeleteMembers(int id)
+        [Route("AttendantDetails")]
+        [HttpPost]
+        public HttpResponseMessage AttendantDetails()
         {
-            Members members = db.Members.Find(id);
-            if (members == null)
-            {
-                return NotFound();
-            }
 
-            db.Members.Remove(members);
-            db.SaveChanges();
-
-            return Ok(members);
+            return Request.CreateResponse(HttpStatusCode.OK, new { result = "新增資料成功" });
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+
 
         private bool MembersExists(int id)
         {
