@@ -165,6 +165,8 @@ namespace Care_UP.Controllers
             }
         }
 
+
+        
         [Route("AttendantDetails")]
         [HttpPost]
         public HttpResponseMessage AttendantDetails()

@@ -166,7 +166,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\AttendantsController.cs" />
+    <Compile Include="Controllers\EldersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -197,7 +197,16 @@
     <Compile Include="Migrations\202009030226089_attendant_edit0930.Designer.cs">
       <DependentUpon>202009030226089_attendant_edit0930.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009030423126_Elder_edit.cs" />
+    <Compile Include="Migrations\202009030423126_Elder_edit.Designer.cs">
+      <DependentUpon>202009030423126_Elder_edit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009030626406_0903Elder_phone.cs" />
+    <Compile Include="Migrations\202009030626406_0903Elder_phone.Designer.cs">
+      <DependentUpon>202009030626406_0903Elder_phone.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ElderView.cs" />
     <Compile Include="Models\Token.cs" />
     <Compile Include="Models\AttendantLocation.cs" />
     <Compile Include="Models\Locations.cs" />
@@ -314,6 +323,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009030226089_attendant_edit0930.resx">
       <DependentUpon>202009030226089_attendant_edit0930.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009030423126_Elder_edit.resx">
+      <DependentUpon>202009030423126_Elder_edit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009030626406_0903Elder_phone.resx">
+      <DependentUpon>202009030626406_0903Elder_phone.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
