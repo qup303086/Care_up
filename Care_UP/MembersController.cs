@@ -15,7 +15,6 @@ using Newtonsoft.Json;
 
 namespace Care_UP.Controllers
 {
-    [AllowAnonymous]
     public class MembersController : ApiController
     {
         private Model1 db = new Model1();
@@ -46,6 +45,7 @@ namespace Care_UP.Controllers
 
 
         // POST: api/Members/
+        [ResponseType(typeof(Members))]
         [Route("AttendantRegister")]
         [HttpPost]
         public HttpResponseMessage PostMembers(Attendants attendants)
@@ -75,6 +75,8 @@ namespace Care_UP.Controllers
 
         [Route("MemberLogin")]
         [HttpPost]
+        [ResponseType(typeof(Members))]
+        [AllowAnonymous]
         public HttpResponseMessage Login(Members login)
         {
             ModelState.Remove("PasswordSalt");
@@ -101,8 +103,6 @@ namespace Care_UP.Controllers
                             return Request.CreateResponse(HttpStatusCode.OK, new
                             {
                                 message = "登入成功",
-                                login.Id,
-                                login.Email,
                                 token = newToken
                             });
                         }
@@ -115,61 +115,30 @@ namespace Care_UP.Controllers
             }
         }
 
-        [Route("AttendantLogin")]
-        [HttpPost]
-        public HttpResponseMessage Login(Attendants login)
+        // DELETE: api/Members/5
+        [ResponseType(typeof(Members))]
+        public IHttpActionResult DeleteMembers(int id)
         {
-            ModelState.Remove("PasswordSalt");
-            ModelState.Remove("Name");
-            ModelState.Remove("Salary");
-            ModelState.Remove("Account");
-            ModelState.Remove("Service");
-            ModelState.Remove("File");
-            ModelState.Remove("ServiceTime");
-            ModelState.Remove("Experience");
-            ModelState.Remove("Status");
-            if (ModelState.IsValid)
+            Members members = db.Members.Find(id);
+            if (members == null)
             {
-                using (db)
-                {
-                    Attendants memberAccount = db.Attendants.FirstOrDefault(x => x.Email == login.Email);
-                    if (memberAccount == null)
-                    {
-                        return Request.CreateResponse(HttpStatusCode.OK, new { message = "無此帳號" });
-                    }
-                    else
-                    {
-                        string psw = Utility.GenerateHashWithSalt(login.Password, memberAccount.PasswordSalt);
-                        Attendants memeber = db.Attendants.FirstOrDefault(x => x.Email == memberAccount.Email && x.Password == psw);
-                        if (memeber == null)
-                        {
-                            return Request.CreateResponse(HttpStatusCode.OK, new { message = "密碼錯誤" });
-                        }
-                        else
-                        {
-                            string newToken = new Token().GenerateToken(memeber.Id, login.Email);
-                            return Request.CreateResponse(HttpStatusCode.OK, new
-                            {
-                                message = "登入成功",
-                                memeber.Id,
-                                login.Email,
-                                token = newToken
-                            });
-                        }
-                    }
-                }
+                return NotFound();
             }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, new { message = "帳密格式不符" });
-            }
+
+            db.Members.Remove(members);
+            db.SaveChanges();
+
+            return Ok(members);
         }
 
-
-        
-
-
-
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
         private bool MembersExists(int id)
         {

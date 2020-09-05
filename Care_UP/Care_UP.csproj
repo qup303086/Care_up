@@ -166,6 +166,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AttendantsController.cs" />
     <Compile Include="Controllers\EldersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
@@ -205,7 +206,12 @@
     <Compile Include="Migrations\202009030626406_0903Elder_phone.Designer.cs">
       <DependentUpon>202009030626406_0903Elder_phone.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009040422115_addphoto.cs" />
+    <Compile Include="Migrations\202009040422115_addphoto.Designer.cs">
+      <DependentUpon>202009040422115_addphoto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AttendantDetails.cs" />
     <Compile Include="Models\ElderView.cs" />
     <Compile Include="Models\Token.cs" />
     <Compile Include="Models\AttendantLocation.cs" />
@@ -329,6 +335,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009030626406_0903Elder_phone.resx">
       <DependentUpon>202009030626406_0903Elder_phone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009040422115_addphoto.resx">
+      <DependentUpon>202009040422115_addphoto.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
