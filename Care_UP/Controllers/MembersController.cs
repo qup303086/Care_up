@@ -167,13 +167,7 @@ namespace Care_UP.Controllers
 
 
         
-        [Route("AttendantDetails")]
-        [HttpPost]
-        public HttpResponseMessage AttendantDetails()
-        {
 
-            return Request.CreateResponse(HttpStatusCode.OK, new { result = "新增資料成功" });
-        }
 
 
 
