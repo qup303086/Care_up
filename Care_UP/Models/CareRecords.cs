@@ -24,10 +24,10 @@ namespace Care_UP.Models
 
         [Display(Name = "建立時間")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public string InitDate { get; set; }
+        public DateTime? InitDate { get; set; }
 
         [Display(Name = "修改時間")]
-        public string EditDate { get; set; }
+        public DateTime? EditDate { get; set; }
 
         [Display(Name = "是否填寫")]
         public string Whether { get; set; }

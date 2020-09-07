@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace Care_UP.Models
 {
@@ -28,5 +29,7 @@ namespace Care_UP.Models
         [Required(ErrorMessage = "{0}必填")]
         public string Area { get; set; }
      
+        [JsonIgnore]
+        public  ICollection<Attendants> Attendantses { get; set; }
     }
 }

@@ -3,16 +3,16 @@ namespace Care_UP.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class addphoto : DbMigration
+    public partial class editSalary : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.Attendants", "Photo", c => c.String(maxLength: 50));
+            AlterColumn("dbo.Attendants", "Salary", c => c.Int());
         }
         
         public override void Down()
         {
-            DropColumn("dbo.Attendants", "Photo");
+            AlterColumn("dbo.Attendants", "Salary", c => c.String(maxLength: 50));
         }
     }
 }

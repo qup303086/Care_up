@@ -39,8 +39,7 @@ namespace Care_UP.Models
         public string Photo { get; set; }
 
         [Display(Name = "日薪")]
-        [MaxLength(length: 50)]
-        public string Salary { get; set; }
+        public int? Salary { get; set; }
 
         [Display(Name = "匯款帳號")]
         [MaxLength(length: 50)]
@@ -77,6 +76,6 @@ namespace Care_UP.Models
         [Display(Name = "是否開啟基本資料")]
         public string Status { get; set; }
 
-
+        public ICollection<Locations> Locationses { get; set; }
     }
 }
