@@ -31,8 +31,27 @@ namespace Care_UP.Controllers
         public IHttpActionResult AttendantDetails(int Id)
         {
             Attendants attendant = db.Attendants.FirstOrDefault(x => x.Id == Id);
-            return Ok(new { attendant });
+            List<Cities> cities = db.Cities.ToList();
+            List<Locations> locationses = db.Locations.ToList();
+            if (db.AttendantLocations.FirstOrDefault(x => x.Id == Id)==null)
+            {
+                return Ok(new
+                {
+                    attendant,
+                    cities,
+                    locationses
+                });
+            }
+
+            
+            return Ok(new
+            {
+                attendant,
+                cities,
+                locationses
+            });
         }
+        
 
         [System.Web.Http.Route("EditAttendantDetails")]
         [System.Web.Http.HttpPatch]

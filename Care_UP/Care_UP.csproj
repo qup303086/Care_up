@@ -211,7 +211,6 @@
       <DependentUpon>202009040422115_addphoto.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AttendantDetails.cs" />
     <Compile Include="Models\ElderView.cs" />
     <Compile Include="Models\Token.cs" />
     <Compile Include="Models\AttendantLocation.cs" />
