@@ -221,3 +221,4 @@ C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\zh-Hant\System.Web.WebPages.Razor.res
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.CopyComplete
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.edit部分model.resources
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.editSalary.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csprojAssemblyReference.cache
