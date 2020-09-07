@@ -17,18 +17,18 @@ namespace Care_UP.Controllers
         private Model1 db = new Model1();
 
         //GET: api/Elders
-       [Route("GetElders")]
-       [HttpGet]
-       public HttpResponseMessage GetElders(int id)
-       {
-           List<Elders> elders = db.Elders.Where(x=>x.MemberId==id).ToList();
-           if (elders.Count==0)
-           {
-               return Request.CreateResponse(HttpStatusCode.OK, new { result = "無欲照護的人員資料" });
-           }
+        [Route("GetElders")]
+        [HttpGet]
+        public HttpResponseMessage GetElders(int id)
+        {
+            List<Elders> elders = db.Elders.Where(x => x.MemberId == id).ToList();
+            if (elders.Count == 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "無欲照護的人員資料" });
+            }
 
-           return Request.CreateResponse(HttpStatusCode.OK, elders);
-       }
+            return Request.CreateResponse(HttpStatusCode.OK, elders);
+        }
 
         // GET: api/Elders/5
         //  [ResponseType(typeof(Elders))]
@@ -48,22 +48,34 @@ namespace Care_UP.Controllers
         [ResponseType(typeof(void))]
         [Route("EditElder")]
         [HttpPut]
-        public HttpResponseMessage PutElders(int id, Elders elders)
+        public HttpResponseMessage PutElders(Elders elders)
         {
+            ModelState.Remove("InitDate");
+            string body = "";
+
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = "沒有值" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "未填寫完畢" });
             }
-
-            if (id != elders.Id)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = "ID不符合" });
-            }
-
-            Elders elders_Edit = db.Elders.Where(x => x.Id == elders.Id).FirstOrDefault();
-            elders_Edit.Name = elders.Name;
-
+            db.Entry(elders).State = EntityState.Modified;
+            elders.EditDate=DateTime.Now;
             db.SaveChanges();
+
+            //try //可不加
+            //{
+            //db.SaveChanges();
+            //   
+            //}
+            //catch (Exception e)
+            //{
+            //    return Request.CreateResponse(HttpStatusCode.OK, new { result = e.ToString() });
+            //}
+            //Elders eldersEdit = db.Elders.Where(x => x.Id == elders.Id).FirstOrDefault();
+
+
+            //eldersEdit.Name = elders.Name;
+            //eldersEdit
+
 
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "更新成功" });
         }
@@ -81,11 +93,11 @@ namespace Care_UP.Controllers
 
             }
 
+
+            elders.InitDate = DateTime.Now;
             db.Elders.Add(elders);
             db.SaveChanges();
-
-
-            return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
+            return Request.CreateResponse(HttpStatusCode.OK, new { result = "建立成功" });
         }
 
         // DELETE: api/Elders/5
