@@ -112,7 +112,6 @@ C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.Migrations._0903Elder_ph
 C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.Migrations.addphoto.resources
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.dll
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.pdb
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csprojAssemblyReference.cache
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.GoSQL.resources
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.fix.resources
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.password.resources
@@ -221,3 +220,4 @@ C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\zh-Hant\System.Web.WebPages.Deploymen
 C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\zh-Hant\System.Web.WebPages.Razor.resources.dll
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.CopyComplete
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.edit部分model.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.editSalary.resources

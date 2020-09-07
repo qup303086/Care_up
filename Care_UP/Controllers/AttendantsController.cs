@@ -93,7 +93,7 @@ namespace Care_UP.Controllers
             }
             attendants.Name = formdata["Name"];
             attendants.Account = formdata["Account"];
-            attendants.Salary = formdata["Salary"];
+            attendants.Salary = Convert.ToInt32(formdata["Salary"]) ;
             attendants.Account = formdata["Account"];
             attendants.Service = formdata["Service"];
             attendants.ServiceTime = formdata["ServiceTime"];

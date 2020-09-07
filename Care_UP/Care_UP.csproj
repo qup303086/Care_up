@@ -211,8 +211,11 @@
     <Compile Include="Migrations\202009070206120_edit部分model.Designer.cs">
       <DependentUpon>202009070206120_edit部分model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009070230053_editSalary.cs" />
+    <Compile Include="Migrations\202009070230053_editSalary.Designer.cs">
+      <DependentUpon>202009070230053_editSalary.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AttendantDetails.cs" />
     <Compile Include="Models\ElderView.cs" />
     <Compile Include="Models\Token.cs" />
     <Compile Include="Models\AttendantLocation.cs" />
@@ -339,6 +342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009070206120_edit部分model.resx">
       <DependentUpon>202009070206120_edit部分model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009070230053_editSalary.resx">
+      <DependentUpon>202009070230053_editSalary.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

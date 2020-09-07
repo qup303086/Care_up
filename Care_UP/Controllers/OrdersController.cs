@@ -37,15 +37,19 @@ namespace Care_UP.Controllers
 
         // PUT: api/Orders/5
         [ResponseType(typeof(void))]
-        [Route("EditOder")]
+        [Route("CancelOrder")]
         [HttpPut]
         public HttpResponseMessage PutOrders(Orders orders)
         {
+          
 
             db.Entry(orders).State = EntityState.Modified;
+            orders.Status = "01";
             orders.EditDate = DateTime.Now;
             db.SaveChanges();
+
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單取消成功" });
+
 
         }
 
@@ -53,12 +57,14 @@ namespace Care_UP.Controllers
         [ResponseType(typeof(Orders))]
         [Route("AddOrder")]
         [HttpPost]
-        public HttpResponseMessage PostOrders(Orders orders,Attendants attendants,Elders elders)
+        public HttpResponseMessage PostOrders(Orders orders)
         {
+            ModelState.Remove("Status");
             DateTime startDate = (DateTime)orders.StartDate;
-            DateTime endDate = (DateTime) orders.EndDate;
-            TimeSpan tsDate = startDate - endDate;
-            //orders.Total = tsDate.Days * attendants.Salary;
+            DateTime endDate = (DateTime)orders.EndDate;
+            TimeSpan tsDate = endDate - startDate;
+
+            Attendants attendants = db.Attendants.Find(orders.AttendantId);
 
 
             if (!ModelState.IsValid)
@@ -66,7 +72,10 @@ namespace Care_UP.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單不完整" });
 
             }
+            orders.Total = Convert.ToInt32(tsDate.Days) * attendants.Salary;
+
             orders.InitDate = DateTime.Now;
+            orders.Status = "10";
             db.Orders.Add(orders);
             db.SaveChanges();
 
