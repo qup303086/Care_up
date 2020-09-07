@@ -76,6 +76,6 @@ namespace Care_UP.Models
         [Display(Name = "是否開啟基本資料")]
         public string Status { get; set; }
 
-
+        public ICollection<Locations> Locationses { get; set; }
     }
 }
