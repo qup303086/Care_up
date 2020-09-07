@@ -13,7 +13,7 @@ namespace Care_UP.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202009070536285_照員地區多對多"; }
+            get { return "202009070934017_照員地區多對多"; }
         }
         
         string IMigrationMetadata.Source

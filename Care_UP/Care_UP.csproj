@@ -215,9 +215,9 @@
     <Compile Include="Migrations\202009070230053_editSalary.Designer.cs">
       <DependentUpon>202009070230053_editSalary.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009070536285_照員地區多對多.cs" />
-    <Compile Include="Migrations\202009070536285_照員地區多對多.Designer.cs">
-      <DependentUpon>202009070536285_照員地區多對多.cs</DependentUpon>
+    <Compile Include="Migrations\202009070934017_照員地區多對多.cs" />
+    <Compile Include="Migrations\202009070934017_照員地區多對多.Designer.cs">
+      <DependentUpon>202009070934017_照員地區多對多.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ElderView.cs" />
@@ -349,8 +349,8 @@
     <EmbeddedResource Include="Migrations\202009070230053_editSalary.resx">
       <DependentUpon>202009070230053_editSalary.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009070536285_照員地區多對多.resx">
-      <DependentUpon>202009070536285_照員地區多對多.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009070934017_照員地區多對多.resx">
+      <DependentUpon>202009070934017_照員地區多對多.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
