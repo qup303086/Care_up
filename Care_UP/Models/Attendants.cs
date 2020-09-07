@@ -39,8 +39,7 @@ namespace Care_UP.Models
         public string Photo { get; set; }
 
         [Display(Name = "日薪")]
-        [MaxLength(length: 50)]
-        public string Salary { get; set; }
+        public int? Salary { get; set; }
 
         [Display(Name = "匯款帳號")]
         [MaxLength(length: 50)]

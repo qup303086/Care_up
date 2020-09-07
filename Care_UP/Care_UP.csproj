@@ -170,6 +170,7 @@
     <Compile Include="Controllers\EldersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -206,12 +207,15 @@
     <Compile Include="Migrations\202009030626406_0903Elder_phone.Designer.cs">
       <DependentUpon>202009030626406_0903Elder_phone.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009040422115_addphoto.cs" />
-    <Compile Include="Migrations\202009040422115_addphoto.Designer.cs">
-      <DependentUpon>202009040422115_addphoto.cs</DependentUpon>
+    <Compile Include="Migrations\202009070206120_edit部分model.cs" />
+    <Compile Include="Migrations\202009070206120_edit部分model.Designer.cs">
+      <DependentUpon>202009070206120_edit部分model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009070230053_editSalary.cs" />
+    <Compile Include="Migrations\202009070230053_editSalary.Designer.cs">
+      <DependentUpon>202009070230053_editSalary.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AttendantDetails.cs" />
     <Compile Include="Models\ElderView.cs" />
     <Compile Include="Models\Token.cs" />
     <Compile Include="Models\AttendantLocation.cs" />
@@ -336,8 +340,11 @@
     <EmbeddedResource Include="Migrations\202009030626406_0903Elder_phone.resx">
       <DependentUpon>202009030626406_0903Elder_phone.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009040422115_addphoto.resx">
-      <DependentUpon>202009040422115_addphoto.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009070206120_edit部分model.resx">
+      <DependentUpon>202009070206120_edit部分model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009070230053_editSalary.resx">
+      <DependentUpon>202009070230053_editSalary.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
