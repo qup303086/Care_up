@@ -39,7 +39,7 @@ namespace Care_UP.Models
         public DateTime? StopDate { set; get; }
 
         [Display(Name = "訂單總額")]
-        public int Total { get; set; }
+        public int? Total { get; set; }
 
         
         [Display(Name = "備註")]
@@ -49,7 +49,7 @@ namespace Care_UP.Models
         public string Comment { get; set; }
 
         [Display(Name = "星星")]
-        public int Star { get; set; }
+        public int? Star { get; set; }
 
         [Display(Name = "訂單取消理由")]
         public string Cancel { get; set; }

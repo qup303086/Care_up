@@ -9,6 +9,9 @@ namespace Care_UP.Models
 {
     public class ElderView
     {
+       
+        public int Id { get; set; }
+
         [Display(Name = "家屬ID")]
         public int MemberId { get; set; }
 

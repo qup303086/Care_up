@@ -7,13 +7,13 @@ namespace Care_UP.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class addphoto : IMigrationMetadata
+    public sealed partial class edit部分model : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addphoto));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(edit部分model));
         
         string IMigrationMetadata.Id
         {
-            get { return "202009040422115_addphoto"; }
+            get { return "202009070206120_edit部分model"; }
         }
         
         string IMigrationMetadata.Source
