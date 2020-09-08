@@ -52,8 +52,8 @@ namespace Care_UP.Controllers
         // PUT: api/Orders/5
         [ResponseType(typeof(void))]
         [Route("CancelOrder")]
-        [HttpPut]
-        public HttpResponseMessage PutOrders(Orders orders)
+        [HttpPatch]
+        public HttpResponseMessage PatchOrders(Orders orders)
         {
           
 
