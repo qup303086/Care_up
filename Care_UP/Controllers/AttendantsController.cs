@@ -47,6 +47,7 @@ namespace Care_UP.Controllers
             List<Locations> locationses = db.Locations.ToList();
 
             Attendants attendant = db.Attendants.Include(x => x.Locationses).Where(x => x.Id == Id).FirstOrDefault();
+            
 
             if (attendant.Locationses.Count == 0)
             {
@@ -64,6 +65,7 @@ namespace Care_UP.Controllers
             {
                 return Ok(new
                 {
+
                     attendant,
                     cities,
                     locationses
@@ -144,14 +146,11 @@ namespace Care_UP.Controllers
                 }
             }
             attendant.Name = formdata["Name"];
-            attendant.Account = formdata["Account"];
             attendant.Salary = Convert.ToInt32(formdata["Salary"]);
             attendant.Account = formdata["Account"];
             attendant.Service = formdata["Service"];
             attendant.ServiceTime = formdata["ServiceTime"];
             attendant.Experience = formdata["Experience"];
-            attendant.StartDateTime = Convert.ToDateTime(formdata["StartDateTime"]);
-            attendant.EndDateTime = Convert.ToDateTime(formdata["EndDateTime"]);
             attendant.Status = formdata["Status"];
             attendant.EditDate = DateTime.Now;
 
