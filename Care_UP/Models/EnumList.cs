@@ -13,4 +13,5 @@ namespace Care_UP.Models
         女 = 1,
         其他 = 2,
     }
+
 }

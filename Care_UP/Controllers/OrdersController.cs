@@ -6,6 +6,8 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Care_UP.Models;
@@ -23,34 +25,19 @@ namespace Care_UP.Controllers
         }
 
         // GET: api/Orders/5
-        [ResponseType(typeof(Orders))]
-        public IHttpActionResult GetOrders(int id)
-        {
-            Orders orders = db.Orders.Find(id);
-            if (orders == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(orders);
-        }
+       
 
         // PUT: api/Orders/5
         [ResponseType(typeof(void))]
         [Route("CancelOrder")]
-        [HttpPut]
-        public HttpResponseMessage PutOrders(Orders orders)
+        [HttpPatch]
+        public HttpResponseMessage PatchOrders(int Id)
         {
-          
-
-            db.Entry(orders).State = EntityState.Modified;
+            Orders orders = db.Orders.Find(Id);
             orders.Status = "01";
             orders.EditDate = DateTime.Now;
             db.SaveChanges();
-
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單取消成功" });
-
-
         }
 
         // POST: api/Orders
