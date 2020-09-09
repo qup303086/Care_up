@@ -82,7 +82,7 @@ namespace Care_UP.Controllers
         //[ResponseType(typeof(Elders))]
         [Route("AddElder")]
         [HttpPost]
-        public HttpResponseMessage PostElders([FromBody] Elders elders)
+        public HttpResponseMessage PostElders(Elders elders)
         {
 
             if (!ModelState.IsValid)

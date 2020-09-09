@@ -28,20 +28,34 @@ namespace Care_UP.Controllers
 
         [ResponseType(typeof(Orders))]
         [HttpGet]
-        [Route("getdate")]
+        [Route("GetAttendat")]
         public HttpResponseMessage GetOrders(int id)//attendent.Id
         {
-            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id).ToList();
-            var attendant = orders.Where(x => x.AttendantId == id).GroupBy(x => x.Id);
-            //var Star= attendant.Select(x => new
-            //{
-            //    Id=x.Key,
-            //    star=x.Where(y=>y.Id==x.Key).Select(y=>y.Star).Average()
-            //}); 
-            var Star = attendant.Select(x => new
+            Attendants attendantDetails = db.Attendants.Include(x => x.Locationses).Where(x => x.Id == id).FirstOrDefault();
+            var area = attendantDetails.Locationses.GroupBy(x => x.Area).Select(x => new
             {
-                star = x.Select(y => y.Star).Average()
+                x.Key,
+                city = x.Where(y => y.Area == x.Key).Select(y => y.Cities)
             });
+
+
+            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id).ToList();
+            var attendant = orders.Where(x => x.AttendantId == id).GroupBy(x => x.Id).Select(x => new
+            {
+                Id = x.Key,
+                star = x.Where(y => y.Id == x.Key).Select(y => y.Star).Average()
+            });
+            
+            double? sum = 0;
+            foreach (var item in attendant)
+            {
+                if (item.star != null)
+                {
+                    sum += item.star;
+                }
+            }
+
+            int star = Convert.ToInt32(sum / attendant.Count());
 
 
             DateTime Starttime = (DateTime)db.Orders.Select(x => x.StartDate).Min();
@@ -57,8 +71,10 @@ namespace Care_UP.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, new
             {
+                attendantDetails,
+                area,
                 日期 = date,
-                Star,
+                star,
             });
         }
 
@@ -91,7 +107,6 @@ namespace Care_UP.Controllers
 
             Attendants attendants = db.Attendants.Find(orders.AttendantId);
 
-
             if (!ModelState.IsValid)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單不完整" });
@@ -122,6 +137,14 @@ namespace Care_UP.Controllers
 
             return Ok(orders);
         }
+
+        [HttpGet]
+        public IHttpActionResult MemberGet01(int id)
+        {
+            return Ok();
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {
