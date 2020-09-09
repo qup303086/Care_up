@@ -225,6 +225,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
     <Compile Include="Models\BankInfoModel.cs" />
+    <Compile Include="Models\OrderReject.cs" />
     <Compile Include="Models\ElderView.cs" />
     <Compile Include="Models\SpgatewayInputModel.cs" />
     <Compile Include="Models\SpgatewayOutputDataModel.cs" />

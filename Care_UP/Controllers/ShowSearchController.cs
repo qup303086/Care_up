@@ -22,15 +22,13 @@ namespace Care_UP.Controllers
         {
             int Id = 15;
             List<Cities> cities = db.Cities.ToList();
-            List<Locations> locationses = db.Locations.ToList();
             List<Attendants> attendant = db.Attendants.Include(x => x.Locationses)
                 .Where(x => x.Locationses.Where(y => y.CityId == Id).Count() > 0).ToList();
 
             return Ok(new
             {
                 attendant,
-                cities,
-                locationses
+                cities
             });
         }
 
@@ -38,13 +36,14 @@ namespace Care_UP.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult City(int Id)
         {
-         
+            List<Locations> locationses = db.Locations.Where(x=>x.CityId==Id).ToList();
             List<Attendants> attendant = db.Attendants.Include(x => x.Locationses)
                 .Where(x => x.Locationses.Where(y => y.CityId == Id).Count() > 0).ToList();
 
             return Ok(new
             {
-                attendant
+                attendant,
+                locationses
             });
         }
 
