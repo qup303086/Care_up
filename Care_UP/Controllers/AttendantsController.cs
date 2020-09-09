@@ -77,20 +77,21 @@ namespace Care_UP.Controllers
             Attendants attendant = db.Attendants.Include(x => x.Locationses).Where(x => x.Id == AttendantID).FirstOrDefault();
             if (!formdata["Location"].IsNullOrWhiteSpace())
             {
-                    string[] formlocation = formdata["Location"].Split(',');
-                    ICollection<Locations> NewLocationses = new List<Locations>();
-                    foreach (string item in formlocation)
-                    {
-                        Locations locations = db.Locations.Find(Convert.ToInt32(item));
-                        NewLocationses.Add(locations);
-                    }
-                    attendant.Locationses = NewLocationses;
+                string[] formlocation = formdata["Location"].Split(',');
+                ICollection<Locations> NewLocationses = new List<Locations>();
+                foreach (string item in formlocation)
+                {
+                    Locations locations = db.Locations.Find(Convert.ToInt32(item));
+                    NewLocationses.Add(locations);
+                }
+                attendant.Locationses = NewLocationses;
             }
             else
             {
                 return Ok(new { message = "未選擇地區" });
             }
-            if (formdata.Files["Photo"] != null)
+
+            if (!string.IsNullOrEmpty(formdata.Files["Photo"].FileName))
             {
                 string photo = "";
                 string fileExtension = Path.GetExtension(formdata.Files["Photo"].FileName).ToLower();
@@ -104,6 +105,7 @@ namespace Care_UP.Controllers
                         break;
                     }
                 }
+
                 if (photoOK)
                 {
                     if (attendant.Photo != null)
@@ -116,12 +118,20 @@ namespace Care_UP.Controllers
                     formdata.Files["Photo"].SaveAs(path);
                     attendant.Photo = photo;
                 }
+                else
+                {
+                    return Ok(new { message = "相片檔案格式不符" });
+                }
             }
             else
             {
-                return Ok(new { message = "未上傳照片" });
+                if (attendant.Photo == null)
+                {
+                    return Ok(new { message = "未上傳照片" });
+                }
             }
-            if (formdata.Files["File"] != null)
+
+            if (!string.IsNullOrEmpty(formdata.Files["File"].FileName))
             {
                 string file = "";
                 string fileExtension = Path.GetExtension(formdata.Files["File"].FileName).ToLower();
@@ -135,6 +145,7 @@ namespace Care_UP.Controllers
                         break;
                     }
                 }
+
                 if (fileOK)
                 {
                     if (attendant.File != null)
@@ -147,12 +158,20 @@ namespace Care_UP.Controllers
                     formdata.Files["File"].SaveAs(path);
                     attendant.File = file;
                 }
+                else
+                {
+                    return Ok(new { message = "證照檔案格式不符" });
+                }
             }
             else
             {
-                return Ok(new { message = "未上傳證照" });
+                if (attendant.File == null)
+                {
+                    return Ok(new { message = "未上傳證照" });
+                }
             }
-            if (formdata["Name"]!=null)
+
+            if (formdata["Name"] != null)
             {
                 attendant.Name = formdata["Name"];
             }
@@ -160,7 +179,8 @@ namespace Care_UP.Controllers
             {
                 return Ok(new { message = "未填姓名" });
             }
-            if (formdata["Salary"]!=null)
+
+            if (formdata["Salary"] != null)
             {
                 attendant.Salary = Convert.ToInt32(formdata["Salary"]);
             }
@@ -168,7 +188,8 @@ namespace Care_UP.Controllers
             {
                 return Ok(new { message = "未填薪水" });
             }
-            if (formdata["Account"]!=null)
+
+            if (formdata["Account"] != null)
             {
                 attendant.Account = formdata["Account"];
             }
@@ -176,7 +197,8 @@ namespace Care_UP.Controllers
             {
                 return Ok(new { message = "未填戶頭" });
             }
-            if (formdata["Service"]!=null)
+
+            if (formdata["Service"] != null)
             {
                 attendant.Service = formdata["Service"];
             }
@@ -184,7 +206,8 @@ namespace Care_UP.Controllers
             {
                 return Ok(new { message = "未選擇能提供的服務項目" });
             }
-            if (formdata["ServiceTime"]!=null)
+
+            if (formdata["ServiceTime"] != null)
             {
                 attendant.ServiceTime = formdata["ServiceTime"];
             }
@@ -192,7 +215,8 @@ namespace Care_UP.Controllers
             {
                 return Ok(new { message = "未選擇服務時段" });
             }
-            if (formdata["Experience"]!=null)
+
+            if (formdata["Experience"] != null)
             {
                 attendant.Experience = formdata["Experience"];
             }
@@ -200,6 +224,7 @@ namespace Care_UP.Controllers
             {
                 return Ok(new { message = "未填寫履歷" });
             }
+
             attendant.Status = formdata["Status"];
 
             attendant.EditDate = DateTime.Now;
