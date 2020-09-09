@@ -13,7 +13,9 @@ using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using Care_UP.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace Care_UP.Controllers
 {
@@ -21,23 +23,7 @@ namespace Care_UP.Controllers
     {
         private Model1 db = new Model1();
 
-        [System.Web.Http.Route("City")]
-        [System.Web.Http.HttpGet]
-        public IHttpActionResult City(int Id)
-        {
-            List<Cities> cities = db.Cities.ToList();
-            List<Locations> locationses = db.Locations.ToList();
 
-            List<Attendants> attendant = db.Attendants.Include(x => x.Locationses)
-                .Where(x => x.Locationses.Where(y => y.CityId == Id).Count() > 0).ToList();
-
-            return Ok(new
-            {
-                attendant,
-                cities,
-                locationses
-            });
-        }
 
         [System.Web.Http.Route("AttendantDetails")]
         [System.Web.Http.HttpGet]
@@ -48,6 +34,7 @@ namespace Care_UP.Controllers
 
             Attendants attendant = db.Attendants.Include(x => x.Locationses).Where(x => x.Id == Id).FirstOrDefault();
 
+
             if (attendant.Locationses.Count == 0)
             {
                 return Ok(new
@@ -56,7 +43,6 @@ namespace Care_UP.Controllers
                     city = "未選擇城市",
                     location = "未指定地區",
                     cities,
-                    locationses
                 });
             }
 
@@ -66,10 +52,20 @@ namespace Care_UP.Controllers
                 {
                     attendant,
                     cities,
-                    locationses
                 });
             }
 
+        }
+
+        [System.Web.Http.Route("AttendantDetailsLocation")]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult AttendantDetailsLocation(int Id)
+        {
+            List<Locations> locations = db.Locations.Where(x => x.CityId == Id).ToList();
+            return Ok(new
+            {
+                locations
+            });
         }
 
         [System.Web.Http.Route("EditAttendantDetails")]
@@ -79,17 +75,23 @@ namespace Care_UP.Controllers
             var formdata = HttpContext.Current.Request;
             int AttendantID = Convert.ToInt32(formdata["Id"]);
             Attendants attendant = db.Attendants.Include(x => x.Locationses).Where(x => x.Id == AttendantID).FirstOrDefault();
-
-            string[] formlocation = formdata["Location"].Split(',');
-            ICollection<Locations> NewLocationses = new List<Locations>();
-            foreach (string item in formlocation)
+            if (!formdata["Location"].IsNullOrWhiteSpace())
             {
-                Locations locations = db.Locations.Find(Convert.ToInt32(item));
-                NewLocationses.Add(locations);
+                string[] formlocation = formdata["Location"].Split(',');
+                ICollection<Locations> NewLocationses = new List<Locations>();
+                foreach (string item in formlocation)
+                {
+                    Locations locations = db.Locations.Find(Convert.ToInt32(item));
+                    NewLocationses.Add(locations);
+                }
+                attendant.Locationses = NewLocationses;
             }
-            attendant.Locationses = NewLocationses;
+            else
+            {
+                return Ok(new { message = "未選擇地區" });
+            }
 
-            if (formdata.Files["Photo"].FileName != null)
+            if (formdata.Files["Photo"] != null)
             {
                 string photo = "";
                 string fileExtension = Path.GetExtension(formdata.Files["Photo"].FileName).ToLower();
@@ -103,6 +105,7 @@ namespace Care_UP.Controllers
                         break;
                     }
                 }
+
                 if (photoOK)
                 {
                     if (attendant.Photo != null)
@@ -115,8 +118,20 @@ namespace Care_UP.Controllers
                     formdata.Files["Photo"].SaveAs(path);
                     attendant.Photo = photo;
                 }
+                else
+                {
+                    return Ok(new { message = "相片檔案格式不符" });
+                }
             }
-            if (formdata.Files["File"].FileName != null)
+            else
+            {
+                if (attendant.Photo == null)
+                {
+                    return Ok(new { message = "未上傳照片" });
+                }
+            }
+
+            if (formdata.Files["File"] != null)
             {
                 string file = "";
                 string fileExtension = Path.GetExtension(formdata.Files["File"].FileName).ToLower();
@@ -130,6 +145,7 @@ namespace Care_UP.Controllers
                         break;
                     }
                 }
+
                 if (fileOK)
                 {
                     if (attendant.File != null)
@@ -142,19 +158,76 @@ namespace Care_UP.Controllers
                     formdata.Files["File"].SaveAs(path);
                     attendant.File = file;
                 }
+                else
+                {
+                    return Ok(new { message = "證照檔案格式不符" });
+                }
             }
-            attendant.Name = formdata["Name"];
-            attendant.Account = formdata["Account"];
-            attendant.Salary = Convert.ToInt32(formdata["Salary"]);
-            attendant.Account = formdata["Account"];
-            attendant.Service = formdata["Service"];
-            attendant.ServiceTime = formdata["ServiceTime"];
-            attendant.Experience = formdata["Experience"];
-            attendant.StartDateTime = Convert.ToDateTime(formdata["StartDateTime"]);
-            attendant.EndDateTime = Convert.ToDateTime(formdata["EndDateTime"]);
-            attendant.Status = formdata["Status"];
-            attendant.EditDate = DateTime.Now;
+            else
+            {
+                if (attendant.File == null)
+                {
+                    return Ok(new { message = "未上傳證照" });
+                }
+            }
 
+            if (formdata["Name"] != null)
+            {
+                attendant.Name = formdata["Name"];
+            }
+            else
+            {
+                return Ok(new { message = "未填姓名" });
+            }
+
+            if (formdata["Salary"] != null)
+            {
+                attendant.Salary = Convert.ToInt32(formdata["Salary"]);
+            }
+            else
+            {
+                return Ok(new { message = "未填薪水" });
+            }
+
+            if (formdata["Account"] != null)
+            {
+                attendant.Account = formdata["Account"];
+            }
+            else
+            {
+                return Ok(new { message = "未填戶頭" });
+            }
+
+            if (formdata["Service"] != null)
+            {
+                attendant.Service = formdata["Service"];
+            }
+            else
+            {
+                return Ok(new { message = "未選擇能提供的服務項目" });
+            }
+
+            if (formdata["ServiceTime"] != null)
+            {
+                attendant.ServiceTime = formdata["ServiceTime"];
+            }
+            else
+            {
+                return Ok(new { message = "未選擇服務時段" });
+            }
+
+            if (formdata["Experience"] != null)
+            {
+                attendant.Experience = formdata["Experience"];
+            }
+            else
+            {
+                return Ok(new { message = "未填寫履歷" });
+            }
+
+            attendant.Status = formdata["Status"];
+
+            attendant.EditDate = DateTime.Now;
             db.SaveChanges();
             return Ok(new { message = "更新資料成功" });
         }

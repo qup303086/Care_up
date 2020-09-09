@@ -25,46 +25,19 @@ namespace Care_UP.Controllers
         }
 
         // GET: api/Orders/5
-        [ResponseType(typeof(Orders))]
-        [HttpGet]
-        [Route("getdate")]
-        public HttpResponseMessage GetOrders(int id)//attendent.Id
-        {
-            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id).ToList();
-           
-            DateTime Starttime = (DateTime)db.Orders.Select(x=>x.StartDate).Min();
-            DateTime Endtime= (DateTime)db.Orders.Select(x => x.EndDate).Max();
-
-            TimeSpan alldate = Endtime-Starttime;
-            List<string> date = new List<string>();
-            for (int i = 0;i<=Convert.ToInt32(alldate.Days);i++)
-            {
-                date.Add(Starttime.AddDays(i).ToString("yyyy-MM-dd"));
-            }
-            
-
-            return Request.CreateResponse(HttpStatusCode.OK, new
-            {
-               日期 =  date
-            });
-        }
+       
 
         // PUT: api/Orders/5
         [ResponseType(typeof(void))]
         [Route("CancelOrder")]
         [HttpPatch]
-        public HttpResponseMessage PatchOrders(Orders orders)
+        public HttpResponseMessage PatchOrders(int Id)
         {
-          
-
-            db.Entry(orders).State = EntityState.Modified;
+            Orders orders = db.Orders.Find(Id);
             orders.Status = "01";
             orders.EditDate = DateTime.Now;
             db.SaveChanges();
-
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單取消成功" });
-
-
         }
 
         // POST: api/Orders
