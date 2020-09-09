@@ -91,7 +91,7 @@ namespace Care_UP.Controllers
                 return Ok(new { message = "未選擇地區" });
             }
 
-            if (!string.IsNullOrEmpty(formdata.Files["Photo"].FileName))
+            if (formdata.Files["Photo"] != null)
             {
                 string photo = "";
                 string fileExtension = Path.GetExtension(formdata.Files["Photo"].FileName).ToLower();
@@ -131,7 +131,7 @@ namespace Care_UP.Controllers
                 }
             }
 
-            if (!string.IsNullOrEmpty(formdata.Files["File"].FileName))
+            if (formdata.Files["File"] != null)
             {
                 string file = "";
                 string fileExtension = Path.GetExtension(formdata.Files["File"].FileName).ToLower();
