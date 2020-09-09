@@ -31,21 +31,33 @@ namespace Care_UP.Controllers
         public HttpResponseMessage GetOrders(int id)//attendent.Id
         {
             List<Orders> orders = db.Orders.Where(x => x.AttendantId == id).ToList();
-           
-            DateTime Starttime = (DateTime)db.Orders.Select(x=>x.StartDate).Min();
-            DateTime Endtime= (DateTime)db.Orders.Select(x => x.EndDate).Max();
+            var attendant = orders.Where(x => x.AttendantId == id).GroupBy(x => x.Id);
+            //var Star= attendant.Select(x => new
+            //{
+            //    Id=x.Key,
+            //    star=x.Where(y=>y.Id==x.Key).Select(y=>y.Star).Average()
+            //}); 
+            var Star = attendant.Select(x => new
+            {
+                star = x.Select(y => y.Star).Average()
+            });
 
-            TimeSpan alldate = Endtime-Starttime;
+
+            DateTime Starttime = (DateTime)db.Orders.Select(x => x.StartDate).Min();
+            DateTime Endtime = (DateTime)db.Orders.Select(x => x.EndDate).Max();
+
+            TimeSpan Alldate = Endtime - Starttime;
             List<string> date = new List<string>();
-            for (int i = 0;i<=Convert.ToInt32(alldate.Days);i++)
+            for (int i = 0; i <= Convert.ToInt32(Alldate.Days); i++)
             {
                 date.Add(Starttime.AddDays(i).ToString("yyyy-MM-dd"));
             }
-            
+
 
             return Request.CreateResponse(HttpStatusCode.OK, new
             {
-               日期 =  date
+                日期 = date,
+                Star,
             });
         }
 
@@ -55,7 +67,7 @@ namespace Care_UP.Controllers
         [HttpPatch]
         public HttpResponseMessage PatchOrders(Orders orders)
         {
-          
+
 
             db.Entry(orders).State = EntityState.Modified;
             orders.Status = "01";
