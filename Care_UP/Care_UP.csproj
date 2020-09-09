@@ -58,6 +58,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -170,6 +171,7 @@
     <Compile Include="Controllers\EldersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\MoneyController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -220,7 +222,12 @@
       <DependentUpon>202009070934017_照員地區多對多.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Atom.cs" />
+    <Compile Include="Models\BankInfoModel.cs" />
     <Compile Include="Models\ElderView.cs" />
+    <Compile Include="Models\SpgatewayInputModel.cs" />
+    <Compile Include="Models\SpgatewayOutputDataModel.cs" />
+    <Compile Include="Models\StringExtension.cs" />
     <Compile Include="Models\Token.cs" />
     <Compile Include="Models\Locations.cs" />
     <Compile Include="Models\Attendants.cs" />
@@ -232,7 +239,10 @@
     <Compile Include="Models\Members.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\Orders.cs" />
+    <Compile Include="Models\TradeInfo.cs" />
     <Compile Include="Models\Utility.cs" />
+    <Compile Include="Models\Util\CryptoUtil.cs" />
+    <Compile Include="Models\Util\LambdaUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +251,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -265,6 +276,10 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -279,7 +294,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
-    <Content Include="Content\Site.css" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -300,18 +314,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\bootstrap.min.css.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\bootstrap.css.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css.map" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
