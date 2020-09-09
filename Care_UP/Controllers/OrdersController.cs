@@ -25,7 +25,43 @@ namespace Care_UP.Controllers
         }
 
         // GET: api/Orders/5
-       
+
+        [ResponseType(typeof(Orders))]
+        [HttpGet]
+        [Route("getdate")]
+        public HttpResponseMessage GetOrders(int id)//attendent.Id
+        {
+            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id).ToList();
+            var attendant = orders.Where(x => x.AttendantId == id).GroupBy(x => x.Id);
+            //var Star= attendant.Select(x => new
+            //{
+            //    Id=x.Key,
+            //    star=x.Where(y=>y.Id==x.Key).Select(y=>y.Star).Average()
+            //}); 
+            var Star = attendant.Select(x => new
+            {
+                star = x.Select(y => y.Star).Average()
+            });
+
+
+            DateTime Starttime = (DateTime)db.Orders.Select(x => x.StartDate).Min();
+            DateTime Endtime = (DateTime)db.Orders.Select(x => x.EndDate).Max();
+
+            TimeSpan Alldate = Endtime - Starttime;
+            List<string> date = new List<string>();
+            for (int i = 0; i <= Convert.ToInt32(Alldate.Days); i++)
+            {
+                date.Add(Starttime.AddDays(i).ToString("yyyy-MM-dd"));
+            }
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, new
+            {
+                日期 = date,
+                Star,
+            });
+        }
+
 
         // PUT: api/Orders/5
         [ResponseType(typeof(void))]
@@ -33,7 +69,9 @@ namespace Care_UP.Controllers
         [HttpPatch]
         public HttpResponseMessage PatchOrders(int Id)
         {
+
             Orders orders = db.Orders.Find(Id);
+
             orders.Status = "01";
             orders.EditDate = DateTime.Now;
             db.SaveChanges();
