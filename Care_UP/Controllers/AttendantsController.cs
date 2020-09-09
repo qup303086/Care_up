@@ -72,6 +72,7 @@ namespace Care_UP.Controllers
         [System.Web.Http.HttpPatch]
         public IHttpActionResult NewAttendantDetails()
         {
+            
             var formdata = HttpContext.Current.Request;
             int AttendantID = Convert.ToInt32(formdata["Id"]);
             Attendants attendant = db.Attendants.Include(x => x.Locationses).Where(x => x.Id == AttendantID).FirstOrDefault();
