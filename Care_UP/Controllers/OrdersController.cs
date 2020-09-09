@@ -25,6 +25,7 @@ namespace Care_UP.Controllers
         }
 
         // GET: api/Orders/5
+
         [ResponseType(typeof(Orders))]
         [HttpGet]
         [Route("getdate")]
@@ -61,22 +62,20 @@ namespace Care_UP.Controllers
             });
         }
 
+
         // PUT: api/Orders/5
         [ResponseType(typeof(void))]
         [Route("CancelOrder")]
         [HttpPatch]
-        public HttpResponseMessage PatchOrders(Orders orders)
+        public HttpResponseMessage PatchOrders(int Id)
         {
 
+            Orders orders = db.Orders.Find(Id);
 
-            db.Entry(orders).State = EntityState.Modified;
             orders.Status = "01";
             orders.EditDate = DateTime.Now;
             db.SaveChanges();
-
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單取消成功" });
-
-
         }
 
         // POST: api/Orders
