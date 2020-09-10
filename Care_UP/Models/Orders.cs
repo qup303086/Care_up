@@ -41,16 +41,15 @@ namespace Care_UP.Models
         [Display(Name = "訂單總額")]
         public int? Total { get; set; }
 
-        
-        [Display(Name = "備註")]
-        public string Remarks { get; set; }
-
+    
         [Display(Name = "評價")]
         public string Comment { get; set; }
 
+      
         [Display(Name = "星星")]
         public int? Star { get; set; }
 
+  
         [Display(Name = "訂單取消理由")]
         public string Cancel { get; set; }
 
