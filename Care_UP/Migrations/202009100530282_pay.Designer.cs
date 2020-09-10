@@ -7,13 +7,17 @@ namespace Care_UP.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class editpay1 : IMigrationMetadata
+    public sealed partial class 金流 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(editpay1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(金流));
         
         string IMigrationMetadata.Id
         {
-            get { return "202009100228390_editpay1"; }
+<<<<<<< HEAD:Care_UP/Migrations/202009100622122_金流.Designer.cs
+            get { return "202009100622122_金流"; }
+=======
+            get { return "202009100530282_pay"; }
+>>>>>>> feature:Care_UP/Migrations/202009100530282_pay.Designer.cs
         }
         
         string IMigrationMetadata.Source

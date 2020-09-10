@@ -222,17 +222,11 @@
     <Compile Include="Migrations\202009090737488_照員地區多對多.Designer.cs">
       <DependentUpon>202009090737488_照員地區多對多.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009090833520_pay.cs" />
-    <Compile Include="Migrations\202009090833520_pay.Designer.cs">
-      <DependentUpon>202009090833520_pay.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009090922094_editpay.cs" />
-    <Compile Include="Migrations\202009090922094_editpay.Designer.cs">
-      <DependentUpon>202009090922094_editpay.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009100228390_editpay1.cs" />
-    <Compile Include="Migrations\202009100228390_editpay1.Designer.cs">
-      <DependentUpon>202009100228390_editpay1.cs</DependentUpon>
+
+    <Compile Include="Migrations\202009100622122_金流.cs" />
+    <Compile Include="Migrations\202009100622122_金流.Designer.cs">
+      <DependentUpon>202009100622122_金流.cs</DependentUpon>
+
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
@@ -369,14 +363,10 @@
     <EmbeddedResource Include="Migrations\202009090737488_照員地區多對多.resx">
       <DependentUpon>202009090737488_照員地區多對多.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009090833520_pay.resx">
-      <DependentUpon>202009090833520_pay.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009090922094_editpay.resx">
-      <DependentUpon>202009090922094_editpay.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009100228390_editpay1.resx">
-      <DependentUpon>202009100228390_editpay1.cs</DependentUpon>
+
+    <EmbeddedResource Include="Migrations\202009100622122_金流.resx">
+      <DependentUpon>202009100622122_金流.cs</DependentUpon>
+
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
