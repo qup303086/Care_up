@@ -18,6 +18,7 @@ namespace Care_UP.Controllers
     {
         private Model1 db = new Model1();
 
+
         // PUT: api/Orders/5
         [ResponseType(typeof(void))]
         [Route("CancelOrder")]
@@ -39,6 +40,7 @@ namespace Care_UP.Controllers
         [HttpPost]
         public HttpResponseMessage PostOrders(Orders orders)
         {
+         
             ModelState.Remove("Status");
             DateTime startDate = (DateTime)orders.StartDate;
             DateTime endDate = (DateTime)orders.EndDate;
@@ -48,7 +50,7 @@ namespace Care_UP.Controllers
 
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單不完整" });
+                return Request.CreateResponse(HttpStatusCode.OK, ModelState);
 
             }
             orders.Total = Convert.ToInt32(tsDate.Days) * attendants.Salary;

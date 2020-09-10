@@ -33,6 +33,7 @@ namespace Care_UP.Controllers
         // GET: api/Elders/5
         //  [ResponseType(typeof(Elders))]
         [Route("ElderDetails")]
+        [HttpGet]
         public HttpResponseMessage ElderDetails(int id)
         {
             Elders elders = db.Elders.Where(x => x.Id == id).FirstOrDefault();
@@ -53,7 +54,7 @@ namespace Care_UP.Controllers
             ModelState.Remove("InitDate");
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = "未填寫完畢" });
+                return Request.CreateResponse(HttpStatusCode.OK, new {result ="不完整"});
             }
             db.Entry(elders).State = EntityState.Modified;
             elders.EditDate=DateTime.Now;
@@ -87,7 +88,7 @@ namespace Care_UP.Controllers
 
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = "不完整" });
+                return Request.CreateResponse(HttpStatusCode.OK, ModelState);
 
             }
 

@@ -24,6 +24,8 @@ namespace Care_UP.Models
         public virtual DbSet<Care_UP.Models.Locations> Locations { get; set; }
         public virtual DbSet<Care_UP.Models.Cities> Cities { get; set; }
         public virtual DbSet<Care_UP.Models.Orders> Orders { get; set; }
+
+        public virtual DbSet<Care_UP.Models.Pay> Pays { get; set; }
         //public virtual DbSet<Care_UP.Models.SpgatewayOutputDataModel> SpgatewayOutputDataModel { get; set; }
     }
 }
