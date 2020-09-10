@@ -167,56 +167,6 @@ namespace Care_UP.Controllers
         }
 
 
-        [ResponseType(typeof(Orders))]
-        [HttpGet]
-        [Route("GetAttendat")]
-        public HttpResponseMessage GetOrders(int id)//attendent.Id
-        {
-            Attendants attendantDetails = db.Attendants.Include(x => x.Locationses).Where(x => x.Id == id).FirstOrDefault();
-            var area = attendantDetails.Locationses.GroupBy(x => x.Area).Select(x => new
-            {
-                x.Key,
-                city = x.Where(y => y.Area == x.Key).Select(y => y.Cities)
-            });
-            
-            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id).ToList();
-            var attendant = orders.Where(x => x.AttendantId == id).GroupBy(x => x.Id).Select(x => new
-            {
-                Id = x.Key,
-                star = x.Where(y => y.Id == x.Key).Select(y => y.Star).Average()
-            });
-            double? sum = 0;
-            int star = 0;
-            if (attendant.Count()!=0)
-            {
-                foreach (var item in attendant)
-                {
-                    if (item.star != null)
-                    {
-                        sum += item.star;
-                    }
-                }
-                 star = Convert.ToInt32(sum / attendant.Count());
-            }
-            DateTime Starttime = (DateTime)db.Orders.Select(x => x.StartDate).Min();
-            DateTime Endtime = (DateTime)db.Orders.Select(x => x.EndDate).Max();
-
-            TimeSpan Alldate = Endtime - Starttime;
-            List<string> date = new List<string>();
-            for (int i = 0; i <= Convert.ToInt32(Alldate.Days); i++)
-            {
-                date.Add(Starttime.AddDays(i).ToString("yyyy-MM-dd"));
-            }
-            return Request.CreateResponse(HttpStatusCode.OK, new
-            {
-                attendantDetails,
-                服務項目 =Utility.Service(attendantDetails.Service),
-                服務時段 = Utility.ServiceTime(attendantDetails.ServiceTime),
-                日期 = date,
-                star,
-                area
-            });
-        }
 
 
         private bool MembersExists(int id)

@@ -78,35 +78,28 @@ namespace Care_UP.Models
 
         #endregion
 
-        public static string Service(string serviceCode)
+        public static string[] Service(string serviceCode)
         {
-            string service = "";
+            string aa = "";
             string a = "";
             if (serviceCode.Contains(','))
             {
-                string[] aa = serviceCode.Split(',');
+                string[] service = serviceCode.Split(',');
 
-                foreach (string item in aa)
+                for (int i = 0; i < service.Length; i++)
                 {
-                    a = Switch(item, a);
-                    if (service.Length > 0)
-                    {
-                        service += "," + a;
-                    }
-                    else
-                    {
-                        service += a;
-                    }
+                    service[i] = ServiceSwitch(service[i],a);
                 }
+                return  service;
             }
             else
             {
-                service = Switch(serviceCode, a);
+                string[] service = new[] { ServiceSwitch(serviceCode, a) };
+                return service;
             }
-            return service;
         }
 
-        public static string Switch(string item, string a)
+        private static string ServiceSwitch(string item, string a)
         {
             switch (item)
             {
@@ -150,5 +143,7 @@ namespace Care_UP.Models
             }
             return timeCode;
         }
+
+
     }
 }

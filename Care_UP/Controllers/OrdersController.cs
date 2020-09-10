@@ -84,8 +84,16 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult CheckOrder(int id)
         {
-            var order = db.Orders.Where(x=>x.Id == id);
-            return Ok(order);
+            Orders order = db.Orders.Find(id);
+
+
+            return Ok(new
+            {
+                order,
+                Attendants_Service =Utility.Service(order.Attendants.Service),
+                Attendants_ServiceTime=Utility.ServiceTime(order.Attendants.ServiceTime),
+                
+            });
         }
 
         [Route("OrderReject")]
