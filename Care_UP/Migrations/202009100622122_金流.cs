@@ -3,7 +3,7 @@ namespace Care_UP.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class pay : DbMigration
+    public partial class 金流 : DbMigration
     {
         public override void Up()
         {
@@ -13,14 +13,19 @@ namespace Care_UP.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         OrderId = c.Int(nullable: false),
+                        Status = c.String(),
                         Message = c.String(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Orders", t => t.OrderId, cascadeDelete: true)
+                .Index(t => t.OrderId);
             
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.Pays", "OrderId", "dbo.Orders");
+            DropIndex("dbo.Pays", new[] { "OrderId" });
             DropTable("dbo.Pays");
         }
     }

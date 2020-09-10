@@ -61,8 +61,8 @@ namespace Care_UP.Controllers
             pay_.OrderId = payView.OrderId;
             db.Pays.Add(pay_);
             db.SaveChanges();
-
-           // Orders orders = db.Orders.Where(x => x.Id == payView.OrderId).FirstOrDefault();
+            
+            Orders orders = db.Orders.Where(x => x.Id == payView.OrderId).FirstOrDefault();
             string version = "1.5";
             string payType = "CREDIT";
             // 目前時間轉換 +08:00, 防止傳入時間或Server時間時區不同造成錯誤
