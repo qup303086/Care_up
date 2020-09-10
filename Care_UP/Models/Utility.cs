@@ -80,7 +80,6 @@ namespace Care_UP.Models
 
         public static string[] Service(string serviceCode)
         {
-            string aa = "";
             string a = "";
             if (serviceCode.Contains(','))
             {
@@ -88,9 +87,9 @@ namespace Care_UP.Models
 
                 for (int i = 0; i < service.Length; i++)
                 {
-                    service[i] = ServiceSwitch(service[i],a);
+                    service[i] = ServiceSwitch(service[i], a);
                 }
-                return  service;
+                return service;
             }
             else
             {
@@ -116,7 +115,7 @@ namespace Care_UP.Models
                     a = "備餐";
                     break;
                 case "05":
-                    a = "備餐";
+                    a = "身心靈陪伴";
                     break;
                 case "06":
                     a = "環境整理";
@@ -144,6 +143,98 @@ namespace Care_UP.Models
             return timeCode;
         }
 
+        public static string[] EldersBody(string serviceCode)
+        {
+            string a = "";
+            if (serviceCode.Contains(','))
+            {
+                string[] service = serviceCode.Split(',');
 
+                for (int i = 0; i < service.Length; i++)
+                {
+                    service[i] = BodySwitch(service[i], a);
+                }
+                return service;
+            }
+            else
+            {
+                string[] service = new[] { BodySwitch(serviceCode, a) };
+                return service;
+            }
+
+        }
+
+        private static string BodySwitch(string item, string a)
+        {
+            switch (item)
+            {
+                case "01":
+                    a = "糖尿病";
+                    break;
+                case "02":
+                    a = "骨折";
+                    break;
+                case "03":
+                    a = "高血壓";
+                    break;
+                case "04":
+                    a = "身心障礙";
+                    break;
+                case "05":
+                    a = "行動不便";
+                    break;
+                case "06":
+                    a = "精神疾病";
+                    break;
+            }
+            return a;
+        }
+
+        public static string[] EldersEquipment(string serviceCode)
+        {
+            string a = "";
+            if (serviceCode.Contains(','))
+            {
+                string[] service = serviceCode.Split(',');
+
+                for (int i = 0; i < service.Length; i++)
+                {
+                    service[i] = EquipmentSwitch(service[i], a);
+                }
+                return service;
+            }
+            else
+            {
+                string[] service = new[] { EquipmentSwitch(serviceCode, a) };
+                return service;
+            }
+
+        }
+
+        private static string EquipmentSwitch(string item, string a)
+        {
+            switch (item)
+            {
+                case "01":
+                    a = "成人紙尿布";
+                    break;
+                case "02":
+                    a = "輪椅";
+                    break;
+                case "03":
+                    a = "拐杖";
+                    break;
+                case "04":
+                    a = "夜壺";
+                    break;
+                case "05":
+                    a = "輔助器";
+                    break;
+                case "06":
+                    a = "護具";
+                    break;
+            }
+            return a;
+        }
     }
 }

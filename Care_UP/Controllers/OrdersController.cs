@@ -92,9 +92,11 @@ namespace Care_UP.Controllers
             return Ok(new
             {
                 order,
-                Attendants_Service =Utility.Service(order.Attendants.Service),
-                Attendants_ServiceTime=Utility.ServiceTime(order.Attendants.ServiceTime),
-                
+                AttendantsService =Utility.Service(order.Attendants.Service),
+                AttendantsServiceTime=Utility.ServiceTime(order.Attendants.ServiceTime),
+                EldersBody=Utility.EldersBody(order.Elders.Body),
+                EldersEquipment =Utility.EldersEquipment(order.Elders.Equipment),
+                EldersServiceItems = Utility.Service(order.Attendants.Service)
             });
         }
 
