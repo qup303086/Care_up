@@ -102,7 +102,7 @@ namespace Care_UP.Controllers
                             return Request.CreateResponse(HttpStatusCode.OK, new
                             {
                                 message = "登入成功",
-                                login.Id,
+                                memeber.Id,
                                 login.Email,
                                 token = newToken
                             });
@@ -165,9 +165,6 @@ namespace Care_UP.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, new { message = "帳密格式不符" });
             }
         }
-
-
-        
 
 
 
