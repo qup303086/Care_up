@@ -61,11 +61,7 @@ namespace Care_UP.Controllers
             pay_.OrderId = payView.OrderId;
             db.Pays.Add(pay_);
             db.SaveChanges();
-<<<<<<< HEAD
-            
-=======
 
->>>>>>> feature
             Orders orders = db.Orders.Where(x => x.Id == payView.OrderId).FirstOrDefault();
             string version = "1.5";
             string payType = "CREDIT";

@@ -222,15 +222,11 @@
     <Compile Include="Migrations\202009090737488_照員地區多對多.Designer.cs">
       <DependentUpon>202009090737488_照員地區多對多.cs</DependentUpon>
     </Compile>
-<<<<<<< HEAD
+
     <Compile Include="Migrations\202009100622122_金流.cs" />
     <Compile Include="Migrations\202009100622122_金流.Designer.cs">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
-=======
-    <Compile Include="Migrations\202009100530282_pay.cs" />
-    <Compile Include="Migrations\202009100530282_pay.Designer.cs">
-      <DependentUpon>202009100530282_pay.cs</DependentUpon>
->>>>>>> feature
+
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
@@ -367,13 +363,10 @@
     <EmbeddedResource Include="Migrations\202009090737488_照員地區多對多.resx">
       <DependentUpon>202009090737488_照員地區多對多.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
+
     <EmbeddedResource Include="Migrations\202009100622122_金流.resx">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
-=======
-    <EmbeddedResource Include="Migrations\202009100530282_pay.resx">
-      <DependentUpon>202009100530282_pay.cs</DependentUpon>
->>>>>>> feature
+
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
