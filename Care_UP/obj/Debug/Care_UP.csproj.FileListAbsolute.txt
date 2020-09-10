@@ -229,3 +229,6 @@ C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.pay.resource
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.editpay.resources
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.editpay1.resources
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.test.resources
+C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.Migrations.pay.resources
+C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.Migrations.editpay.resources
+C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.Migrations.editpay1.resources

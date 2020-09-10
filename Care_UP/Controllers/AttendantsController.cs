@@ -79,12 +79,14 @@ namespace Care_UP.Controllers
             if (!formdata["Location"].IsNullOrWhiteSpace())
             {
                 string[] formlocation = formdata["Location"].Split(',');
-                ICollection<Locations> NewLocationses = new List<Locations>();
-                foreach (string item in formlocation)
+                int[] formlocationInt = new int[formlocation.Length];
+                for (int i = 0; i < formlocation.Length; i++)
                 {
-                    Locations locations = db.Locations.Find(Convert.ToInt32(item));
-                    NewLocationses.Add(locations);
+                    formlocationInt[i] = Convert.ToInt32(formlocation[i]);
                 }
+
+                var NewLocationses = db.Locations.Where(x => formlocationInt.Contains(x.Id)).ToList();//搜尋 同SQL IN
+            
                 attendant.Locationses = NewLocationses;
             }
             else

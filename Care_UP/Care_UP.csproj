@@ -234,13 +234,10 @@
     <Compile Include="Migrations\202009100228390_editpay1.Designer.cs">
       <DependentUpon>202009100228390_editpay1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009100510250_test.cs" />
-    <Compile Include="Migrations\202009100510250_test.Designer.cs">
-      <DependentUpon>202009100510250_test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
     <Compile Include="Models\BankInfoModel.cs" />
+    <Compile Include="Models\OrderReject.cs" />
     <Compile Include="Models\Pay.cs" />
     <Compile Include="Models\PayView.cs" />
     <Compile Include="Models\SpgatewayInputModel.cs" />
@@ -380,9 +377,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009100228390_editpay1.resx">
       <DependentUpon>202009100228390_editpay1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009100510250_test.resx">
-      <DependentUpon>202009100510250_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

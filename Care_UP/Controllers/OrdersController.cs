@@ -18,11 +18,6 @@ namespace Care_UP.Controllers
     {
         private Model1 db = new Model1();
 
-        // GET: api/Orders
-        public IQueryable<Orders> GetOrders()
-        {
-            return db.Orders;
-        }
 
         // PUT: api/Orders/5
         [ResponseType(typeof(void))]
@@ -53,7 +48,6 @@ namespace Care_UP.Controllers
 
             Attendants attendants = db.Attendants.Find(orders.AttendantId);
 
-
             if (!ModelState.IsValid)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, ModelState);
@@ -69,21 +63,62 @@ namespace Care_UP.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單成立" });
         }
 
-        // DELETE: api/Orders/5
-        [ResponseType(typeof(Orders))]
-        public IHttpActionResult DeleteOrders(int id)
+        
+        [Route("MemberGet10")]
+        [HttpGet]
+        public IHttpActionResult MemberGet10(int id)
         {
-            Orders orders = db.Orders.Find(id);
-            if (orders == null)
-            {
-                return NotFound();
-            }
+            var order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == "10").ToList();
 
-            db.Orders.Remove(orders);
-            db.SaveChanges();
-
-            return Ok(orders);
+            return Ok(order);
         }
+
+
+        [Route("AttendantsGet10")]
+        [HttpGet]
+        public IHttpActionResult AttendantsGet10(int id)
+        {
+            var order = db.Orders.Where(x => x.AttendantId == id && x.Status == "10").ToList();
+            return Ok(order);
+        }
+
+        [Route("CheckOrder")]
+        [HttpGet]
+        public IHttpActionResult CheckOrder(int id)
+        {
+            Orders order = db.Orders.Find(id);
+
+
+            return Ok(new
+            {
+                order,
+                Attendants_Service =Utility.Service(order.Attendants.Service),
+                Attendants_ServiceTime=Utility.ServiceTime(order.Attendants.ServiceTime),
+                
+            });
+        }
+
+        [Route("OrderReject")]
+        [HttpPatch]
+        public IHttpActionResult OrderReject(OrderReject orderReject)
+        {
+            if (!string.IsNullOrWhiteSpace(orderReject.Cancel))
+            {
+                Orders order = db.Orders.Find(orderReject.Id);
+                order.Cancel = orderReject.Cancel;
+                order.Status = "01";
+                order.EditDate = DateTime.Now;
+                db.SaveChanges();
+                return Ok(new{ message = "已拒絕此訂單"});
+            }
+            else
+            {
+                return Ok(new{ message = "未填寫拒絕理由"});
+            }
+           
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {
