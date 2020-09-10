@@ -13,7 +13,7 @@ namespace Care_UP.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202009090833520_pay"; }
+            get { return "202009100530282_pay"; }
         }
         
         string IMigrationMetadata.Source
