@@ -19,6 +19,7 @@ namespace Care_UP.Models
         [Display(Name = "訂單詳細日期")]
         public virtual DetailedDates DetailedDates { set; get; }
 
+        [Required(ErrorMessage = "{0}必填")]
         [Display(Name = "病患心情")]
         public string Mood{ get; set; }
 
