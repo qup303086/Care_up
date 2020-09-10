@@ -66,10 +66,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult MemberGet10(int id)
         {
-            var order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == "10").Select(x => new
-            {
-                x.Elders
-            }); ;
+            var order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == "10").ToList();
 
             return Ok(order);
         }
@@ -79,10 +76,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet10(int id)
         {
-            var order= db.Orders.Where(x=>x.AttendantId== id && x.Status == "10").Select(x=>new
-            {
-                x.Elders
-            });
+            var order = db.Orders.Where(x => x.AttendantId == id && x.Status == "10").ToList();
             return Ok(order);
         }
 

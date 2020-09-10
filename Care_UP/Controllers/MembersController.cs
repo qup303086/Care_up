@@ -185,18 +185,19 @@ namespace Care_UP.Controllers
                 Id = x.Key,
                 star = x.Where(y => y.Id == x.Key).Select(y => y.Star).Average()
             });
-
             double? sum = 0;
-            foreach (var item in attendant)
+            int star = 0;
+            if (attendant.Count()!=0)
             {
-                if (item.star != null)
+                foreach (var item in attendant)
                 {
-                    sum += item.star;
+                    if (item.star != null)
+                    {
+                        sum += item.star;
+                    }
                 }
+                 star = Convert.ToInt32(sum / attendant.Count());
             }
-            int star = Convert.ToInt32(sum / attendant.Count());
-
-
             DateTime Starttime = (DateTime)db.Orders.Select(x => x.StartDate).Min();
             DateTime Endtime = (DateTime)db.Orders.Select(x => x.EndDate).Max();
 
@@ -206,19 +207,16 @@ namespace Care_UP.Controllers
             {
                 date.Add(Starttime.AddDays(i).ToString("yyyy-MM-dd"));
             }
-
-
             return Request.CreateResponse(HttpStatusCode.OK, new
             {
                 attendantDetails,
-                area,
+                服務項目 =Utility.Service(attendantDetails.Service),
+                服務時段 = Utility.ServiceTime(attendantDetails.ServiceTime),
                 日期 = date,
                 star,
+                area
             });
         }
-
-
-
 
 
         private bool MembersExists(int id)

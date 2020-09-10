@@ -77,5 +77,78 @@ namespace Care_UP.Models
         //}
 
         #endregion
+
+        public static string Service(string serviceCode)
+        {
+            string service = "";
+            string a = "";
+            if (serviceCode.Contains(','))
+            {
+                string[] aa = serviceCode.Split(',');
+
+                foreach (string item in aa)
+                {
+                    a = Switch(item, a);
+                    if (service.Length > 0)
+                    {
+                        service += "," + a;
+                    }
+                    else
+                    {
+                        service += a;
+                    }
+                }
+            }
+            else
+            {
+                service = Switch(serviceCode, a);
+            }
+            return service;
+        }
+
+        public static string Switch(string item, string a)
+        {
+            switch (item)
+            {
+                case "01":
+                    a = "協助如廁";
+                    break;
+                case "02":
+                    a = "協助進食";
+                    break;
+                case "03":
+                    a = "代購物品";
+                    break;
+                case "04":
+                    a = "備餐";
+                    break;
+                case "05":
+                    a = "備餐";
+                    break;
+                case "06":
+                    a = "環境整理";
+                    break;
+            }
+            return a;
+        }
+
+        public static string ServiceTime(string timeCode)
+        {
+            switch (timeCode)
+            {
+                case "01":
+                    timeCode = "白天(09:00-18:00";
+                    break;
+
+                case "02":
+                    timeCode = "傍晚(15:00-23:00)";
+                    break;
+
+                case "03":
+                    timeCode = "凌晨(23:00-07:00)";
+                    break;
+            }
+            return timeCode;
+        }
     }
 }

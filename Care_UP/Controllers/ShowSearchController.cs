@@ -83,6 +83,11 @@ namespace Care_UP.Controllers
                 日期 = date
             });
         }
+
+
+        
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
