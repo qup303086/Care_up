@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using Care_UP.Migrations;
 using Care_UP.Models;
 using Care_UP.Models.Util;
 using Newtonsoft.Json;
@@ -19,6 +21,7 @@ namespace Care_UP.Controllers
     public class MoneyController : ApiController
     {
         private Model1 db = new Model1();
+
         /// <summary>
         /// 金流基本資料(可再移到Web.config或資料庫設定)
         /// </summary>
@@ -27,12 +30,14 @@ namespace Care_UP.Controllers
             MerchantID = "MS113893343",
             HashKey = "6gfdegvpE7wwJ2zKz9GpxxVCijHgFPvz",
             HashIV = "Cxyx7qJ1IdkQNyFP",
-            ReturnURL = "http://yourWebsitUrl/Bank/SpgatewayReturn", //給前台
+            ReturnURL = "http://careup.rocket-coding.com", //給前台
             NotifyURL = "https://yourWebsitUrl/home/SpgatewayNotify", //隱藏執行欄位 給資料庫
             CustomerURL = "http://yourWebsitUrl/Bank/SpgatewayNotify",
             AuthUrl = "https://ccore.spgateway.com/MPG/mpg_gateway",
             CloseUrl = "https://core.newebpay.com/API/CreditCard/Close"
         };
+
+        
         /// <summary>
         /// [智付通支付]金流介接
         /// </summary>
@@ -40,10 +45,24 @@ namespace Care_UP.Controllers
         /// <param name="amount">訂單金額</param>
         /// <param name="payType">請款類型</param>
         /// <returns></returns>
-        [HttpGet]
-        [System.Web.Http.Route("get")]
-        public HttpResponseMessage SpgatewayPayBill(int amount, string ProductName)
+        [HttpPost]
+        [System.Web.Http.Route("SpgatewayPayBill")]
+        public HttpResponseMessage SpgatewayPayBill(PayView payView)
         {
+            Pay pay_=new Pay();
+            ModelState.Remove("Status");
+            ModelState.Remove("Message");
+          
+            if (!ModelState.IsValid)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, ModelState);
+
+            }
+            pay_.OrderId = payView.OrderId;
+            db.Pays.Add(pay_);
+            db.SaveChanges();
+
+           // Orders orders = db.Orders.Where(x => x.Id == payView.OrderId).FirstOrDefault();
             string version = "1.5";
             string payType = "CREDIT";
             // 目前時間轉換 +08:00, 防止傳入時間或Server時間時區不同造成錯誤
@@ -60,12 +79,12 @@ namespace Care_UP.Controllers
                 // * 串接程式版本
                 Version = version,
                 // * 商店訂單編號
-                MerchantOrderNo = $"T{DateTime.Now.ToString("yyyyMMddHHmm")}",
+                MerchantOrderNo = pay_.Id.ToString(),
                 // MerchantOrderNo = ordernumber,
                 // * 訂單金額
-                Amt = amount,
+                Amt = pay_.Orders.Total.Value,//(int)orders.Total,
                 // * 商品資訊
-                ItemDesc = ProductName,
+                ItemDesc = pay_.Id.ToString(),
                 // 繳費有效期限(適用於非即時交易)
                 ExpireDate = null,
                 // 支付完成 返回商店網址
@@ -89,9 +108,9 @@ namespace Care_UP.Controllers
                 // ATM 轉帳啟用(1=啟用、0或者未有此參數，即代表不開啟)
                 //VACC = null,
                 // 超商代碼繳費啟用(1=啟用、0或者未有此參數，即代表不開啟)(當該筆訂單金額小於 30 元或超過 2 萬元時，即使此參數設定為啟用，MPG 付款頁面仍不會顯示此支付方式選項。)
-                CVS = 1,
+                //CVS = 1,
                 // 超商條碼繳費啟用(1=啟用、0或者未有此參數，即代表不開啟)(當該筆訂單金額小於 20 元或超過 4 萬元時，即使此參數設定為啟用，MPG 付款頁面仍不會顯示此支付方式選項。)
-                BARCODE = 1
+                //BARCODE = 1
             };
 
             if (string.Equals(payType, "CREDIT"))
@@ -137,64 +156,79 @@ namespace Care_UP.Controllers
             // 將List<KeyValuePair<string, string>> 轉換為 key1=Value1&key2=Value2&key3=Value3...
             var tradeQueryPara = string.Join("&", tradeData.Select(x => $"{x.Key}={x.Value}"));
             // AES 加密
-            inputModel.TradeInfo = CryptoUtil.EncryptAESHex(tradeQueryPara, _bankInfoModel.HashKey, _bankInfoModel.HashIV);
+            inputModel.TradeInfo =
+                CryptoUtil.EncryptAESHex(tradeQueryPara, _bankInfoModel.HashKey, _bankInfoModel.HashIV);
             // SHA256 加密
-            inputModel.TradeSha = CryptoUtil.EncryptSHA256($"HashKey={_bankInfoModel.HashKey}&{inputModel.TradeInfo}&HashIV={_bankInfoModel.HashIV}");
+            inputModel.TradeSha =
+                CryptoUtil.EncryptSHA256(
+                    $"HashKey={_bankInfoModel.HashKey}&{inputModel.TradeInfo}&HashIV={_bankInfoModel.HashIV}");
 
             // 將model 轉換為List<KeyValuePair<string, string>>, null值不轉
-            List<KeyValuePair<string, string>> postData = LambdaUtil.ModelToKeyValuePairList<SpgatewayInputModel>(inputModel);
+            List<KeyValuePair<string, string>> postData =
+                LambdaUtil.ModelToKeyValuePairList<SpgatewayInputModel>(inputModel);
 
 
-            StringBuilder s = new StringBuilder();
-            s.Append("<html>");
-            s.AppendFormat("<body onload='document.forms[\"form\"].submit()'>");
-            s.AppendFormat("<form name='form' action='{0}' method='post'>", _bankInfoModel.AuthUrl);
-            foreach (KeyValuePair<string, string> item in postData)
-            {
-                s.AppendFormat("<input type='hidden' name='{0}' value='{1}' />", item.Key, item.Value);
-            }
+            //StringBuilder s = new StringBuilder();
+            //s.Append("<html>");
+            //s.AppendFormat("<body onload='document.forms[\"form\"].submit()'>");
+            //s.AppendFormat("<form name='form' action='{0}' method='post'>", _bankInfoModel.AuthUrl);
+            //foreach (KeyValuePair<string, string> item in postData)
+            //{
+            //    s.AppendFormat("<input type='hidden' name='{0}' value='{1}' />", item.Key, item.Value);
+            //}
 
-            s.Append("</form></body></html>");
+            //s.Append("</form></body></html>");
 
 
 
 
             return Request.CreateResponse(HttpStatusCode.OK, postData);
-        
+
         }
 
 
-        ///// <summary>
-        ///// [智付通]金流介接(結果: 支付通知網址)
-        ///// </summary>
-        ///// 
-        //[HttpPost]
-        //[System.Web.Http.Route("SpgatewayNotify")]
-        //public HttpResponseMessage SpgatewayNotify(SpgatewayOutputDataModel spgateway)
-        //{  // Status 回傳狀態 
-        //    // MerchantID 回傳訊息
-        //    // TradeInfo 交易資料AES 加密
-        //    // TradeSha 交易資料SHA256 加密
-        //    // Version 串接程式版本
+        /// <summary>
+        /// [智付通]金流介接(結果: 支付通知網址)
+        /// </summary>
+        /// 
+        [HttpPost]
+        [System.Web.Http.Route("SpgatewayNotify")]
+        public HttpResponseMessage SpgatewayNotify(int Id)
+        {
+            Orders orders = db.Orders.Find(Id);
+            // Status 回傳狀態 
+            // MerchantID 回傳訊息
+            // TradeInfo 交易資料AES 加密
+            // TradeSha 交易資料SHA256 加密
+            // Version 串接程式版本
+            var collection = HttpContext.Current.Request;
+            if (collection["MerchantID"] != null && string.Equals(collection["MerchantID"], _bankInfoModel.MerchantID) &&
+                collection["TradeInfo"] != null && string.Equals(collection["TradeSha"], CryptoUtil.EncryptSHA256($"HashKey={_bankInfoModel.HashKey}&{collection["TradeInfo"]}&HashIV={_bankInfoModel.HashIV}")))
+            {
+                var decryptTradeInfo = CryptoUtil.DecryptAESHex(collection["TradeInfo"], _bankInfoModel.HashKey, _bankInfoModel.HashIV);
 
-        //    if (spgateway.Status != null && spgateway.Message != null && spgateway.MerchantID != null && spgateway.Amt != 0)
-        //    {
-        //        var decryptTradeInfo = CryptoUtil.DecryptAESHex(spgateway.TradeNo, _bankInfoModel.HashKey, _bankInfoModel.HashIV);
+                // 取得回傳參數(ex:key1=value1&key2=value2),儲存為NameValueCollection
+                NameValueCollection decryptTradeCollection = HttpUtility.ParseQueryString(decryptTradeInfo);
+                SpgatewayOutputDataModel convertModel =
+                    LambdaUtil.DictionaryToObject<SpgatewayOutputDataModel>(
+                        decryptTradeCollection.AllKeys.ToDictionary(k => k, k => decryptTradeCollection[k]));
 
-        //        // 取得回傳參數(ex:key1=value1&key2=value2),儲存為NameValueCollection
-        //        NameValueCollection decryptTradeCollection = HttpUtility.ParseQueryString(decryptTradeInfo);
-        //        SpgatewayOutputDataModel convertModel = LambdaUtil.DictionaryToObject<SpgatewayOutputDataModel>(decryptTradeCollection.AllKeys.ToDictionary(k => k, k => decryptTradeCollection[k]));
+                Pay pay = new Pay();
+                pay.Message = convertModel.Message;
+                pay.Status = convertModel.Status;
+                pay.OrderId = convertModel.Id;
+                // TODO 將回傳訊息寫入資料庫
+                
+                db.SaveChanges();
 
+            }
 
-        //        // TODO 將回傳訊息寫入資料庫
-
-        //        return Request.CreateResponse(HttpStatusCode.OK, convertModel);
-        //    }
-
-        //}
-
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
 
 
 
     }
+
+   
 }

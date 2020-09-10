@@ -218,14 +218,27 @@
     <Compile Include="Migrations\202009070230053_editSalary.Designer.cs">
       <DependentUpon>202009070230053_editSalary.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009070934017_照員地區多對多.cs" />
-    <Compile Include="Migrations\202009070934017_照員地區多對多.Designer.cs">
-      <DependentUpon>202009070934017_照員地區多對多.cs</DependentUpon>
+    <Compile Include="Migrations\202009090737488_照員地區多對多.cs" />
+    <Compile Include="Migrations\202009090737488_照員地區多對多.Designer.cs">
+      <DependentUpon>202009090737488_照員地區多對多.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009090833520_pay.cs" />
+    <Compile Include="Migrations\202009090833520_pay.Designer.cs">
+      <DependentUpon>202009090833520_pay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009090922094_editpay.cs" />
+    <Compile Include="Migrations\202009090922094_editpay.Designer.cs">
+      <DependentUpon>202009090922094_editpay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009100228390_editpay1.cs" />
+    <Compile Include="Migrations\202009100228390_editpay1.Designer.cs">
+      <DependentUpon>202009100228390_editpay1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
     <Compile Include="Models\BankInfoModel.cs" />
-    <Compile Include="Models\ElderView.cs" />
+    <Compile Include="Models\Pay.cs" />
+    <Compile Include="Models\PayView.cs" />
     <Compile Include="Models\SpgatewayInputModel.cs" />
     <Compile Include="Models\SpgatewayOutputDataModel.cs" />
     <Compile Include="Models\StringExtension.cs" />
@@ -352,8 +365,17 @@
     <EmbeddedResource Include="Migrations\202009070230053_editSalary.resx">
       <DependentUpon>202009070230053_editSalary.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009070934017_照員地區多對多.resx">
-      <DependentUpon>202009070934017_照員地區多對多.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009090737488_照員地區多對多.resx">
+      <DependentUpon>202009090737488_照員地區多對多.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009090833520_pay.resx">
+      <DependentUpon>202009090833520_pay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009090922094_editpay.resx">
+      <DependentUpon>202009090922094_editpay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009100228390_editpay1.resx">
+      <DependentUpon>202009100228390_editpay1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
