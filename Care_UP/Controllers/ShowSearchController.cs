@@ -25,9 +25,16 @@ namespace Care_UP.Controllers
             List<Attendants> attendant = db.Attendants.Include(x => x.Locationses)
                 .Where(x => x.Locationses.Where(y => y.CityId == Id).Count() > 0).ToList();
 
+            var attendants = attendant.Select(x => new
+            {
+                x,
+                服務項目 = Utility.Service(x.Service),
+                服務時段 = Utility.ServiceTime(x.ServiceTime)
+            });
+
             return Ok(new
             {
-                attendant,
+                attendants,
                 cities
             });
         }
@@ -40,9 +47,16 @@ namespace Care_UP.Controllers
             List<Attendants> attendant = db.Attendants.Include(x => x.Locationses)
                 .Where(x => x.Locationses.Where(y => y.CityId == Id).Count() > 0).ToList();
 
+            var attendants = attendant.Select(x => new
+            {
+                x,
+                服務項目 = Utility.Service(x.Service),
+                服務時段 = Utility.ServiceTime(x.ServiceTime)
+            });
+
             return Ok(new
             {
-                attendant,
+                attendants,
                 locationses
             });
         }
@@ -53,11 +67,29 @@ namespace Care_UP.Controllers
         {
             List<Attendants> attendant = db.Attendants.Include(x => x.Locationses)
                 .Where(x => x.Locationses.Where(y => y.Id == Id).Count() > 0).ToList();
-
-            return Ok(new
+            if (attendant.Count==0)
             {
-                attendant
-            });
+                return Ok(new
+                {
+                    message = "此地區尚無照護員"
+                });
+            }
+            else
+            {
+                var attendants = attendant.Select(x => new
+                {
+                    x,
+                    服務項目 = Utility.Service(x.Service),
+                    服務時段 = Utility.ServiceTime(x.ServiceTime)
+
+                });
+                
+                return Ok(new
+                {
+                    attendants
+                });
+            }
+         
         }
         
         

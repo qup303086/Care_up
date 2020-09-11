@@ -21,13 +21,26 @@ namespace Care_UP.Controllers
         [HttpGet]
         public HttpResponseMessage GetElders(int id)
         {
-            List<Elders> elders = db.Elders.Where(x => x.MemberId == id).ToList();
-            if (elders.Count == 0)
+            List<Elders> elder = db.Elders.Where(x => x.MemberId == id).ToList();
+            if (elder.Count == 0)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = "無欲照護的人員資料" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { message = "無須照護人員列表" });
             }
+            else
+            {
+                var elders = elder.Select(x => new
+                {
+                    x,
+                    EldersBody = Utility.ArrayToString(Utility.EldersBody(x.Body)),
+                    EldersEquipment = Utility.ArrayToString(Utility.EldersEquipment(x.Equipment)),
+                    EldersServiceItems = Utility.ArrayToString(Utility.Service(x.ServiceItems))
+                });
 
-            return Request.CreateResponse(HttpStatusCode.OK, elders);
+                return Request.CreateResponse(HttpStatusCode.OK, new
+                {
+                    elders
+                });
+            }
         }
 
         // GET: api/Elders/5
@@ -39,10 +52,16 @@ namespace Care_UP.Controllers
             Elders elders = db.Elders.Where(x => x.Id == id).FirstOrDefault();
             if (elders == null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = "無此ID" });
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "無此筆記錄" });
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, elders);
+            return Request.CreateResponse(HttpStatusCode.OK, new
+            {
+                elders,
+                EldersBody = Utility.EldersBody(elders.Body),
+                EldersEquipment = Utility.EldersEquipment(elders.Equipment),
+                EldersServiceItems = Utility.Service(elders.ServiceItems)
+            });
         }
 
         // PUT: api/Elders/5
@@ -54,10 +73,11 @@ namespace Care_UP.Controllers
             ModelState.Remove("InitDate");
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new {result ="不完整"});
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "不完整" });
             }
             db.Entry(elders).State = EntityState.Modified;
-            elders.EditDate=DateTime.Now;
+
+            elders.EditDate = DateTime.Now;
             db.SaveChanges();
 
             //try //可不加

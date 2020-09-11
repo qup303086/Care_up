@@ -236,5 +236,26 @@ namespace Care_UP.Models
             }
             return a;
         }
+
+        public static string ArrayToString(string[] array)
+        {
+            string cc = "";
+            if (array.Length<2)
+            {
+                cc = array[0];
+            }
+            foreach (string item in array)
+            {
+                if (cc == "")
+                {
+                    cc += item;
+                }
+                else
+                {
+                    cc += "," + item;
+                }
+            }
+            return cc;
+        }
     }
 }
