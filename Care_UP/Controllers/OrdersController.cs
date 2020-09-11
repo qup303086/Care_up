@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Care_UP.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace Care_UP.Controllers
 {
@@ -40,7 +41,7 @@ namespace Care_UP.Controllers
         [HttpPost]
         public HttpResponseMessage PostOrders(Orders orders)
         {
-         
+
             ModelState.Remove("Status");
             DateTime startDate = (DateTime)orders.StartDate;
             DateTime endDate = (DateTime)orders.EndDate;
@@ -63,7 +64,7 @@ namespace Care_UP.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單成立" });
         }
 
-        
+
         [Route("MemberGet10")]
         [HttpGet]
         public IHttpActionResult MemberGet10(int id)
@@ -83,7 +84,7 @@ namespace Care_UP.Controllers
                 {
                     x,
                     startDate = x.StartDate?.ToString("yyyy-MM-dd"),
-                    endDate =x.EndDate?.ToString("yyyy-MM-dd")
+                    endDate = x.EndDate?.ToString("yyyy-MM-dd")
                 });
                 return Ok(orders);
             }
@@ -128,11 +129,11 @@ namespace Care_UP.Controllers
             return Ok(new
             {
                 order,
-                AttendantsService =Utility.Service(order.Attendants.Service),
-                AttendantsServiceTime=Utility.ServiceTime(order.Attendants.ServiceTime),
+                AttendantsService = Utility.Service(order.Attendants.Service),
+                AttendantsServiceTime = Utility.ServiceTime(order.Attendants.ServiceTime),
                 date,
-                EldersBody=Utility.EldersBody(order.Elders.Body),
-                EldersEquipment =Utility.EldersEquipment(order.Elders.Equipment),
+                EldersBody = Utility.EldersBody(order.Elders.Body),
+                EldersEquipment = Utility.EldersEquipment(order.Elders.Equipment),
                 EldersServiceItems = Utility.Service(order.Attendants.Service)
             });
         }
@@ -150,15 +151,39 @@ namespace Care_UP.Controllers
                 order.Status = "01";
                 order.EditDate = DateTime.Now;
                 db.SaveChanges();
-                return Ok(new{ message = "已拒絕此訂單"});
+                return Ok(new { message = "已拒絕此訂單" });
             }
             else
             {
-                return Ok(new{ message = "未填寫拒絕理由"});
+                return Ok(new { message = "未填寫拒絕理由" });
             }
-           
+
         }
 
+
+        [HttpPatch]
+        [Route("FillinComment")]
+        public HttpResponseMessage FillinComment(FillinCommentView FillinComment)
+        {
+            ModelState.Remove("EditDate");
+            if (FillinComment.Comment==null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { message = "評價未填寫" });
+            }
+            if (FillinComment.Star == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { message = "未給星星" });
+            }
+            Orders orders = db.Orders.Find(FillinComment.Id);
+            orders.Comment = FillinComment.Comment;
+            orders.Star = FillinComment.Star;
+            orders.Status = "02";
+            orders.EditDate = DateTime.Now;
+            db.Entry(orders).State = EntityState.Modified;
+            db.SaveChanges();
+            return Request.CreateResponse(HttpStatusCode.OK, new { message = "評價填寫完畢" });
+
+        }
 
 
         protected override void Dispose(bool disposing)
