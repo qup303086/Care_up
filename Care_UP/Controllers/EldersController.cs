@@ -73,7 +73,9 @@ namespace Care_UP.Controllers
             ModelState.Remove("InitDate");
             if (!ModelState.IsValid)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = "不完整" });
+
+                return Request.CreateResponse(HttpStatusCode.OK, ModelState);
+
             }
             db.Entry(elders).State = EntityState.Modified;
 
