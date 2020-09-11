@@ -226,6 +226,10 @@
     <Compile Include="Migrations\202009100622122_金流.Designer.cs">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009110637581_訂單的startTimeendTime不要問號.cs" />
+    <Compile Include="Migrations\202009110637581_訂單的startTimeendTime不要問號.Designer.cs">
+      <DependentUpon>202009110637581_訂單的startTimeendTime不要問號.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
     <Compile Include="Models\BankInfoModel.cs" />
@@ -364,6 +368,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009100622122_金流.resx">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009110637581_訂單的startTimeendTime不要問號.resx">
+      <DependentUpon>202009110637581_訂單的startTimeendTime不要問號.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
