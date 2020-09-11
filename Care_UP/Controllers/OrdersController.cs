@@ -70,7 +70,23 @@ namespace Care_UP.Controllers
         {
             var order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == "10").ToList();
 
-            return Ok(order);
+            if (order.Count == 0)
+            {
+                return Ok(new
+                {
+                    message = "目前尚無未確認訂單"
+                });
+            }
+            else
+            {
+                var orders = order.Select(x => new
+                {
+                    x,
+                    startDate = x.StartDate?.ToString("yyyy-MM-dd"),
+                    endDate =x.EndDate?.ToString("yyyy-MM-dd")
+                });
+                return Ok(orders);
+            }
         }
 
 
@@ -79,7 +95,18 @@ namespace Care_UP.Controllers
         public IHttpActionResult AttendantsGet10(int id)
         {
             var order = db.Orders.Where(x => x.AttendantId == id && x.Status == "10").ToList();
-            return Ok(order);
+            if (order.Count == 0)
+            {
+                return Ok(new
+                {
+                    message = "目前尚無未確認訂單"
+                });
+            }
+            else
+            {
+
+                return Ok(order);
+            }
         }
 
         [Route("CheckOrder")]
@@ -88,15 +115,29 @@ namespace Care_UP.Controllers
         {
             Orders order = db.Orders.Find(id);
 
+            DateTime Starttime = (DateTime)db.Orders.Select(x => x.StartDate).Min();
+            DateTime Endtime = (DateTime)db.Orders.Select(x => x.EndDate).Max();
+
+            TimeSpan Alldate = Endtime - Starttime;
+            List<string> date = new List<string>();
+            for (int i = 0; i <= Convert.ToInt32(Alldate.Days); i++)
+            {
+                date.Add(Starttime.AddDays(i).ToString("yyyy-MM-dd"));
+            }
 
             return Ok(new
             {
                 order,
-                Attendants_Service =Utility.Service(order.Attendants.Service),
-                Attendants_ServiceTime=Utility.ServiceTime(order.Attendants.ServiceTime),
-                
+                AttendantsService =Utility.Service(order.Attendants.Service),
+                AttendantsServiceTime=Utility.ServiceTime(order.Attendants.ServiceTime),
+                date,
+                EldersBody=Utility.EldersBody(order.Elders.Body),
+                EldersEquipment =Utility.EldersEquipment(order.Elders.Equipment),
+                EldersServiceItems = Utility.Service(order.Attendants.Service)
             });
         }
+
+
 
         [Route("OrderReject")]
         [HttpPatch]
