@@ -44,6 +44,28 @@ namespace Care_UP.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
         }
 
+        [Route("EditMemberRegister")]
+        [HttpPatch]
+        public HttpResponseMessage EditMembers(PasswordView password)
+        {
+            Members members = db.Members.Find(password.Id);
+            if (password.Password==members.Password)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼無變更" });
+            }
+
+            if (password.Password.Length<6)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼長度不符" });
+
+            }
+            members.PasswordSalt = Utility.CreateSalt();
+            members.Password = Utility.GenerateHashWithSalt(members.Password, members.PasswordSalt);
+            db.Entry(members).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼修改成功" });
+        }
 
         // POST: api/Members/
         [Route("AttendantRegister")]

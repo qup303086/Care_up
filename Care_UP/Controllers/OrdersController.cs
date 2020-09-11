@@ -83,8 +83,8 @@ namespace Care_UP.Controllers
                 var orders = order.Select(x => new
                 {
                     x,
-                    startDate = x.StartDate?.ToString("yyyy-MM-dd"),
-                    endDate = x.EndDate?.ToString("yyyy-MM-dd")
+                    startDate = x.StartDate.ToString("yyyy-MM-dd"),
+                    endDate = x.EndDate.ToString("yyyy-MM-dd")
 
                 });
                 return Ok(orders);
@@ -108,8 +108,8 @@ namespace Care_UP.Controllers
                 var orders = order.Select(x => new
                 {
                     x,
-                    startDate = x.StartDate?.ToString("yyyy-MM-dd"),
-                    endDate = x.EndDate?.ToString("yyyy-MM-dd"),
+                    startDate = x.StartDate.ToString("yyyy-MM-dd"),
+                    endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
                 });
                 return Ok(orders);
@@ -134,8 +134,8 @@ namespace Care_UP.Controllers
                 var orders = order.Select(x => new
                 {
                     x,
-                    startDate = x.StartDate?.ToString("yyyy-MM-dd"),
-                    endDate = x.EndDate?.ToString("yyyy-MM-dd"),
+                    startDate = x.StartDate.ToString("yyyy-MM-dd"),
+                    endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
                     OrderStatus = Utility.OrderStatus(x.Status)
                 });
@@ -161,8 +161,8 @@ namespace Care_UP.Controllers
                 var orders = order.Select(x => new
                 {
                     x,
-                    startDate = x.StartDate?.ToString("yyyy-MM-dd"),
-                    endDate = x.EndDate?.ToString("yyyy-MM-dd"),
+                    startDate = x.StartDate.ToString("yyyy-MM-dd"),
+                    endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
                     OrderStatus = Utility.OrderStatus(x.Status)
                 });

@@ -28,12 +28,13 @@ namespace Care_UP.Models
         [Display(Name = "照服員ID")]
         public virtual Attendants Attendants { set; get; }
 
-
+        [Required(ErrorMessage = "{0}必填")]
         [Display(Name = "開始日期")]
-        public DateTime? StartDate { set; get; }
+        public DateTime StartDate { set; get; }
 
+        [Required(ErrorMessage = "{0}必填")]
         [Display(Name = "結束日期")]
-        public DateTime? EndDate { set; get; }
+        public DateTime EndDate { set; get; }
 
         [Display(Name = "中止日期")]
         public DateTime? StopDate { set; get; }
