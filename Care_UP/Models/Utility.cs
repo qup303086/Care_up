@@ -240,7 +240,7 @@ namespace Care_UP.Models
         public static string ArrayToString(string[] array)
         {
             string cc = "";
-            if (array.Length<2)
+            if (array.Length < 2)
             {
                 cc = array[0];
             }
@@ -256,6 +256,47 @@ namespace Care_UP.Models
                 }
             }
             return cc;
+        }
+
+
+
+        public static string OrderStatus(string status)
+        {
+            string a = "";
+            switch (status)
+            {
+                case "11":
+                    a = "待付款";
+                    break;
+                case "12":
+                    a = "已付款";
+                    break;
+                case "21":
+                    a = "待服務進行";
+                    break;
+                case "22":
+                    a = "服務進行中";
+                    break;
+                case "13":
+                    a = "待評價";
+                    break;
+                case "23":
+                    a = "待收款";
+                    break;
+                case "01":
+                    a = "已取消";
+                    break;
+                case "02":
+                    a = "已完成";
+                    break;
+                case "03":
+                    a = "中斷";
+                    break;
+                case "04":
+                    a = "待退款";
+                    break;
+            }
+            return a;
         }
     }
 }

@@ -85,13 +85,13 @@ namespace Care_UP.Controllers
                     x,
                     startDate = x.StartDate?.ToString("yyyy-MM-dd"),
                     endDate = x.EndDate?.ToString("yyyy-MM-dd")
+
                 });
                 return Ok(orders);
             }
         }
 
-
-        [Route("AttendantsGet10")]
+        [Route("AttendantsOrder01")]
         [HttpGet]
         public IHttpActionResult AttendantsGet10(int id)
         {
@@ -105,10 +105,71 @@ namespace Care_UP.Controllers
             }
             else
             {
-
-                return Ok(order);
+                var orders = order.Select(x => new
+                {
+                    x,
+                    startDate = x.StartDate?.ToString("yyyy-MM-dd"),
+                    endDate = x.EndDate?.ToString("yyyy-MM-dd"),
+                    OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
+                });
+                return Ok(orders);
             }
         }
+
+        [Route("MemberOrder02")]
+        [HttpGet]
+        public IHttpActionResult MemberGet11(int id)
+        {
+            var order = db.Orders.Where(x => x.Elders.MemberId == id).Where(x=>x.Status == "11"||x.Status=="12").ToList();
+
+            if (order.Count == 0)
+            {
+                return Ok(new
+                {
+                    message = "尚無待處理訂單"
+                });
+            }
+            else
+            {
+                var orders = order.Select(x => new
+                {
+                    x,
+                    startDate = x.StartDate?.ToString("yyyy-MM-dd"),
+                    endDate = x.EndDate?.ToString("yyyy-MM-dd"),
+                    OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
+                    OrderStatus = Utility.OrderStatus(x.Status)
+                });
+                return Ok(orders);
+            }
+        }
+
+        [Route("AttendantsOrder02")]
+        [HttpGet]
+        public IHttpActionResult AttendantsGet11(int id)
+        {
+            var order = db.Orders.Where(x => x.AttendantId == id).Where(x => x.Status == "11" || x.Status == "12").ToList();
+
+            if (order.Count == 0)
+            {
+                return Ok(new
+                {
+                    message = "尚無待處理訂單"
+                });
+            }
+            else
+            {
+                var orders = order.Select(x => new
+                {
+                    x,
+                    startDate = x.StartDate?.ToString("yyyy-MM-dd"),
+                    endDate = x.EndDate?.ToString("yyyy-MM-dd"),
+                    OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
+                    OrderStatus = Utility.OrderStatus(x.Status)
+                });
+                return Ok(orders);
+            }
+        }
+
 
         [Route("CheckOrder")]
         [HttpGet]
@@ -138,7 +199,16 @@ namespace Care_UP.Controllers
             });
         }
 
-
+        [Route("OrderAccept")]
+        [HttpPatch]
+        public IHttpActionResult OrderAccept(int id)
+        {
+                Orders order = db.Orders.Find(id);
+                order.Status = "11";
+                order.EditDate = DateTime.Now;
+                db.SaveChanges();
+                return Ok(new { message = "已接受此訂單" });
+        }
 
         [Route("OrderReject")]
         [HttpPatch]
@@ -157,7 +227,6 @@ namespace Care_UP.Controllers
             {
                 return Ok(new { message = "未填寫拒絕理由" });
             }
-
         }
 
 
