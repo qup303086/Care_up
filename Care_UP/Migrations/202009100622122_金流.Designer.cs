@@ -10,16 +10,14 @@ namespace Care_UP.Migrations
     public sealed partial class 金流 : IMigrationMetadata
     {
         private readonly ResourceManager Resources = new ResourceManager(typeof(金流));
-        
+
         string IMigrationMetadata.Id
         {
-<<<<<<< HEAD:Care_UP/Migrations/202009100622122_金流.Designer.cs
+
             get { return "202009100622122_金流"; }
-=======
-            get { return "202009100530282_pay"; }
->>>>>>> feature:Care_UP/Migrations/202009100530282_pay.Designer.cs
         }
-        
+
+
         string IMigrationMetadata.Source
         {
             get { return null; }
