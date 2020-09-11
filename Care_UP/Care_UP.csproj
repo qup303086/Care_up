@@ -222,11 +222,9 @@
     <Compile Include="Migrations\202009090737488_照員地區多對多.Designer.cs">
       <DependentUpon>202009090737488_照員地區多對多.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202009100622122_金流.cs" />
     <Compile Include="Migrations\202009100622122_金流.Designer.cs">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
-
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
@@ -363,10 +361,8 @@
     <EmbeddedResource Include="Migrations\202009090737488_照員地區多對多.resx">
       <DependentUpon>202009090737488_照員地區多對多.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202009100622122_金流.resx">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
-
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
