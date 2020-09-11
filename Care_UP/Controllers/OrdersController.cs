@@ -82,8 +82,8 @@ namespace Care_UP.Controllers
                 var orders = order.Select(x => new
                 {
                     x,
-                    startDate = x.StartDate?.ToString("yyyy-MM-dd"),
-                    endDate =x.EndDate?.ToString("yyyy-MM-dd"),
+                    startDate = x.StartDate.ToString("yyyy-MM-dd"),
+                    endDate =x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
                 });
                 return Ok(orders);
@@ -94,6 +94,16 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet10(int id)
         {
+            List<Orders> ordes = db.Orders.Where(x => x.Elders.Id == id && x.Status == "12").ToList();
+            foreach (Orders item in ordes)
+            {
+                if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
+                {
+                    item.Status = "21";
+                }
+            }
+            db.SaveChanges();
+
             var order = db.Orders.Where(x => x.AttendantId == id && x.Status == "10").ToList();
             if (order.Count == 0)
             {
@@ -107,8 +117,8 @@ namespace Care_UP.Controllers
                 var orders = order.Select(x => new
                 {
                     x,
-                    startDate = x.StartDate?.ToString("yyyy-MM-dd"),
-                    endDate = x.EndDate?.ToString("yyyy-MM-dd"),
+                    startDate = x.StartDate.ToString("yyyy-MM-dd"),
+                    endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
                 });
                 return Ok(orders);
@@ -119,6 +129,8 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult MemberGet11(int id)
         {
+            
+
             var order = db.Orders.Where(x => x.Elders.MemberId == id).Where(x=>x.Status == "11"||x.Status=="12").ToList();
 
             if (order.Count == 0)
@@ -133,8 +145,8 @@ namespace Care_UP.Controllers
                 var orders = order.Select(x => new
                 {
                     x,
-                    startDate = x.StartDate?.ToString("yyyy-MM-dd"),
-                    endDate = x.EndDate?.ToString("yyyy-MM-dd"),
+                    startDate = x.StartDate.ToString("yyyy-MM-dd"),
+                    endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
                     OrderStatus = Utility.OrderStatus(x.Status)
                 });
@@ -146,6 +158,16 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet11(int id)
         {
+            List<Orders> ordes = db.Orders.Where(x => x.AttendantId == id && x.Status == "12").ToList();
+            foreach (Orders item in ordes)
+            {
+                if (DateTime.Compare(DateTime.Now, item.StartDate)>0)
+                {
+                    item.Status = "21";
+                }
+            }
+            db.SaveChanges();
+
             var order = db.Orders.Where(x => x.AttendantId == id).Where(x => x.Status == "11" || x.Status == "12").ToList();
 
             if (order.Count == 0)
@@ -160,8 +182,8 @@ namespace Care_UP.Controllers
                 var orders = order.Select(x => new
                 {
                     x,
-                    startDate = x.StartDate?.ToString("yyyy-MM-dd"),
-                    endDate = x.EndDate?.ToString("yyyy-MM-dd"),
+                    startDate = x.StartDate.ToString("yyyy-MM-dd"),
+                    endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
                     OrderStatus = Utility.OrderStatus(x.Status)
                 });
