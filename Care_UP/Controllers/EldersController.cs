@@ -118,7 +118,14 @@ namespace Care_UP.Controllers
             elders.InitDate = DateTime.Now;
             db.Elders.Add(elders);
             db.SaveChanges();
-            return Request.CreateResponse(HttpStatusCode.OK, new { result = "建立成功" });
+
+            Elders elder = db.Elders.FirstOrDefault(x => x.MemberId == elders.MemberId && x.Name == elders.Name);
+
+            return Request.CreateResponse(HttpStatusCode.OK, new
+            {
+                result = "建立成功",
+                elder
+            });
         }
 
         // DELETE: api/Elders/5

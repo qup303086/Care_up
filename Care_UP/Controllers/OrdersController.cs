@@ -69,13 +69,21 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult MemberGet10(int id)
         {
-            var order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == "10").ToList();
+            List<Orders> order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == "10").ToList();
             if (order.Count == 0)
             {
                 return Ok(new
                 {
                     message = "目前尚無未確認訂單"
                 });
+            }
+
+            foreach (Orders item in order)
+            {
+                if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
+                {
+                    item.Status = "05";
+                }
             }
             
             var orders = order.Select(x => new
@@ -93,13 +101,20 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet10(int id)
         {
-            var order = db.Orders.Where(x => x.AttendantId == id && x.Status == "10").ToList();
+            List<Orders> order = db.Orders.Where(x => x.AttendantId == id && x.Status == "10").ToList();
             if (order.Count == 0)
             {
                 return Ok(new
                 {
                     message = "目前尚無未確認訂單"
                 });
+            }
+            foreach (Orders item in order)
+            {
+                if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
+                {
+                    item.Status = "05";
+                }
             }
 
             var orders = order.Select(x => new
@@ -368,7 +383,58 @@ namespace Care_UP.Controllers
         }
 
 
+        [Route("MemberOrder05")]
+        [HttpGet]
+        public IHttpActionResult MemberFinish(int id)
+        {
+            List<Orders> orders = db.Orders.Where(x => x.Elders.MemberId == id)
+                .Where(x => x.Status == "01"|| x.Status == "02" || x.Status == "03" || x.Status == "04" || x.Status == "05")
+                .ToList();
+            if (orders.Count==0)
+            {
+                return Ok(new
+                {
+                    message = "尚無已完成訂單"
+                });
+            }
 
+            var order = orders.Select(x=>new
+            {
+                x,
+                status = Utility.OrderStatus(x.Status)
+            });
+
+            return Ok(new
+            {
+                order
+            });
+        }
+        [Route("AttendantsOrder05")]
+        [HttpGet]
+        public IHttpActionResult AttendantsFinish(int id)
+        {
+            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id)
+                .Where(x => x.Status == "01" || x.Status == "02" || x.Status == "03" || x.Status == "04" || x.Status == "05")
+                .ToList();
+            if (orders.Count == 0)
+            {
+                return Ok(new
+                {
+                    message = "尚無已完成訂單"
+                });
+            }
+
+            var order = orders.Select(x => new
+            {
+                x,
+                status = Utility.Attendant04Status(x.Status)
+            });
+
+            return Ok(new
+            {
+                order
+            });
+        }
 
 
         [Route("CheckOrder")]
@@ -420,7 +486,7 @@ namespace Care_UP.Controllers
             {
                 Orders order = db.Orders.Find(orderReject.Id);
                 order.Cancel = orderReject.Cancel;
-                order.Status = "01";
+                order.Status = "05";
                 order.EditDate = DateTime.Now;
                 db.SaveChanges();
                 return Ok(new { message = "已拒絕此訂單" });
@@ -429,6 +495,20 @@ namespace Care_UP.Controllers
             {
                 return Ok(new { message = "未填寫拒絕理由" });
             }
+        }
+
+        [Route("WriteLog")]
+        [HttpPost]
+        public IHttpActionResult WriteLog(int id)
+        {
+            return Ok();
+        }
+
+        [Route("GetLog")]
+        [HttpGet]
+        public IHttpActionResult GetLog(int id)
+        {
+            return Ok();
         }
 
 
