@@ -257,9 +257,7 @@ namespace Care_UP.Models
             }
             return cc;
         }
-
-
-
+         
         public static string OrderStatus(string status)
         {
             string a = "";
@@ -294,6 +292,21 @@ namespace Care_UP.Models
                     break;
                 case "04":
                     a = "待退款";
+                    break;
+                case "19":
+                    a = "未於訂單開始前付款";
+                    break;
+            }
+            return a;
+        }
+
+        public static string Attendant04Status(string status)
+        {
+            string a = "";
+            switch (status)
+            {
+                case "13":
+                    a = "完成訂單,待收款";
                     break;
             }
             return a;
