@@ -112,4 +112,4 @@ C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.CopyComplete
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.dll
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.pdb
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csprojAssemblyReference.cache
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.日期修改.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.訂單的startTimeendTime不要問號.resources

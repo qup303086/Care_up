@@ -7,13 +7,13 @@ namespace Care_UP.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class 日期修改 : IMigrationMetadata
+    public sealed partial class 訂單的startTimeendTime不要問號 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(日期修改));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(訂單的startTimeendTime不要問號));
         
         string IMigrationMetadata.Id
         {
-            get { return "202009110605460_日期修改"; }
+            get { return "202009110642252_訂單的startTimeendTime不要問號"; }
         }
         
         string IMigrationMetadata.Source
