@@ -67,7 +67,7 @@ namespace Care_UP.Controllers
 
 
 
-        [Route("MemberGet10")]
+        [Route("MemberOrder01")]
         [HttpGet]
         public IHttpActionResult MemberGet10(int id)
         {
@@ -175,7 +175,7 @@ namespace Care_UP.Controllers
             {
                 var orders = order.Select(x => new
                 {
-
+                    x,
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate =x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
@@ -237,8 +237,9 @@ namespace Care_UP.Controllers
             }
         }
 
+       
+        
         [Route("MemberOrder03")]
-
         [HttpGet]
         public IHttpActionResult MemberGet22(int id)
         {
@@ -270,13 +271,9 @@ namespace Care_UP.Controllers
             db.SaveChanges();
 
             var order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == "22").ToList();
-
             if (order.Count == 0)
             {
-                return Ok(new
-                {
-                    message = "尚無進行中訂單"
-                });
+                return Ok(new {message = "尚無進行中訂單"});
             }
             else
             {
@@ -321,6 +318,7 @@ namespace Care_UP.Controllers
                 }
             }
             db.SaveChanges();
+
             var order = db.Orders.Where(x => x.AttendantId == id && x.Status == "22")
                 .ToList();
             if (order.Count == 0)
@@ -339,7 +337,7 @@ namespace Care_UP.Controllers
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
                     OrderStatus = Utility.OrderStatus(x.Status)
-                });
+                }); 
                 return Ok(orders);
             }
         }
@@ -511,11 +509,11 @@ namespace Care_UP.Controllers
             {
                 foreach (var item in Records)
                 {
-                    if (item.WriteTime.ToString("yyyy-MM-dd")==careRecords.WriteTime.ToString("yyyy-MM-dd"))
+                    if (item.InitDate.Value.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
                     {
                         return Ok(new
                         {
-                            message = item.WriteTime.ToString("yyyy-MM-dd") +"的照護紀錄已經填過囉"
+                            message = item.InitDate.Value.ToString("yyyy-MM-dd") + "的照護紀錄已經填過囉"
                         });
                     }
                 }
@@ -523,7 +521,7 @@ namespace Care_UP.Controllers
             careRecords.InitDate=DateTime.Now;
             db.CareRecords.Add(careRecords);
             
-            string date = careRecords.WriteTime.ToString("yyyy-MM-dd");
+            string date = careRecords.InitDate.Value.ToString("yyyy-MM-dd");
             db.SaveChanges();
             return Ok(new
             {
@@ -546,9 +544,9 @@ namespace Care_UP.Controllers
             }
             var records = careRecords.Select(x => new
             {
-                date = x.WriteTime.ToString("yyyy-MM-dd"),
+                date = x.InitDate.Value.ToString("yyyy-MM-dd"),
                 mood = x.Mood,
-                time = x.WriteTime.ToString("HH:mm"),
+                time = x.InitDate.Value.ToString("HH:mm"),
                 remark = x.Remark
             });
 

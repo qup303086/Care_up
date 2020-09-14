@@ -25,7 +25,6 @@ namespace Care_UP.Models
 
         
         [Display(Name = "建立時間")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? InitDate { get; set; }
 
         [Display(Name = "修改時間")]
@@ -33,11 +32,6 @@ namespace Care_UP.Models
 
         [Display(Name = "備註")]
         public string Remark { get; set; }
-
-        [Display(Name = "是否填寫")]
-        public string Whether { get; set; }
-
-        [Display(Name = "填寫時間")]
-        public DateTime WriteTime { get; set; }
+      
     }
 }
