@@ -7,17 +7,13 @@ namespace Care_UP.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class 金流 : IMigrationMetadata
+    public sealed partial class 訂單的startTimeendTime不要問號 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(金流));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(訂單的startTimeendTime不要問號));
         
         string IMigrationMetadata.Id
         {
-<<<<<<< HEAD:Care_UP/Migrations/202009100622122_金流.Designer.cs
-            get { return "202009100622122_金流"; }
-=======
-            get { return "202009100530282_pay"; }
->>>>>>> feature:Care_UP/Migrations/202009100530282_pay.Designer.cs
+            get { return "202009110637581_訂單的startTimeendTime不要問號"; }
         }
         
         string IMigrationMetadata.Source
