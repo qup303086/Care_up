@@ -558,19 +558,7 @@ namespace Care_UP.Controllers
             return Ok(records);
         }
 
-<<<<<<< HEAD
-        //[Route("test")]
-        //[HttpGet]
-        //public IHttpActionResult test()
-        //{
-        //    var test = db.Attendants.Select(x => new
-        //    {
-        //        x,
-        //        dateGroup = x.InitDate.ToString("yyyy-MM-dd")
-        //    });
-        //    return Ok(test);
-        //}
-=======
+
         [HttpPatch]
         [Route("FillinComment")]
         public HttpResponseMessage FillinComment(FillinCommentView FillinComment)
@@ -595,7 +583,7 @@ namespace Care_UP.Controllers
 
         }
 
->>>>>>> dfaad8f895a00b85ab02728a9ae4b73f6c8b2e31
+
 
         protected override void Dispose(bool disposing)
         {
