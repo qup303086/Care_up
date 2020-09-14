@@ -226,14 +226,18 @@
     <Compile Include="Migrations\202009100622122_金流.Designer.cs">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\202009140232509_移除order的starttime問號移除detaildate新增carerecord欄位remark.cs" />
     <Compile Include="Migrations\202009140232509_移除order的starttime問號移除detaildate新增carerecord欄位remark.Designer.cs">
       <DependentUpon>202009140232509_移除order的starttime問號移除detaildate新增carerecord欄位remark.cs</DependentUpon>
+
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
     <Compile Include="Models\BankInfoModel.cs" />
-    <Compile Include="Models\CareRecordsViewModel.cs" />
+
+    <Compile Include="Models\FillinCommentView.cs" />
+
     <Compile Include="Models\OrderReject.cs" />
     <Compile Include="Models\Pay.cs" />
     <Compile Include="Models\PayView.cs" />
@@ -369,8 +373,10 @@
     <EmbeddedResource Include="Migrations\202009100622122_金流.resx">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202009140232509_移除order的starttime問號移除detaildate新增carerecord欄位remark.resx">
       <DependentUpon>202009140232509_移除order的starttime問號移除detaildate新增carerecord欄位remark.cs</DependentUpon>
+
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Care_UP.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace Care_UP.Controllers
 {
@@ -65,7 +66,8 @@ namespace Care_UP.Controllers
         }
 
 
-        [Route("MemberOrder01")]
+
+        [Route("MemberGet10")]
         [HttpGet]
         public IHttpActionResult MemberGet10(int id)
         {
@@ -173,11 +175,11 @@ namespace Care_UP.Controllers
             {
                 var orders = order.Select(x => new
                 {
-                    x,
+
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
-                    endDate = x.EndDate.ToString("yyyy-MM-dd"),
-                    OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                    OrderStatus = Utility.OrderStatus(x.Status)
+                    endDate =x.EndDate.ToString("yyyy-MM-dd"),
+                    OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
+
                 });
                 return Ok(orders);
             }
@@ -455,9 +457,7 @@ namespace Care_UP.Controllers
 
             return Ok(new
             {
-                order,
-                AttendantsStartTime = order.Attendants.StartDateTime?.ToString("yyyy-MM-dd"),
-                AttendantsEndTime = order.Attendants.EndDateTime?.ToString("yyyy-MM-dd"),
+                order, 
                 AttendantsService = Utility.Service(order.Attendants.Service),
                 AttendantsServiceTime = Utility.ServiceTime(order.Attendants.ServiceTime),
                 date,
@@ -558,6 +558,7 @@ namespace Care_UP.Controllers
             return Ok(records);
         }
 
+<<<<<<< HEAD
         //[Route("test")]
         //[HttpGet]
         //public IHttpActionResult test()
@@ -569,6 +570,32 @@ namespace Care_UP.Controllers
         //    });
         //    return Ok(test);
         //}
+=======
+        [HttpPatch]
+        [Route("FillinComment")]
+        public HttpResponseMessage FillinComment(FillinCommentView FillinComment)
+        {
+            ModelState.Remove("EditDate");
+            if (FillinComment.Comment==null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { message = "評價未填寫" });
+            }
+            if (FillinComment.Star == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { message = "未給星星" });
+            }
+            Orders orders = db.Orders.Find(FillinComment.Id);
+            orders.Comment = FillinComment.Comment;
+            orders.Star = FillinComment.Star;
+            orders.Status = "02";
+            orders.EditDate = DateTime.Now;
+            db.Entry(orders).State = EntityState.Modified;
+            db.SaveChanges();
+            return Request.CreateResponse(HttpStatusCode.OK, new { message = "評價填寫完畢" });
+
+        }
+
+>>>>>>> dfaad8f895a00b85ab02728a9ae4b73f6c8b2e31
 
         protected override void Dispose(bool disposing)
         {
