@@ -124,21 +124,43 @@ namespace Care_UP.Controllers
                 }
                 star = Convert.ToInt32(sum / attendant.Count());
             }
-            DateTime Starttime = (DateTime)db.Orders.Select(x => x.StartDate).Min();
-            DateTime Endtime = (DateTime)db.Orders.Select(x => x.EndDate).Max();
 
-            TimeSpan Alldate = Endtime - Starttime;
+            //DateTime Starttime = (DateTime)db.Orders.Where(x => x.AttendantId == id).Select(x => x.StartDate).Min();
+            //DateTime Endtime = (DateTime)db.Orders.Where(x => x.AttendantId == id).Select(x => x.EndDate).Max();
+
+            //TimeSpan Alldate = Endtime - Starttime;
+            //List<string> date = new List<string>();
+            //for (int i = 0; i <= Convert.ToInt32(Alldate.Days); i++)
+            //{
+            //    date.Add(Starttime.AddDays(i).ToString("yyyy-MM-dd"));
+            //}
+
             List<string> date = new List<string>();
-            for (int i = 0; i <= Convert.ToInt32(Alldate.Days); i++)
+            var orderDate = orders.Where(x=>x.Status=="10"||x.Status=="11"||x.Status=="12"||x.Status=="22")
+                .Select(x => new
             {
-                date.Add(Starttime.AddDays(i).ToString("yyyy-MM-dd"));
+                x.StartDate,
+                x.EndDate
+            });
+            if (orderDate.Count()!=0)
+            {
+                foreach (var item in orderDate)
+                {
+                    TimeSpan Alldate = item.EndDate - item.StartDate;
+                    for (int i = 0; i <= Convert.ToInt32(Alldate.Days); i++)
+                    {
+                        date.Add(item.StartDate.AddDays(i).ToString("yyyy-MM-dd"));
+                    }
+                }
+                
             }
+
             return Request.CreateResponse(HttpStatusCode.OK, new
             {
                 attendantDetails,
                 服務項目 = Utility.Service(attendantDetails.Service),
                 服務時段 = Utility.ServiceTime(attendantDetails.ServiceTime),
-                日期 = date,
+                已被預約的日期 = date,
                 star,
                 area
             });

@@ -71,13 +71,21 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult MemberGet10(int id)
         {
-            var order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == "10").ToList();
+            List<Orders> order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == "10").ToList();
             if (order.Count == 0)
             {
                 return Ok(new
                 {
                     message = "目前尚無未確認訂單"
                 });
+            }
+
+            foreach (Orders item in order)
+            {
+                if (DateTime.Compare(DateTime.Now, item.StartDate.AddDays(-3)) > 0)
+                {
+                    item.Status = "05";
+                }
             }
             
             var orders = order.Select(x => new
@@ -95,13 +103,20 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet10(int id)
         {
-            var order = db.Orders.Where(x => x.AttendantId == id && x.Status == "10").ToList();
+            List<Orders> order = db.Orders.Where(x => x.AttendantId == id && x.Status == "10").ToList();
             if (order.Count == 0)
             {
                 return Ok(new
                 {
                     message = "目前尚無未確認訂單"
                 });
+            }
+            foreach (Orders item in order)
+            {
+                if (DateTime.Compare(DateTime.Now, item.StartDate.AddDays(-3)) > 0)
+                {
+                    item.Status = "05";
+                }
             }
 
             var orders = order.Select(x => new
@@ -370,7 +385,58 @@ namespace Care_UP.Controllers
         }
 
 
+        [Route("MemberOrder05")]
+        [HttpGet]
+        public IHttpActionResult MemberFinish(int id)
+        {
+            List<Orders> orders = db.Orders.Where(x => x.Elders.MemberId == id)
+                .Where(x => x.Status == "01"|| x.Status == "02" || x.Status == "03" || x.Status == "04" || x.Status == "05")
+                .ToList();
+            if (orders.Count==0)
+            {
+                return Ok(new
+                {
+                    message = "尚無已完成訂單"
+                });
+            }
 
+            var order = orders.Select(x=>new
+            {
+                x,
+                status = Utility.OrderStatus(x.Status)
+            });
+
+            return Ok(new
+            {
+                order
+            });
+        }
+        [Route("AttendantsOrder05")]
+        [HttpGet]
+        public IHttpActionResult AttendantsFinish(int id)
+        {
+            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id)
+                .Where(x => x.Status == "01" || x.Status == "02" || x.Status == "03" || x.Status == "04" || x.Status == "05")
+                .ToList();
+            if (orders.Count == 0)
+            {
+                return Ok(new
+                {
+                    message = "尚無已完成訂單"
+                });
+            }
+
+            var order = orders.Select(x => new
+            {
+                x,
+                status = Utility.Attendant04Status(x.Status)
+            });
+
+            return Ok(new
+            {
+                order
+            });
+        }
 
 
         [Route("CheckOrder")]
@@ -420,7 +486,7 @@ namespace Care_UP.Controllers
             {
                 Orders order = db.Orders.Find(orderReject.Id);
                 order.Cancel = orderReject.Cancel;
-                order.Status = "01";
+                order.Status = "05";
                 order.EditDate = DateTime.Now;
                 db.SaveChanges();
                 return Ok(new { message = "已拒絕此訂單" });
@@ -429,6 +495,67 @@ namespace Care_UP.Controllers
             {
                 return Ok(new { message = "未填寫拒絕理由" });
             }
+        }
+
+        [Route("WriteLog")]
+        [HttpPost]
+        public IHttpActionResult WriteLog(CareRecords careRecords)
+        {
+            ModelState.Remove("Remark");
+            if (!ModelState.IsValid)
+            {
+                return Ok(new
+                {
+                    message = "照護日製沒填喔"
+                });
+            }
+            List<CareRecords> Records = db.CareRecords.Where(x => x.OrdersID == careRecords.OrdersID).ToList();
+            if (Records.Count!=0)
+            {
+                foreach (var item in Records)
+                {
+                    if (item.WriteTime.ToString("yyyy-MM-dd")==careRecords.WriteTime.ToString("yyyy-MM-dd"))
+                    {
+                        return Ok(new
+                        {
+                            message = item.WriteTime.ToString("yyyy-MM-dd") +"的照護紀錄已經填過囉"
+                        });
+                    }
+                }
+            }
+            careRecords.InitDate=DateTime.Now;
+            db.CareRecords.Add(careRecords);
+            
+            string date = careRecords.WriteTime.ToString("yyyy-MM-dd");
+            db.SaveChanges();
+            return Ok(new
+            {
+                message = $"已新增{date}的照護紀錄"
+            });
+        }
+
+        [Route("GetLog")]
+        [HttpGet]
+        public IHttpActionResult GetLog(int id)
+        {
+            List<CareRecords> careRecords = db.CareRecords.Where(x => x.OrdersID == id).ToList();
+
+            if (careRecords.Count==0)
+            {
+                return Ok(new
+                {
+                    messsage = "此訂單目前尚無照護紀錄"
+                });
+            }
+            var records = careRecords.Select(x => new
+            {
+                date = x.WriteTime.ToString("yyyy-MM-dd"),
+                mood = x.Mood,
+                time = x.WriteTime.ToString("HH:mm"),
+                remark = x.Remark
+            });
+
+            return Ok(records);
         }
 
 
@@ -455,6 +582,7 @@ namespace Care_UP.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { message = "評價填寫完畢" });
 
         }
+
 
 
         protected override void Dispose(bool disposing)
