@@ -226,15 +226,22 @@
     <Compile Include="Migrations\202009100622122_金流.Designer.cs">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Migrations\202009110637581_訂單的startTimeendTime不要問號.cs" />
     <Compile Include="Migrations\202009110637581_訂單的startTimeendTime不要問號.Designer.cs">
       <DependentUpon>202009110637581_訂單的startTimeendTime不要問號.cs</DependentUpon>
+=======
+    <Compile Include="Migrations\202009110642252_訂單的startTimeendTime不要問號.cs" />
+    <Compile Include="Migrations\202009110642252_訂單的startTimeendTime不要問號.Designer.cs">
+      <DependentUpon>202009110642252_訂單的startTimeendTime不要問號.cs</DependentUpon>
+>>>>>>> featureping
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
     <Compile Include="Models\BankInfoModel.cs" />
     <Compile Include="Models\FillinCommentView.cs" />
     <Compile Include="Models\OrderReject.cs" />
+    <Compile Include="Models\MemberView.cs" />
     <Compile Include="Models\Pay.cs" />
     <Compile Include="Models\PayView.cs" />
     <Compile Include="Models\SpgatewayInputModel.cs" />
@@ -369,8 +376,13 @@
     <EmbeddedResource Include="Migrations\202009100622122_金流.resx">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <EmbeddedResource Include="Migrations\202009110637581_訂單的startTimeendTime不要問號.resx">
       <DependentUpon>202009110637581_訂單的startTimeendTime不要問號.cs</DependentUpon>
+=======
+    <EmbeddedResource Include="Migrations\202009110642252_訂單的startTimeendTime不要問號.resx">
+      <DependentUpon>202009110642252_訂單的startTimeendTime不要問號.cs</DependentUpon>
+>>>>>>> featureping
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

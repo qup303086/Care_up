@@ -160,10 +160,16 @@ namespace Care_UP.Controllers
             {
                 var orders = order.Select(x => new
                 {
+<<<<<<< HEAD
 
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate =x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
+=======
+                    x,
+                    startDate = x.StartDate.ToString("yyyy-MM-dd"),
+                    endDate = x.EndDate.ToString("yyyy-MM-dd")
+>>>>>>> featureping
 
                 });
                 return Ok(orders);
@@ -215,19 +221,29 @@ namespace Care_UP.Controllers
                     x,
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
+<<<<<<< HEAD
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
                     OrderStatus = Utility.OrderStatus(x.Status)
+=======
+                    OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
+>>>>>>> featureping
                 });
                 return Ok(orders);
             }
         }
 
+<<<<<<< HEAD
 
 
         [Route("MemberOrder03")]
+=======
+      
+        [Route("MemberOrder02")]
+>>>>>>> featureping
         [HttpGet]
         public IHttpActionResult MemberGet22(int id)
         {
+<<<<<<< HEAD
             List<Orders> ordes = db.Orders.Where(x => x.Elders.MemberId == id).ToList();
             if (ordes.Count == 0)
             {
@@ -251,11 +267,23 @@ namespace Care_UP.Controllers
                 if (DateTime.Compare(DateTime.Now, item.EndDate) > 0)
                 {
                     item.Status = "13";
+=======
+            List<Orders> ordes = db.Orders.Where(x => x.Elders.MemberId== id && x.Status == "12").ToList();
+            foreach (Orders item in ordes)
+            {
+                if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
+                {
+                    item.Status = "21";
+>>>>>>> featureping
                 }
             }
             db.SaveChanges();
 
+<<<<<<< HEAD
             var order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == "22").ToList();
+=======
+            var order = db.Orders.Where(x => x.Elders.MemberId == id).Where(x=>x.Status == "11"||x.Status=="12").ToList();
+>>>>>>> featureping
 
             if (order.Count == 0)
             {
@@ -281,6 +309,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet22(int id)
         {
+<<<<<<< HEAD
             List<Orders> ordes = db.Orders.Where(x => x.AttendantId == id).ToList();
             if (ordes.Count == 0)
             {
@@ -304,12 +333,24 @@ namespace Care_UP.Controllers
                 if (DateTime.Compare(DateTime.Now, item.EndDate) > 0)
                 {
                     item.Status = "13";
+=======
+            List<Orders> ordes = db.Orders.Where(x => x.AttendantId == id && x.Status == "12").ToList();
+            foreach (Orders item in ordes)
+            {
+                if (DateTime.Compare(DateTime.Now, item.StartDate)>0)
+                {
+                    item.Status = "21";
+>>>>>>> featureping
                 }
             }
             db.SaveChanges();
 
+<<<<<<< HEAD
             var order = db.Orders.Where(x => x.AttendantId == id && x.Status == "22")
                 .ToList();
+=======
+            var order = db.Orders.Where(x => x.AttendantId == id).Where(x => x.Status == "11" || x.Status == "12").ToList();
+>>>>>>> featureping
 
             if (order.Count == 0)
             {
