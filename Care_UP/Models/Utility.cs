@@ -293,6 +293,9 @@ namespace Care_UP.Models
                 case "04":
                     a = "待退款";
                     break;
+                case "05":
+                    a = "照服員拒接";
+                    break;
                 case "19":
                     a = "未於訂單開始前付款";
                     break;
@@ -307,6 +310,39 @@ namespace Care_UP.Models
             {
                 case "13":
                     a = "完成訂單,待收款";
+                    break;
+                case "11":
+                    a = "待付款";
+                    break;
+                case "12":
+                    a = "已付款";
+                    break;
+                case "21":
+                    a = "待服務進行";
+                    break;
+                case "22":
+                    a = "服務進行中";
+                    break;
+                case "23":
+                    a = "待收款";
+                    break;
+                case "01":
+                    a = "已取消";
+                    break;
+                case "02":
+                    a = "已完成";
+                    break;
+                case "03":
+                    a = "中斷";
+                    break;
+                case "04":
+                    a = "待退款";
+                    break;
+                case "05":
+                    a = "照服員拒接";
+                    break;
+                case "19":
+                    a = "未於訂單開始前付款";
                     break;
             }
             return a;
