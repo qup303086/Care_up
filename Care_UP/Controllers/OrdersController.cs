@@ -237,8 +237,8 @@ namespace Care_UP.Controllers
             }
         }
 
-
-
+       
+        
         [Route("MemberOrder03")]
         [HttpGet]
         public IHttpActionResult MemberGet22(int id)
@@ -271,13 +271,9 @@ namespace Care_UP.Controllers
             db.SaveChanges();
 
             var order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == "22").ToList();
-
             if (order.Count == 0)
             {
-                return Ok(new
-                {
-                    message = "尚無進行中訂單"
-                });
+                return Ok(new {message = "尚無進行中訂單"});
             }
             else
             {
@@ -325,7 +321,6 @@ namespace Care_UP.Controllers
 
             var order = db.Orders.Where(x => x.AttendantId == id && x.Status == "22")
                 .ToList();
-
             if (order.Count == 0)
             {
                 return Ok(new
@@ -342,7 +337,7 @@ namespace Care_UP.Controllers
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
                     OrderStatus = Utility.OrderStatus(x.Status)
-                });
+                }); 
                 return Ok(orders);
             }
         }

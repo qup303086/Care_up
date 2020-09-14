@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -33,6 +34,7 @@ namespace Care_UP.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, new { result = "不完整" });
             }
 
+
             members.PasswordSalt = Utility.CreateSalt(); //產生密碼鹽
             members.Password = Utility.GenerateHashWithSalt(members.Password, members.PasswordSalt);//密碼+密碼鹽
             members.InitDate = DateTime.Now;
@@ -44,11 +46,10 @@ namespace Care_UP.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
         }
 
-
         // POST: api/Members/
         [Route("AttendantRegister")]
         [HttpPost]
-        public HttpResponseMessage PostMembers(Attendants attendants)
+        public HttpResponseMessage PostAttendant(Attendants attendants)
         {
             ModelState.Remove("PasswordSalt");
                 ModelState.Remove("Name");
@@ -72,6 +73,106 @@ namespace Care_UP.Controllers
                 db.SaveChanges();
 
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "註冊成功" });
+        }
+
+        [Route("CheckoutMemberEmail")]
+        [HttpPost]
+        public HttpResponseMessage CheckoutMemberEmail(MemberView memberView)
+        {
+            var checkoutEmail = db.Members.Count(x =>x.Email.StartsWith(memberView.Email));
+            if (checkoutEmail > 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "信箱重複" });
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, new { result = "未使用" });
+        }
+
+        [Route("CheckoutAttendantEmail")]
+        [HttpPost]
+        public HttpResponseMessage CheckoutAttendantEmail(MemberView memberView)
+        {
+            var checkoutEmail = db.Attendants.Count(x => x.Email.StartsWith(memberView.Email));
+            if (checkoutEmail > 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "信箱重複" });
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, new { result = "未使用" });
+        }
+
+        [Route("GetMember")]
+        [HttpGet]
+        public HttpResponseMessage GetMember(int Id)
+        {
+            Members members = db.Members.Where(x => x.Id == Id).FirstOrDefault();
+
+            if (members.Id != null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = members.Email });
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, new { result = "無此筆記錄" });
+
+        }
+       
+        [Route("GetAttendant")]
+        [HttpGet]
+        public HttpResponseMessage GetAttendant(int Id)
+        {
+           Attendants attendants = db.Attendants.Where(x => x.Id == Id).FirstOrDefault();
+
+            if (attendants.Id != null)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = attendants.Email });
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, new { result = "無此筆記錄" });
+
+        }
+
+        [Route("EditMemberRegister")]
+        [HttpPatch]
+        public HttpResponseMessage EditMembers(MemberView password)
+        {
+            Members members = db.Members.Find(password.Id);
+            if (password.Password == members.Password)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼無變更" });
+            }
+
+            if (password.Password.Length < 6)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼長度不符" });
+
+            }
+            members.PasswordSalt = Utility.CreateSalt();
+            members.Password = Utility.GenerateHashWithSalt(members.Password, members.PasswordSalt);
+            db.Entry(members).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼修改成功" });
+        }
+
+        [Route("EditAttendantRegister")]
+        [HttpPatch]
+        public HttpResponseMessage AttendantRegister(MemberView password)
+        {
+            Attendants attendants = db.Attendants.Find(password.Id);
+            if (password.Password == attendants.Password)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼無變更" });
+            }
+
+            if (password.Password.Length < 6)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼長度不符" });
+
+            }
+            attendants.PasswordSalt = Utility.CreateSalt();
+            attendants.Password = Utility.GenerateHashWithSalt(attendants.Password, attendants.PasswordSalt);
+            db.Entry(attendants).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼修改成功" });
         }
 
         [Route("MemberLogin")]

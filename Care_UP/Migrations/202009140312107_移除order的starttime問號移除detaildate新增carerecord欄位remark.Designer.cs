@@ -13,7 +13,7 @@ namespace Care_UP.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202009140232509_移除order的starttime問號移除detaildate新增carerecord欄位remark"; }
+            get { return "202009140312107_移除order的starttime問號移除detaildate新增carerecord欄位remark"; }
         }
         
         string IMigrationMetadata.Source
