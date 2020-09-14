@@ -14,15 +14,16 @@ namespace Care_UP.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-      public int DetailedDateId { get; set; }
-        [ForeignKey("DetailedDateId")]
-        [Display(Name = "訂單詳細日期")]
-        public virtual DetailedDates DetailedDates { set; get; }
+      public int OrdersID { get; set; }
+        [ForeignKey("OrdersID")]
+        [Display(Name = "訂單編號")]
+        public virtual Orders Orders { set; get; }
 
         [Required(ErrorMessage = "{0}必填")]
         [Display(Name = "病患心情")]
         public string Mood{ get; set; }
 
+        
         [Display(Name = "建立時間")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? InitDate { get; set; }
@@ -30,7 +31,13 @@ namespace Care_UP.Models
         [Display(Name = "修改時間")]
         public DateTime? EditDate { get; set; }
 
+        [Display(Name = "備註")]
+        public string Remark { get; set; }
+
         [Display(Name = "是否填寫")]
         public string Whether { get; set; }
+
+        [Display(Name = "填寫時間")]
+        public DateTime WriteTime { get; set; }
     }
 }

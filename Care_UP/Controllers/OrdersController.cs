@@ -80,7 +80,7 @@ namespace Care_UP.Controllers
 
             foreach (Orders item in order)
             {
-                if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
+                if (DateTime.Compare(DateTime.Now, item.StartDate.AddDays(-3)) > 0)
                 {
                     item.Status = "05";
                 }
@@ -111,7 +111,7 @@ namespace Care_UP.Controllers
             }
             foreach (Orders item in order)
             {
-                if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
+                if (DateTime.Compare(DateTime.Now, item.StartDate.AddDays(-3)) > 0)
                 {
                     item.Status = "05";
                 }
@@ -499,19 +499,76 @@ namespace Care_UP.Controllers
 
         [Route("WriteLog")]
         [HttpPost]
-        public IHttpActionResult WriteLog(int id)
+        public IHttpActionResult WriteLog(CareRecords careRecords)
         {
-            return Ok();
+            ModelState.Remove("Remark");
+            if (!ModelState.IsValid)
+            {
+                return Ok(new
+                {
+                    message = "照護日製沒填喔"
+                });
+            }
+            List<CareRecords> Records = db.CareRecords.Where(x => x.OrdersID == careRecords.OrdersID).ToList();
+            if (Records.Count!=0)
+            {
+                foreach (var item in Records)
+                {
+                    if (item.WriteTime.ToString("yyyy-MM-dd")==careRecords.WriteTime.ToString("yyyy-MM-dd"))
+                    {
+                        return Ok(new
+                        {
+                            message = item.WriteTime.ToString("yyyy-MM-dd") +"的照護紀錄已經填過囉"
+                        });
+                    }
+                }
+            }
+            careRecords.InitDate=DateTime.Now;
+            db.CareRecords.Add(careRecords);
+            
+            string date = careRecords.WriteTime.ToString("yyyy-MM-dd");
+            db.SaveChanges();
+            return Ok(new
+            {
+                message = $"已新增{date}的照護紀錄"
+            });
         }
 
         [Route("GetLog")]
         [HttpGet]
         public IHttpActionResult GetLog(int id)
         {
-            return Ok();
+            List<CareRecords> careRecords = db.CareRecords.Where(x => x.OrdersID == id).ToList();
+
+            if (careRecords.Count==0)
+            {
+                return Ok(new
+                {
+                    messsage = "此訂單目前尚無照護紀錄"
+                });
+            }
+            var records = careRecords.Select(x => new
+            {
+                date = x.WriteTime.ToString("yyyy-MM-dd"),
+                mood = x.Mood,
+                time = x.WriteTime.ToString("HH:mm"),
+                remark = x.Remark
+            });
+
+            return Ok(records);
         }
 
-
+        //[Route("test")]
+        //[HttpGet]
+        //public IHttpActionResult test()
+        //{
+        //    var test = db.Attendants.Select(x => new
+        //    {
+        //        x,
+        //        dateGroup = x.InitDate.ToString("yyyy-MM-dd")
+        //    });
+        //    return Ok(test);
+        //}
 
         protected override void Dispose(bool disposing)
         {
