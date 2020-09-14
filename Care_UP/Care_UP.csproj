@@ -139,6 +139,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Backend\BackendAreaRegistration.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -226,7 +227,6 @@
     <Compile Include="Migrations\202009100622122_金流.Designer.cs">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202009140312107_移除order的starttime問號移除detaildate新增carerecord欄位remark.cs" />
     <Compile Include="Migrations\202009140312107_移除order的starttime問號移除detaildate新增carerecord欄位remark.Designer.cs">
       <DependentUpon>202009140312107_移除order的starttime問號移除detaildate新增carerecord欄位remark.cs</DependentUpon>
@@ -294,6 +294,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Areas\Backend\Views\web.config" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -316,6 +317,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Backend\Controllers\" />
+    <Folder Include="Areas\Backend\Data\" />
+    <Folder Include="Areas\Backend\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -371,7 +375,6 @@
     <EmbeddedResource Include="Migrations\202009100622122_金流.resx">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202009140312107_移除order的starttime問號移除detaildate新增carerecord欄位remark.resx">
       <DependentUpon>202009140312107_移除order的starttime問號移除detaildate新增carerecord欄位remark.cs</DependentUpon>
     </EmbeddedResource>
