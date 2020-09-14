@@ -134,11 +134,7 @@ namespace Care_UP.Controllers
         public HttpResponseMessage EditMembers(MemberView password)
         {
             Members members = db.Members.Find(password.Id);
-            if (password.Password == members.Password)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼無變更" });
-            }
-
+           
             if (password.Password.Length < 6)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼長度不符" });
@@ -157,11 +153,7 @@ namespace Care_UP.Controllers
         public HttpResponseMessage AttendantRegister(MemberView password)
         {
             Attendants attendants = db.Attendants.Find(password.Id);
-            if (password.Password == attendants.Password)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼無變更" });
-            }
-
+            
             if (password.Password.Length < 6)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { result = "密碼長度不符" });

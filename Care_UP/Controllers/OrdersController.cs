@@ -67,7 +67,7 @@ namespace Care_UP.Controllers
 
 
 
-        [Route("MemberGet10")]
+        [Route("MemberOrder01")]
         [HttpGet]
         public IHttpActionResult MemberGet10(int id)
         {
