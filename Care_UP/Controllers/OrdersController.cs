@@ -175,7 +175,7 @@ namespace Care_UP.Controllers
             {
                 var orders = order.Select(x => new
                 {
-
+                    x,
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate =x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
@@ -514,14 +514,6 @@ namespace Care_UP.Controllers
             {
                 foreach (var item in Records)
                 {
-                    //if (item.WriteTime.ToString("yyyy-MM-dd") == careRecords.WriteTime.ToString("yyyy-MM-dd"))
-                    //{
-                    //    return Ok(new
-                    //    {
-                    //        message = item.WriteTime.ToString("yyyy-MM-dd") + "的照護紀錄已經填過囉"
-                    //    });
-                    //}
-
                     if (item.InitDate.Value.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
                     {
                         return Ok(new
