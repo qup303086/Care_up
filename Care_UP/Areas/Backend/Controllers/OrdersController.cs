@@ -25,7 +25,7 @@ namespace Care_UP.Areas.Backend.Controllers
             DateTime? date_start = Session["date_start"] != null ? (DateTime?)Session["date_start"] : null;
             DateTime? date_end = Session["date_end"] != null ? (DateTime?)Session["date_end"] : null;
 
-            var result = db.Orders.AsQueryable().Where(x=>x.Status=="13" &&x.Status=="12"); //AsQueryable只是一段SQL語法
+            var result = db.Orders.Where(x=>x.Status=="13"||x.Status=="02"); 
         
             if (date_start.HasValue && date_end.HasValue) //起始 結束都要有值(結束時間一定要多加一天)
             {
@@ -83,11 +83,12 @@ namespace Care_UP.Areas.Backend.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ElderId,AttendantId,date_start,date_end,StopDate,Total,Comment,Star,Cancel,InitDate,EditDate,Status")] Orders orders)
+        public ActionResult Edit([Bind(Include = "Id,ElderId,AttendantId,date_start,date_end,StopDate,Total,Comment,Star,Cancel,InitDate,EditDate,Status,StartDate,EndDate")] Orders orders)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(orders).State = EntityState.Modified;
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
