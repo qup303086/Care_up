@@ -232,6 +232,18 @@
     <Compile Include="Migrations\202009100622122_金流.Designer.cs">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009140616440_carerecord去掉writetime.cs" />
+    <Compile Include="Migrations\202009140616440_carerecord去掉writetime.Designer.cs">
+      <DependentUpon>202009140616440_carerecord去掉writetime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009150842351_增加QA用的資料表.cs" />
+    <Compile Include="Migrations\202009150842351_增加QA用的資料表.Designer.cs">
+      <DependentUpon>202009150842351_增加QA用的資料表.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009150917176_orders增加備註.cs" />
+    <Compile Include="Migrations\202009150917176_orders增加備註.Designer.cs">
+      <DependentUpon>202009150917176_orders增加備註.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
     <Compile Include="Models\BankInfoModel.cs" />
@@ -391,6 +403,16 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009100622122_金流.resx">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202009140616440_carerecord去掉writetime.resx">
+      <DependentUpon>202009140616440_carerecord去掉writetime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009150842351_增加QA用的資料表.resx">
+      <DependentUpon>202009150842351_增加QA用的資料表.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009150917176_orders增加備註.resx">
+      <DependentUpon>202009150917176_orders增加備註.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
