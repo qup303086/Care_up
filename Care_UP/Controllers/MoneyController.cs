@@ -82,9 +82,9 @@ namespace Care_UP.Controllers
                 MerchantOrderNo = pay_.Id.ToString(),
                 // MerchantOrderNo = ordernumber,
                 // * 訂單金額
-                Amt = (int)orders.Total,//(int)orders.Total,
-                                        // * 商品資訊
-                ItemDesc = pay_.Id.ToString(),
+                Amt = (int)orders.Total,
+                // * 商品資訊
+                ItemDesc = pay_.OrderId.ToString(),
                 // 繳費有效期限(適用於非即時交易)
                 ExpireDate = null,
                 // 支付完成 返回商店網址
@@ -212,20 +212,22 @@ namespace Care_UP.Controllers
                     LambdaUtil.DictionaryToObject<SpgatewayOutputDataModel>(
                         decryptTradeCollection.AllKeys.ToDictionary(k => k, k => decryptTradeCollection[k]));
 
-                Pay pay = new Pay();
+                Pay pay = db.Pays.Find(Convert.ToInt32(convertModel.MerchantOrderNo));
                 pay.Message = convertModel.Message;
                 pay.Status = convertModel.Status;
-                pay.OrderId = Convert.ToInt32(convertModel.MerchantOrderNo);
                 db.Pays.Add(pay);
+
                 if (pay.Status == "SUCCESS")
                 {
                     Orders orders = db.Orders.Find(pay.OrderId);
                     orders.Status = "12";
                     db.Entry(orders).State = EntityState.Modified;
+
+                    db.SaveChanges();
                 }
                 // TODO 將回傳訊息寫入資料庫
 
-                db.SaveChanges();
+
 
             }
 
