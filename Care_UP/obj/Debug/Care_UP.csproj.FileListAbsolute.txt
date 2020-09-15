@@ -113,3 +113,4 @@ C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.csproj.CoreCompileInputs
 C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.csproj.CopyComplete
 C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.dll
 C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.pdb
+C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.csprojAssemblyReference.cache
