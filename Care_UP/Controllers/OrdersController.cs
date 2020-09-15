@@ -45,7 +45,7 @@ namespace Care_UP.Controllers
 
             ModelState.Remove("Status");
             DateTime startDate = (DateTime)orders.StartDate;
-            DateTime endDate = (DateTime)orders.EndDate;
+            DateTime endDate = (DateTime)orders.EndDate.AddDays(1);
             TimeSpan tsDate = endDate - startDate;
 
             Attendants attendants = db.Attendants.Find(orders.AttendantId);

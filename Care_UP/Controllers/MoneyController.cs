@@ -31,7 +31,7 @@ namespace Care_UP.Controllers
             HashKey = "6gfdegvpE7wwJ2zKz9GpxxVCijHgFPvz",
             HashIV = "Cxyx7qJ1IdkQNyFP",
             ReturnURL = "http://careup.rocket-coding.com", //給前台
-            NotifyURL = "https://careup.rocket-coding.com/SpgatewayNotify", //隱藏執行欄位 給資料庫
+            NotifyURL = "http://careup.rocket-coding.com/SpgatewayNotify", //隱藏執行欄位 給資料庫
             CustomerURL = "http://yourWebsitUrl/Bank/SpgatewayNotify",
             AuthUrl = "https://ccore.spgateway.com/MPG/mpg_gateway",
             CloseUrl = "https://core.newebpay.com/API/CreditCard/Close"

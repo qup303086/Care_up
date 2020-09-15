@@ -55,6 +55,9 @@
       <HintPath>..\packages\jose-jwt.2.5.0\lib\net461\jose-jwt.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcPaging, Version=2.1.13.46, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcPaging.2.1.13\lib\net40\MvcPaging.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -140,6 +143,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Backend\BackendAreaRegistration.cs" />
+    <Compile Include="Areas\Backend\Controllers\OrdersController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -266,9 +270,18 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="css\sb-admin-2.css" />
+    <Content Include="css\sb-admin-2.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="img\undraw_posting_photo.svg" />
+    <Content Include="js\demo\chart-area-demo.js" />
+    <Content Include="js\demo\chart-bar-demo.js" />
+    <Content Include="js\demo\chart-pie-demo.js" />
+    <Content Include="js\demo\datatables-demo.js" />
+    <Content Include="js\sb-admin-2.js" />
+    <Content Include="js\sb-admin-2.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -297,6 +310,10 @@
     <Content Include="Areas\Backend\Views\web.config" />
     <Content Include="Areas\Backend\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Backend\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Backend\Views\Orders\Delete.cshtml" />
+    <Content Include="Areas\Backend\Views\Orders\Details.cshtml" />
+    <Content Include="Areas\Backend\Views\Orders\Edit.cshtml" />
+    <Content Include="Areas\Backend\Views\Orders\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -319,7 +336,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Backend\Controllers\" />
     <Folder Include="Areas\Backend\Data\" />
   </ItemGroup>
   <ItemGroup>
