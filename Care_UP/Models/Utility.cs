@@ -347,5 +347,14 @@ namespace Care_UP.Models
             }
             return a;
         }
+
+        public static double Star(double? averge)
+        {
+            if (averge==null)
+            {
+                return 0;
+            }
+            return Math.Round(averge.Value, 1, MidpointRounding.AwayFromZero);
+        }
     }
 }
