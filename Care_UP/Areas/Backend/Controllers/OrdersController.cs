@@ -15,31 +15,31 @@ namespace Care_UP.Areas.Backend.Controllers
     {
         private Model1 db = new Model1();
 
-        private const int DefaultPagerSize = 2;
+        private const int DefaultPagerSize = 5;
 
         // GET: admin/Members
         public ActionResult Index(int? page) //int 接頁數第?頁
         {
             int user_page = page.HasValue ? page.Value - 1 : 0;
           
-            DateTime? StartDate = Session["StartDate"] != null ? (DateTime?)Session["StartDate"] : null;
-            DateTime? EndDate = Session["EndDate"] != null ? (DateTime?)Session["EndDate"] : null;
+            DateTime? date_start = Session["date_start"] != null ? (DateTime?)Session["date_start"] : null;
+            DateTime? date_end = Session["date_end"] != null ? (DateTime?)Session["date_end"] : null;
 
-            var result = db.Orders.AsQueryable(); //AsQueryable只是一段SQL語法
-
-            if (StartDate.HasValue && EndDate.HasValue) //起始 結束都要有值(結束時間一定要多加一天)
+            var result = db.Orders.AsQueryable().Where(x=>x.Status=="13" &&x.Status=="12"); //AsQueryable只是一段SQL語法
+        
+            if (date_start.HasValue && date_end.HasValue) //起始 結束都要有值(結束時間一定要多加一天)
             {
-                EndDate = EndDate.Value.AddDays(1); //系統預設起始時間是從0:00 開始算EX:搜尋8/1-8/3 搜尋結果會是8/1 0:00 - 8/3 0:00
-                result = result.Where(x => x.InitDate >= StartDate && x.InitDate <= EndDate);
+                date_end = date_end.Value.AddDays(1); //系統預設起始時間是從0:00 開始算EX:搜尋8/1-8/3 搜尋結果會是8/1 0:00 - 8/3 0:00
+                result = result.Where(x => x.InitDate >= date_start && x.InitDate <= date_end);
             }
             return View(result.ToList().ToPagedList(user_page, DefaultPagerSize));
         }
 
         [HttpPost]
-        public ActionResult Index(DateTime? StartDate, DateTime? EndDate)
+        public ActionResult Index(DateTime? date_start, DateTime? date_end)
         {
-            Session["StartDate"] = StartDate;
-            Session["EndDate"] = EndDate;
+            Session["date_start"] = date_start;
+            Session["date_end"] = date_end;
             return RedirectToAction("Index");
         }
 
@@ -83,7 +83,7 @@ namespace Care_UP.Areas.Backend.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ElderId,AttendantId,StartDate,EndDate,StopDate,Total,Comment,Star,Cancel,InitDate,EditDate,Status")] Orders orders)
+        public ActionResult Edit([Bind(Include = "Id,ElderId,AttendantId,date_start,date_end,StopDate,Total,Comment,Star,Cancel,InitDate,EditDate,Status")] Orders orders)
         {
             if (ModelState.IsValid)
             {
