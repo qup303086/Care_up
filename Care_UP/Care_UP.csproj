@@ -232,14 +232,6 @@
     <Compile Include="Migrations\202009100622122_金流.Designer.cs">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009140616440_carerecord去掉writetime.cs" />
-    <Compile Include="Migrations\202009140616440_carerecord去掉writetime.Designer.cs">
-      <DependentUpon>202009140616440_carerecord去掉writetime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009150842351_增加QA用的資料表.cs" />
-    <Compile Include="Migrations\202009150842351_增加QA用的資料表.Designer.cs">
-      <DependentUpon>202009150842351_增加QA用的資料表.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
     <Compile Include="Models\BankInfoModel.cs" />
@@ -321,6 +313,7 @@
     <Content Include="Areas\Backend\Views\Orders\Details.cshtml" />
     <Content Include="Areas\Backend\Views\Orders\Edit.cshtml" />
     <Content Include="Areas\Backend\Views\Orders\Index.cshtml" />
+    <Content Include="App_Code\UIhelper.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -398,12 +391,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009100622122_金流.resx">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009140616440_carerecord去掉writetime.resx">
-      <DependentUpon>202009140616440_carerecord去掉writetime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009150842351_增加QA用的資料表.resx">
-      <DependentUpon>202009150842351_增加QA用的資料表.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
