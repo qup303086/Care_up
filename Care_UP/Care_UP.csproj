@@ -55,6 +55,9 @@
       <HintPath>..\packages\jose-jwt.2.5.0\lib\net461\jose-jwt.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcPaging, Version=2.1.13.46, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcPaging.2.1.13\lib\net40\MvcPaging.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -140,6 +143,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Backend\BackendAreaRegistration.cs" />
+    <Compile Include="Areas\Backend\Controllers\OrdersController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -227,9 +231,9 @@
     <Compile Include="Migrations\202009100622122_金流.Designer.cs">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009140312107_移除order的starttime問號移除detaildate新增carerecord欄位remark.cs" />
-    <Compile Include="Migrations\202009140312107_移除order的starttime問號移除detaildate新增carerecord欄位remark.Designer.cs">
-      <DependentUpon>202009140312107_移除order的starttime問號移除detaildate新增carerecord欄位remark.cs</DependentUpon>
+    <Compile Include="Migrations\202009140616440_carerecord去掉writetime.cs" />
+    <Compile Include="Migrations\202009140616440_carerecord去掉writetime.Designer.cs">
+      <DependentUpon>202009140616440_carerecord去掉writetime.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
@@ -306,6 +310,10 @@
     <Content Include="Areas\Backend\Views\web.config" />
     <Content Include="Areas\Backend\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Backend\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Backend\Views\Orders\Delete.cshtml" />
+    <Content Include="Areas\Backend\Views\Orders\Details.cshtml" />
+    <Content Include="Areas\Backend\Views\Orders\Edit.cshtml" />
+    <Content Include="Areas\Backend\Views\Orders\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -328,7 +336,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Backend\Controllers\" />
     <Folder Include="Areas\Backend\Data\" />
   </ItemGroup>
   <ItemGroup>
@@ -385,8 +392,8 @@
     <EmbeddedResource Include="Migrations\202009100622122_金流.resx">
       <DependentUpon>202009100622122_金流.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009140312107_移除order的starttime問號移除detaildate新增carerecord欄位remark.resx">
-      <DependentUpon>202009140312107_移除order的starttime問號移除detaildate新增carerecord欄位remark.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009140616440_carerecord去掉writetime.resx">
+      <DependentUpon>202009140616440_carerecord去掉writetime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

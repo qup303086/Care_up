@@ -7,13 +7,13 @@ namespace Care_UP.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class 移除order的starttime問號移除detaildate新增carerecord欄位remark : IMigrationMetadata
+    public sealed partial class carerecord去掉writetime : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(移除order的starttime問號移除detaildate新增carerecord欄位remark));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(carerecord去掉writetime));
         
         string IMigrationMetadata.Id
         {
-            get { return "202009140312107_移除order的starttime問號移除detaildate新增carerecord欄位remark"; }
+            get { return "202009140616440_carerecord去掉writetime"; }
         }
         
         string IMigrationMetadata.Source

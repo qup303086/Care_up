@@ -45,7 +45,7 @@ namespace Care_UP.Controllers
 
             ModelState.Remove("Status");
             DateTime startDate = (DateTime)orders.StartDate;
-            DateTime endDate = (DateTime)orders.EndDate;
+            DateTime endDate = (DateTime)orders.EndDate.AddDays(1);
             TimeSpan tsDate = endDate - startDate;
 
             Attendants attendants = db.Attendants.Find(orders.AttendantId);
@@ -175,7 +175,7 @@ namespace Care_UP.Controllers
             {
                 var orders = order.Select(x => new
                 {
-
+                    x,
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate =x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
@@ -509,11 +509,11 @@ namespace Care_UP.Controllers
             {
                 foreach (var item in Records)
                 {
-                    if (item.WriteTime.ToString("yyyy-MM-dd")==careRecords.WriteTime.ToString("yyyy-MM-dd"))
+                    if (item.InitDate.Value.ToString("yyyy-MM-dd") == DateTime.Now.ToString("yyyy-MM-dd"))
                     {
                         return Ok(new
                         {
-                            message = item.WriteTime.ToString("yyyy-MM-dd") +"的照護紀錄已經填過囉"
+                            message = item.InitDate.Value.ToString("yyyy-MM-dd") + "的照護紀錄已經填過囉"
                         });
                     }
                 }
@@ -521,7 +521,7 @@ namespace Care_UP.Controllers
             careRecords.InitDate=DateTime.Now;
             db.CareRecords.Add(careRecords);
             
-            string date = careRecords.WriteTime.ToString("yyyy-MM-dd");
+            string date = careRecords.InitDate.Value.ToString("yyyy-MM-dd");
             db.SaveChanges();
             return Ok(new
             {
@@ -544,9 +544,9 @@ namespace Care_UP.Controllers
             }
             var records = careRecords.Select(x => new
             {
-                date = x.WriteTime.ToString("yyyy-MM-dd"),
+                date = x.InitDate.Value.ToString("yyyy-MM-dd"),
                 mood = x.Mood,
-                time = x.WriteTime.ToString("HH:mm"),
+                time = x.InitDate.Value.ToString("HH:mm"),
                 remark = x.Remark
             });
 
