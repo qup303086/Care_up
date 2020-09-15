@@ -178,8 +178,8 @@ namespace Care_UP.Controllers
                     x,
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate =x.EndDate.ToString("yyyy-MM-dd"),
-                    OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
-
+                    OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
+                    status =Utility.OrderStatus(x.Status) 
                 });
                 return Ok(orders);
             }
@@ -356,7 +356,18 @@ namespace Care_UP.Controllers
                     message = "尚無需要填寫評價的訂單"
                 });
             }
-            return Ok(orders);
+            var order = orders.Select(x => new
+            {
+                x,
+                initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
+                startTime = x.StartDate.ToString("yyyy-MM-dd"),
+                endTime = x.EndDate.ToString("yyyy-MM-dd"),
+                status = Utility.OrderStatus(x.Status)
+            });
+            return Ok(new
+            {
+                order
+            });
         }
         [Route("AttendantsOrder04")]
         [HttpGet]
@@ -374,6 +385,9 @@ namespace Care_UP.Controllers
             var order = orders.Select(x => new
             {
                 x,
+                initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
+                startTime = x.StartDate.ToString("yyyy-MM-dd"),
+                endTime = x.EndDate.ToString("yyyy-MM-dd"),
                 status = Utility.Attendant04Status(x.Status)
             });
             return Ok(order);
@@ -398,6 +412,7 @@ namespace Care_UP.Controllers
             var order = orders.Select(x=>new
             {
                 x,
+                initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
                 status = Utility.OrderStatus(x.Status)
             });
 
@@ -424,6 +439,7 @@ namespace Care_UP.Controllers
             var order = orders.Select(x => new
             {
                 x,
+                initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
                 status = Utility.Attendant04Status(x.Status)
             });
 
@@ -452,7 +468,8 @@ namespace Care_UP.Controllers
 
             return Ok(new
             {
-                order, 
+                order,
+                initTime = order.InitDate.Value.ToString("yyyy-MM-dd"),
                 AttendantsService = Utility.Service(order.Attendants.Service),
                 AttendantsServiceTime = Utility.ServiceTime(order.Attendants.ServiceTime),
                 date,

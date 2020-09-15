@@ -43,7 +43,7 @@ namespace Care_UP.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult City(int Id)
         {
-            List<Locations> locationses = db.Locations.Where(x=>x.CityId==Id).ToList();
+            List<Locations> locationses = db.Locations.Where(x => x.CityId == Id).ToList();
             List<Attendants> attendant = db.Attendants.Include(x => x.Locationses)
                 .Where(x => x.Locationses.Where(y => y.CityId == Id).Count() > 0).ToList();
 
@@ -54,9 +54,16 @@ namespace Care_UP.Controllers
                 服務時段 = Utility.ServiceTime(x.ServiceTime)
             });
 
+            int[] attendantID = new int[attendants.Count()];
+
+            var selectAtt = db.Orders.GroupBy(x => x.AttendantId).ToList();
+
+
+
+
             return Ok(new
             {
-                attendants,
+
                 locationses
             });
         }
@@ -67,7 +74,7 @@ namespace Care_UP.Controllers
         {
             List<Attendants> attendant = db.Attendants.Include(x => x.Locationses)
                 .Where(x => x.Locationses.Where(y => y.Id == Id).Count() > 0).ToList();
-            if (attendant.Count==0)
+            if (attendant.Count == 0)
             {
                 return Ok(new
                 {
@@ -83,16 +90,16 @@ namespace Care_UP.Controllers
                     服務時段 = Utility.ServiceTime(x.ServiceTime)
 
                 });
-                
+
                 return Ok(new
                 {
                     attendants
                 });
             }
-         
+
         }
-        
-        
+
+
         [ResponseType(typeof(Orders))]
         [HttpGet]
         [Route("GetAttendat")]
@@ -136,13 +143,13 @@ namespace Care_UP.Controllers
             //}
 
             List<string> date = new List<string>();
-            var orderDate = orders.Where(x=>x.Status=="10"||x.Status=="11"||x.Status=="12"||x.Status=="22")
+            var orderDate = orders.Where(x => x.Status == "10" || x.Status == "11" || x.Status == "12" || x.Status == "22")
                 .Select(x => new
-            {
-                x.StartDate,
-                x.EndDate
-            });
-            if (orderDate.Count()!=0)
+                {
+                    x.StartDate,
+                    x.EndDate
+                });
+            if (orderDate.Count() != 0)
             {
                 foreach (var item in orderDate)
                 {
@@ -152,7 +159,7 @@ namespace Care_UP.Controllers
                         date.Add(item.StartDate.AddDays(i).ToString("yyyy-MM-dd"));
                     }
                 }
-                
+
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, new
