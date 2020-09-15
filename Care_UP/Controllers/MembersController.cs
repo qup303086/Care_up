@@ -107,7 +107,7 @@ namespace Care_UP.Controllers
         {
             Members members = db.Members.Where(x => x.Id == Id).FirstOrDefault();
 
-            if (members.Id != null)
+            if (members!= null)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { result = members.Email });
             }
@@ -121,7 +121,7 @@ namespace Care_UP.Controllers
         {
            Attendants attendants = db.Attendants.Where(x => x.Id == Id).FirstOrDefault();
 
-            if (attendants.Id != null)
+            if (attendants!= null)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { result = attendants.Email });
             }
