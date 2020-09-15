@@ -178,6 +178,7 @@
     <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\MoneyController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\ShowSearchController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -235,9 +236,14 @@
     <Compile Include="Migrations\202009140616440_carerecord去掉writetime.Designer.cs">
       <DependentUpon>202009140616440_carerecord去掉writetime.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009150842351_增加QA用的資料表.cs" />
+    <Compile Include="Migrations\202009150842351_增加QA用的資料表.Designer.cs">
+      <DependentUpon>202009150842351_增加QA用的資料表.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
     <Compile Include="Models\BankInfoModel.cs" />
+    <Compile Include="Models\QuestionAnswer.cs" />
     <Compile Include="Models\FillinCommentView.cs" />
     <Compile Include="Models\OrderReject.cs" />
     <Compile Include="Models\MemberView.cs" />
@@ -395,6 +401,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009140616440_carerecord去掉writetime.resx">
       <DependentUpon>202009140616440_carerecord去掉writetime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009150842351_增加QA用的資料表.resx">
+      <DependentUpon>202009150842351_增加QA用的資料表.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
