@@ -17,6 +17,12 @@ namespace Care_UP.Controllers
         private Model1 db = new Model1();
 
 
+        [Route("Quiz")]
+
+        public IHttpActionResult Quiz(int MemberID)
+        {
+            return Ok();
+        }
 
         protected override void Dispose(bool disposing)
         {
