@@ -247,6 +247,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
     <Compile Include="Models\BankInfoModel.cs" />
+    <Compile Include="Models\OrderView.cs" />
     <Compile Include="Models\QuestionAnswer.cs" />
     <Compile Include="Models\FillinCommentView.cs" />
     <Compile Include="Models\OrderReject.cs" />
@@ -325,6 +326,7 @@
     <Content Include="Areas\Backend\Views\Orders\Details.cshtml" />
     <Content Include="Areas\Backend\Views\Orders\Edit.cshtml" />
     <Content Include="Areas\Backend\Views\Orders\Index.cshtml" />
+    <Content Include="App_Code\UIhelper.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

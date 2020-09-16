@@ -142,6 +142,7 @@ namespace Care_UP.Controllers
             }
             members.PasswordSalt = Utility.CreateSalt();
             members.Password = Utility.GenerateHashWithSalt(password.Password, members.PasswordSalt);
+
             db.Entry(members).State = EntityState.Modified;
             db.SaveChanges();
 

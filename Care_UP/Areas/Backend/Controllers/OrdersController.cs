@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Care_UP.Models;
+using Microsoft.Ajax.Utilities;
 using MvcPaging;
 
 namespace Care_UP.Areas.Backend.Controllers
@@ -19,14 +20,20 @@ namespace Care_UP.Areas.Backend.Controllers
 
         // GET: admin/Members
         public ActionResult Index(int? page) //int 接頁數第?頁
-        {
+        { 
+            
+            var result = db.Orders.AsQueryable();
             int user_page = page.HasValue ? page.Value - 1 : 0;
-          
+            string order = Session["order"] != null ? (string)Session["order"] : null;
             DateTime? date_start = Session["date_start"] != null ? (DateTime?)Session["date_start"] : null;
             DateTime? date_end = Session["date_end"] != null ? (DateTime?)Session["date_end"] : null;
 
-            var result = db.Orders.AsQueryable().Where(x=>x.Status=="13" &&x.Status=="12"); //AsQueryable只是一段SQL語法
-        
+            ViewBag.order = order;
+            //Where(x=>x.Status=="13"||x.Status=="02"); 
+            if (string.IsNullOrEmpty(order))
+            {
+                result = result.Where(x => x.Status == order);
+            }
             if (date_start.HasValue && date_end.HasValue) //起始 結束都要有值(結束時間一定要多加一天)
             {
                 date_end = date_end.Value.AddDays(1); //系統預設起始時間是從0:00 開始算EX:搜尋8/1-8/3 搜尋結果會是8/1 0:00 - 8/3 0:00
@@ -36,8 +43,9 @@ namespace Care_UP.Areas.Backend.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(DateTime? date_start, DateTime? date_end)
+        public ActionResult Index(OrderType? order,DateTime? date_start, DateTime? date_end)
         {
+            Session["order"] = order;
             Session["date_start"] = date_start;
             Session["date_end"] = date_end;
             return RedirectToAction("Index");
@@ -83,11 +91,12 @@ namespace Care_UP.Areas.Backend.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ElderId,AttendantId,date_start,date_end,StopDate,Total,Comment,Star,Cancel,InitDate,EditDate,Status")] Orders orders)
+        public ActionResult Edit([Bind(Include = "Id,ElderId,AttendantId,date_start,date_end,StopDate,Total,Comment,Star,Cancel,InitDate,EditDate,Status,StartDate,EndDate")] Orders orders)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(orders).State = EntityState.Modified;
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

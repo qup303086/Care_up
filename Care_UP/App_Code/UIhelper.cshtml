@@ -1,0 +1,15 @@
+﻿@helper OrdeResult(string Status)
+{
+    if (Status.IndexOf("13")>-1)
+    {
+        @Status@:待收款
+    }
+    else
+    {
+        @:已完成
+    }
+}
+@helper Orderdowpdown(string Status)
+{
+    
+}
