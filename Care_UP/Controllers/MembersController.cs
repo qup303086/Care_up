@@ -67,7 +67,7 @@ namespace Care_UP.Controllers
                 attendants.PasswordSalt = Utility.CreateSalt(); //產生密碼鹽
                 attendants.Password = Utility.GenerateHashWithSalt(attendants.Password, attendants.PasswordSalt);//密碼+密碼鹽
                 attendants.InitDate = DateTime.Now;
-                attendants.Status = "02";
+                attendants.Status = Whether.否;
                 db.Attendants.Add(attendants);
 
                 db.SaveChanges();
