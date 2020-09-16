@@ -471,7 +471,7 @@ namespace Care_UP.Controllers
                 order,
                 initTime = order.InitDate.Value.ToString("yyyy-MM-dd"),
                 AttendantsService = Utility.Service(order.Attendants.Service),
-                AttendantsServiceTime = Utility.ServiceTime(order.Attendants.ServiceTime),
+                AttendantsServiceTime =Enum.Parse(typeof(ServiceTime), order.Attendants.ServiceTime.ToString()).ToString(),
                 date,
                 EldersBody = Utility.EldersBody(order.Elders.Body),
                 EldersEquipment = Utility.EldersEquipment(order.Elders.Equipment),

@@ -53,7 +53,7 @@ namespace Care_UP.Models
         public string File { get; set; }
 
         [Display(Name = "服務時段")]
-        public string ServiceTime { get; set; }
+        public ServiceTime ServiceTime { get; set; }
 
         [Display(Name = "經驗")]
         public string Experience { get; set; }
@@ -74,7 +74,7 @@ namespace Care_UP.Models
         public DateTime? EditDate { set; get; }
 
         [Display(Name = "是否開啟基本資料")]
-        public string Status { get; set; }
+        public Whether Status { get; set; }
 
         public ICollection<Locations> Locationses { get; set; }
     }
