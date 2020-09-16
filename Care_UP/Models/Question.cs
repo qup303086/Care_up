@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace Care_UP.Models
 {
@@ -28,5 +29,8 @@ namespace Care_UP.Models
 
         [Display(Name = "提問日期")]
         public DateTime? InitDateTime { get; set; }
+
+       
+        public virtual ICollection<QuestionAnswer> QuestionAnswers { get; set; }
     }
 }

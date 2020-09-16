@@ -129,7 +129,7 @@ namespace Care_UP.Models
             switch (timeCode)
             {
                 case "01":
-                    timeCode = "白天(09:00-18:00";
+                    timeCode = "白天(09:00-18:00)";
                     break;
 
                 case "02":
