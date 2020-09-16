@@ -19,20 +19,20 @@ namespace Care_UP.Areas.Backend.Controllers
         private const int DefaultPagerSize = 5;
 
         // GET: admin/Members
-        public ActionResult Index(int? page) //int 接頁數第?頁
-        { 
-            
+        public ActionResult Index(int? page,OrderView orderView) //int 接頁數第?頁
+        {
+
             var result = db.Orders.AsQueryable();
             int user_page = page.HasValue ? page.Value - 1 : 0;
-            string order = Session["order"] != null ? (string)Session["order"] : null;
+            OrderType? order = Session["order"] != null ? (OrderType?)Session["order"] : null;
             DateTime? date_start = Session["date_start"] != null ? (DateTime?)Session["date_start"] : null;
             DateTime? date_end = Session["date_end"] != null ? (DateTime?)Session["date_end"] : null;
 
-            ViewBag.order = order;
+
             //Where(x=>x.Status=="13"||x.Status=="02"); 
-            if (string.IsNullOrEmpty(order))
+            if (order.HasValue)
             {
-                result = result.Where(x => x.Status == order);
+                //result = result.Where(x => x.Status == );
             }
             if (date_start.HasValue && date_end.HasValue) //起始 結束都要有值(結束時間一定要多加一天)
             {
@@ -43,7 +43,7 @@ namespace Care_UP.Areas.Backend.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(OrderType? order,DateTime? date_start, DateTime? date_end)
+        public ActionResult Index(OrderType? order, DateTime? date_start, DateTime? date_end)
         {
             Session["order"] = order;
             Session["date_start"] = date_start;
@@ -66,9 +66,9 @@ namespace Care_UP.Areas.Backend.Controllers
             return View(orders);
         }
 
-    
 
-       
+
+
         // GET: Backend/Orders/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -96,7 +96,7 @@ namespace Care_UP.Areas.Backend.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(orders).State = EntityState.Modified;
-                
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
