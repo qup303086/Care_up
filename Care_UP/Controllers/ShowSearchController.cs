@@ -30,8 +30,8 @@ namespace Care_UP.Controllers
                 .Where(x => x.Locationses.Where(y => y.CityId == Id).Count() > 0).ToList();
 
             List<Orders> allOrderses = db.Orders.ToList();
-
-            var attendants = attendant.Select(x => new
+            
+            var attendants = attendant.Where(x => x.Status == "02").Select(x => new
             {
                 attendantId = x.Id,
                 name = x.Name,
@@ -41,6 +41,7 @@ namespace Care_UP.Controllers
                 file = x.File,
                 服務項目 = Utility.Service(x.Service),
                 服務時段 = Utility.ServiceTime(x.ServiceTime),
+                count = allOrderses.Where(z=>z.AttendantId==x.Id).Where(z=>z.Comment!=null&&z.Star!=null).Count(),
                 star = Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average())
             }).ToList();
 
@@ -71,7 +72,7 @@ namespace Care_UP.Controllers
 
             List<Orders> allOrderses = db.Orders.ToList();
 
-            var attendants = attendant.Select(x => new
+            var attendants = attendant.Where(x => x.Status == "02").Select(x => new
             {
                 attendantId = x.Id,
                 name = x.Name,
@@ -81,8 +82,14 @@ namespace Care_UP.Controllers
                 file = x.File,
                 服務項目 = Utility.Service(x.Service),
                 服務時段 = Utility.ServiceTime(x.ServiceTime),
+<<<<<<< HEAD
                 star = Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average())
             }).ToList();
+=======
+                count = allOrderses.Where(z => z.AttendantId == x.Id).Where(z => z.Comment != null && z.Star != null).Count(),
+                star =Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average()) 
+                }).ToList();
+>>>>>>> master
 
             return Ok(new
             {
@@ -106,7 +113,7 @@ namespace Care_UP.Controllers
             }
             List<Orders> allOrderses = db.Orders.ToList();
 
-            var attendants = attendant.Select(x => new
+            var attendants = attendant.Where(x=>x.Status=="02").Select(x => new
             {
                 attendantId = x.Id,
                 name = x.Name,
@@ -116,6 +123,7 @@ namespace Care_UP.Controllers
                 file = x.File,
                 服務項目 = Utility.Service(x.Service),
                 服務時段 = Utility.ServiceTime(x.ServiceTime),
+                count = allOrderses.Where(z => z.AttendantId == x.Id).Where(z => z.Comment != null && z.Star != null).Count(),
                 star = Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average())
             }).ToList();
 
@@ -129,46 +137,18 @@ namespace Care_UP.Controllers
 
         [ResponseType(typeof(Orders))]
         [HttpGet]
-        [Route("GetAttendat")]
-        public HttpResponseMessage GetAttendat(int id)//attendent.Id
+        [Route("SelectAttendant")]
+        public HttpResponseMessage SelectAttendant(int id)//attendent.Id
         {
             Attendants attendantDetails = db.Attendants.Include(x => x.Locationses).Where(x => x.Id == id).FirstOrDefault();
+            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id).ToList();
             var area = attendantDetails.Locationses.GroupBy(x => x.Area).Select(x => new
             {
                 x.Key,
-                city = x.Where(y => y.Area == x.Key).Select(y => y.Cities)
+                city = x.Where(y => y.Area == x.Key).Select(y => y.Cities),
+                star= Utility.Star(orders.Select(y => y.Star).Average())
             });
-
-            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id).ToList();
-            var attendant = orders.Where(x => x.AttendantId == id).GroupBy(x => x.Id).Select(x => new
-            {
-                Id = x.Key,
-                star = x.Where(y => y.Id == x.Key).Select(y => y.Star).Average()
-            });
-            double? sum = 0;
-            int star = 0;
-            if (attendant.Count() != 0)
-            {
-                foreach (var item in attendant)
-                {
-                    if (item.star != null)
-                    {
-                        sum += item.star;
-                    }
-                }
-                star = Convert.ToInt32(sum / attendant.Count());
-            }
-
-            //DateTime Starttime = (DateTime)db.Orders.Where(x => x.AttendantId == id).Select(x => x.StartDate).Min();
-            //DateTime Endtime = (DateTime)db.Orders.Where(x => x.AttendantId == id).Select(x => x.EndDate).Max();
-
-            //TimeSpan Alldate = Endtime - Starttime;
-            //List<string> date = new List<string>();
-            //for (int i = 0; i <= Convert.ToInt32(Alldate.Days); i++)
-            //{
-            //    date.Add(Starttime.AddDays(i).ToString("yyyy-MM-dd"));
-            //}
-
+            
             List<string> date = new List<string>();
             var orderDate = orders.Where(x => x.Status == OrderType.等待照服員確認訂單 ||x.Status == OrderType.待付款 ||x.Status == OrderType.已付款 ||x.Status == OrderType.服務進行中)
                 .Select(x => new
@@ -186,22 +166,31 @@ namespace Care_UP.Controllers
                         date.Add(item.StartDate.AddDays(i).ToString("yyyy-MM-dd"));
                     }
                 }
-
             }
+
+            var allcomment = orders.Where(x => x.Star != null && x.Comment != null).Select(comments => new
+            {
+                memeber =  comments.Elders.Members.Email.Substring(0,4)+"xxxxxxx",
+                star = comments.Star,
+                comment = comments.Comment
+            }).ToList();
+
+            var quiz = db.Questions.Include(x=>x.QuestionAnswers).Where(x=>x.AttendantId==id).ToList();
 
             return Request.CreateResponse(HttpStatusCode.OK, new
             {
                 attendantDetails,
+                count = orders.Where(z => z.Comment != null && z.Star != null).Count(),
                 服務項目 = Utility.Service(attendantDetails.Service),
                 服務時段 = Utility.ServiceTime(attendantDetails.ServiceTime),
                 已被預約的日期 = date,
-                star,
-                area
+                area,
+                allcomment,
+                quiz
             });
         }
 
-
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
