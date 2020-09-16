@@ -107,7 +107,7 @@ namespace Care_UP.Controllers
         {
             Members members = db.Members.Where(x => x.Id == Id).FirstOrDefault();
 
-            if (members.Id != null)
+            if (members!= null)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { result = members.Email });
             }
@@ -121,7 +121,7 @@ namespace Care_UP.Controllers
         {
            Attendants attendants = db.Attendants.Where(x => x.Id == Id).FirstOrDefault();
 
-            if (attendants.Id != null)
+            if (attendants!= null)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, new { result = attendants.Email });
             }
@@ -141,7 +141,8 @@ namespace Care_UP.Controllers
 
             }
             members.PasswordSalt = Utility.CreateSalt();
-            members.Password = Utility.GenerateHashWithSalt(members.Password, members.PasswordSalt);
+            members.Password = Utility.GenerateHashWithSalt(password.Password, members.PasswordSalt);
+            
             db.Entry(members).State = EntityState.Modified;
             db.SaveChanges();
 
@@ -160,7 +161,7 @@ namespace Care_UP.Controllers
 
             }
             attendants.PasswordSalt = Utility.CreateSalt();
-            attendants.Password = Utility.GenerateHashWithSalt(attendants.Password, attendants.PasswordSalt);
+            attendants.Password = Utility.GenerateHashWithSalt(password.Password, attendants.PasswordSalt);
             db.Entry(attendants).State = EntityState.Modified;
             db.SaveChanges();
 

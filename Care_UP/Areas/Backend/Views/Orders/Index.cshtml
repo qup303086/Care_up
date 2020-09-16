@@ -12,6 +12,11 @@
 @using (Html.BeginForm())
 {
     <div>
+        <label for="Order">訂單搜尋:</label>
+        @Html.DropDownList("Order", new SelectList(UIhelper.OrdeResult(ViewBag.order)), "請選擇"@*,new {@class="from-control"}*@)
+    </div>
+
+    <div>
         <label>日期搜尋:</label>
         <input type="date" name="date_start" value="" />
         <input type="date" name="date_end" value="" />
@@ -96,7 +101,8 @@
                 @Html.DisplayFor(modelItem => item.EditDate)
             </td>
             <td>
-                @UIhelper.OrdeResult(item.Status)
+                @Html.DisplayFor(modelItem => item.Status)
+                @*@UIhelper.OrdeResult(item.Status)*@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

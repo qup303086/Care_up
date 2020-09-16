@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.UI.WebControls;
 using Care_UP.Models;
 
 namespace Care_UP.Controllers
@@ -22,20 +24,31 @@ namespace Care_UP.Controllers
         {
             int Id = 15;
             List<Cities> cities = db.Cities.ToList();
+            List<Locations> locationses = db.Locations.Where(x => x.CityId == Id).ToList();
+
             List<Attendants> attendant = db.Attendants.Include(x => x.Locationses)
                 .Where(x => x.Locationses.Where(y => y.CityId == Id).Count() > 0).ToList();
 
+            List<Orders> allOrderses = db.Orders.ToList();
+
             var attendants = attendant.Select(x => new
             {
-                x,
+                attendantId = x.Id,
+                name = x.Name,
+                salary = x.Salary,
+                experience = x.Experience,
+                photo = x.Photo,
+                file = x.File,
                 服務項目 = Utility.Service(x.Service),
-                服務時段 = Utility.ServiceTime(x.ServiceTime)
-            });
+                服務時段 = Utility.ServiceTime(x.ServiceTime),
+                star = Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average())
+            }).ToList();
 
             return Ok(new
             {
                 attendants,
-                cities
+                cities,
+                locationses
             });
         }
 
@@ -44,26 +57,36 @@ namespace Care_UP.Controllers
         public IHttpActionResult City(int Id)
         {
             List<Locations> locationses = db.Locations.Where(x => x.CityId == Id).ToList();
+
             List<Attendants> attendant = db.Attendants.Include(x => x.Locationses)
                 .Where(x => x.Locationses.Where(y => y.CityId == Id).Count() > 0).ToList();
 
+            if (attendant.Count == 0)
+            {
+                return Ok(new
+                {
+                    message = "尚無照服員登記於此地區服務"
+                });
+            }
+
+            List<Orders> allOrderses = db.Orders.ToList();
+
             var attendants = attendant.Select(x => new
             {
-                x,
+                attendantId = x.Id,
+                name = x.Name,
+                salary = x.Salary,
+                experience = x.Experience,
+                photo = x.Photo,
+                file = x.File,
                 服務項目 = Utility.Service(x.Service),
-                服務時段 = Utility.ServiceTime(x.ServiceTime)
-            });
-
-            int[] attendantID = new int[attendants.Count()];
-
-            var selectAtt = db.Orders.GroupBy(x => x.AttendantId).ToList();
-
-
-
+                服務時段 = Utility.ServiceTime(x.ServiceTime),
+                star =Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average()) 
+                }).ToList();
 
             return Ok(new
             {
-
+                attendants,
                 locationses
             });
         }
@@ -78,24 +101,28 @@ namespace Care_UP.Controllers
             {
                 return Ok(new
                 {
-                    message = "此地區尚無照護員"
+                    message = "尚無照服員登記於此地區服務"
                 });
             }
-            else
+            List<Orders> allOrderses = db.Orders.ToList();
+
+            var attendants = attendant.Select(x => new
             {
-                var attendants = attendant.Select(x => new
-                {
-                    x,
-                    服務項目 = Utility.Service(x.Service),
-                    服務時段 = Utility.ServiceTime(x.ServiceTime)
+                attendantId = x.Id,
+                name = x.Name,
+                salary = x.Salary,
+                experience = x.Experience,
+                photo = x.Photo,
+                file = x.File,
+                服務項目 = Utility.Service(x.Service),
+                服務時段 = Utility.ServiceTime(x.ServiceTime),
+                star = Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average())
+            }).ToList();
 
-                });
-
-                return Ok(new
-                {
-                    attendants
-                });
-            }
+            return Ok(new
+            {
+                attendants
+            });
 
         }
 

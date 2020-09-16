@@ -136,7 +136,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult MemberGet11(int id)
         {
-            List<Orders> ordes = db.Orders.Where(x => x.Elders.MemberId == id).ToList();
+            List<Orders> ordes = db.Orders.Where(x => x.Elders.MemberId == id).Where(x => x.Status == "11" || x.Status == "12").ToList();
             if (ordes.Count == 0)
             {
                 return Ok(new
@@ -188,7 +188,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet11(int id)
         {
-            List<Orders> ordes = db.Orders.Where(x => x.AttendantId == id).ToList();
+            List<Orders> ordes = db.Orders.Where(x => x.AttendantId == id).Where(x => x.Status == "11" || x.Status == "12").ToList();
             if (ordes.Count == 0)
             {
                 return Ok(new
@@ -243,7 +243,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult MemberGet22(int id)
         {
-            List<Orders> ordes = db.Orders.Where(x => x.Elders.MemberId == id).ToList();
+            List<Orders> ordes = db.Orders.Where(x => x.Elders.MemberId == id).Where(x => x.Status == "11" || x.Status == "22").ToList();
             if (ordes.Count == 0)
             {
                 return Ok(new
@@ -292,7 +292,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet22(int id)
         {
-            List<Orders> ordes = db.Orders.Where(x => x.AttendantId == id).ToList();
+            List<Orders> ordes = db.Orders.Where(x => x.AttendantId == id).Where(x => x.Status == "12" || x.Status == "22").ToList();
             if (ordes.Count == 0)
             {
                 return Ok(new
@@ -587,7 +587,7 @@ namespace Care_UP.Controllers
             Orders orders = db.Orders.Find(FillinComment.Id);
             orders.Comment = FillinComment.Comment;
             orders.Star = FillinComment.Star;
-            orders.Status = "02";
+            orders.Status = "13";
             orders.EditDate = DateTime.Now;
             db.Entry(orders).State = EntityState.Modified;
             db.SaveChanges();
