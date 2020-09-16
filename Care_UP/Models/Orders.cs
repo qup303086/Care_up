@@ -30,11 +30,9 @@ namespace Care_UP.Models
 
         [Required(ErrorMessage = "{0}必填")]
         [Display(Name = "開始日期")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime StartDate { set; get; }
 
         [Required(ErrorMessage = "{0}必填")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         [Display(Name = "結束日期")]
         public DateTime EndDate { set; get; }
 
@@ -61,7 +59,6 @@ namespace Care_UP.Models
         public DateTime? InitDate { get; set; }
 
         [Display(Name = "修改時間")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime? EditDate { get; set; }
 
         [Display(Name = "訂單狀態")]
