@@ -30,8 +30,8 @@ namespace Care_UP.Controllers
                 .Where(x => x.Locationses.Where(y => y.CityId == Id).Count() > 0).ToList();
 
             List<Orders> allOrderses = db.Orders.ToList();
-
-            var attendants = attendant.Select(x => new
+            
+            var attendants = attendant.Where(x => x.Status == "02").Select(x => new
             {
                 attendantId = x.Id,
                 name = x.Name,
@@ -41,6 +41,7 @@ namespace Care_UP.Controllers
                 file = x.File,
                 服務項目 = Utility.Service(x.Service),
                 服務時段 = Utility.ServiceTime(x.ServiceTime),
+                count = allOrderses.Where(z=>z.AttendantId==x.Id).Where(z=>z.Comment!=null&&z.Star!=null).Count(),
                 star = Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average())
             }).ToList();
 
@@ -71,7 +72,7 @@ namespace Care_UP.Controllers
 
             List<Orders> allOrderses = db.Orders.ToList();
 
-            var attendants = attendant.Select(x => new
+            var attendants = attendant.Where(x => x.Status == "02").Select(x => new
             {
                 attendantId = x.Id,
                 name = x.Name,
@@ -81,6 +82,7 @@ namespace Care_UP.Controllers
                 file = x.File,
                 服務項目 = Utility.Service(x.Service),
                 服務時段 = Utility.ServiceTime(x.ServiceTime),
+                count = allOrderses.Where(z => z.AttendantId == x.Id).Where(z => z.Comment != null && z.Star != null).Count(),
                 star =Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average()) 
                 }).ToList();
 
@@ -106,7 +108,7 @@ namespace Care_UP.Controllers
             }
             List<Orders> allOrderses = db.Orders.ToList();
 
-            var attendants = attendant.Select(x => new
+            var attendants = attendant.Where(x=>x.Status=="02").Select(x => new
             {
                 attendantId = x.Id,
                 name = x.Name,
@@ -116,6 +118,7 @@ namespace Care_UP.Controllers
                 file = x.File,
                 服務項目 = Utility.Service(x.Service),
                 服務時段 = Utility.ServiceTime(x.ServiceTime),
+                count = allOrderses.Where(z => z.AttendantId == x.Id).Where(z => z.Comment != null && z.Star != null).Count(),
                 star = Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average())
             }).ToList();
 
@@ -167,20 +170,22 @@ namespace Care_UP.Controllers
                 comment = comments.Comment
             }).ToList();
 
+            var quiz = db.Questions.Include(x=>x.QuestionAnswers).Where(x=>x.AttendantId==id).ToList();
 
             return Request.CreateResponse(HttpStatusCode.OK, new
             {
                 attendantDetails,
+                count = orders.Where(z => z.Comment != null && z.Star != null).Count(),
                 服務項目 = Utility.Service(attendantDetails.Service),
                 服務時段 = Utility.ServiceTime(attendantDetails.ServiceTime),
                 已被預約的日期 = date,
                 area,
-                allcomment
+                allcomment,
+                quiz
             });
         }
 
-
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
