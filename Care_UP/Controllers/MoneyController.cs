@@ -220,7 +220,7 @@ namespace Care_UP.Controllers
                 if (pay.Status == "SUCCESS")
                 {
                     Orders orders = db.Orders.Find(pay.OrderId);
-                    orders.Status = "12";
+                    orders.Status = OrderType.已付款;
                     db.Entry(orders).State = EntityState.Modified;
 
                     db.SaveChanges();

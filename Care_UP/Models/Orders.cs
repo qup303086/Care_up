@@ -62,7 +62,7 @@ namespace Care_UP.Models
         public DateTime? EditDate { get; set; }
 
         [Display(Name = "訂單狀態")]
-        public string Status { get; set; }
+        public OrderType Status { get; set; }
 
         [Display(Name = "備註")]
         public string Remark { get; set; }

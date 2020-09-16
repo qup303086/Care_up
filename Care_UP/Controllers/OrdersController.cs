@@ -30,7 +30,7 @@ namespace Care_UP.Controllers
 
             Orders orders = db.Orders.Find(Id);
 
-            orders.Status = "01";
+            orders.Status = OrderType. 已取消;
             orders.EditDate = DateTime.Now;
             db.SaveChanges();
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單取消成功" });
@@ -58,7 +58,7 @@ namespace Care_UP.Controllers
             orders.Total = Convert.ToInt32(tsDate.Days) * attendants.Salary;
 
             orders.InitDate = DateTime.Now;
-            orders.Status = "10";
+            orders.Status = OrderType.等待照服員確認訂單;
             db.Orders.Add(orders);
             db.SaveChanges();
 
@@ -71,7 +71,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult MemberGet10(int id)
         {
-            List<Orders> order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == "10").ToList();
+            List<Orders> order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == OrderType.等待照服員確認訂單).ToList();
             if (order.Count == 0)
             {
                 return Ok(new
@@ -84,7 +84,7 @@ namespace Care_UP.Controllers
             {
                 if (DateTime.Compare(DateTime.Now, item.StartDate.AddDays(-3)) > 0)
                 {
-                    item.Status = "05";
+                    item.Status = OrderType. 照服員拒接;
                 }
             }
             
@@ -103,7 +103,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet10(int id)
         {
-            List<Orders> order = db.Orders.Where(x => x.AttendantId == id && x.Status == "10").ToList();
+            List<Orders> order = db.Orders.Where(x => x.AttendantId == id && x.Status == OrderType.等待照服員確認訂單).ToList();
             if (order.Count == 0)
             {
                 return Ok(new
@@ -115,7 +115,7 @@ namespace Care_UP.Controllers
             {
                 if (DateTime.Compare(DateTime.Now, item.StartDate.AddDays(-3)) > 0)
                 {
-                    item.Status = "05";
+                    item.Status = OrderType. 照服員拒接;
                 }
             }
 
@@ -136,7 +136,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult MemberGet11(int id)
         {
-            List<Orders> ordes = db.Orders.Where(x => x.Elders.MemberId == id).Where(x => x.Status == "11" || x.Status == "12").ToList();
+            List<Orders> ordes = db.Orders.Where(x => x.Elders.MemberId == id).Where(x => x.Status == OrderType. 待付款 || x.Status == OrderType. 已付款).ToList();
             if (ordes.Count == 0)
             {
                 return Ok(new
@@ -144,25 +144,25 @@ namespace Care_UP.Controllers
                     message = "尚無待處理訂單"
                 });
             }
-            List<Orders> order11 = ordes.Where(x => x.Status == "11").ToList();
+            List<Orders> order11 = ordes.Where(x => x.Status == OrderType. 待付款).ToList();
             foreach (Orders item in order11)
             {
                 if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
                 {
-                    item.Status = "19";
+                    item.Status = OrderType. 未於訂單開始前付款;
                 }
             }
-            List<Orders> order12 = ordes.Where(x => x.Status == "12").ToList();
+            List<Orders> order12 = ordes.Where(x => x.Status == OrderType. 已付款).ToList();
             foreach (Orders item in order12)
             {
                 if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
                 {
-                    item.Status = "22";
+                    item.Status = OrderType. 服務進行中;
                 }
             }
             db.SaveChanges();
 
-            var order = db.Orders.Where(x => x.Elders.MemberId == id).Where(x => x.Status == "11" || x.Status == "12").ToList();
+            var order = db.Orders.Where(x => x.Elders.MemberId == id).Where(x => x.Status == OrderType. 待付款 || x.Status == OrderType. 已付款).ToList();
 
             if (order.Count == 0)
             {
@@ -179,7 +179,7 @@ namespace Care_UP.Controllers
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate =x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                    status =Utility.OrderStatus(x.Status) 
+                    status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString()
                 });
                 return Ok(orders);
             }
@@ -188,7 +188,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet11(int id)
         {
-            List<Orders> ordes = db.Orders.Where(x => x.AttendantId == id).Where(x => x.Status == "11" || x.Status == "12").ToList();
+            List<Orders> ordes = db.Orders.Where(x => x.AttendantId == id).Where(x => x.Status == OrderType. 待付款 || x.Status == OrderType. 已付款).ToList();
             if (ordes.Count == 0)
             {
                 return Ok(new
@@ -196,25 +196,25 @@ namespace Care_UP.Controllers
                     message = "尚無待處理訂單"
                 });
             }
-            List<Orders> order11 = ordes.Where(x => x.Status == "11").ToList();
+            List<Orders> order11 = ordes.Where(x => x.Status == OrderType. 待付款).ToList();
             foreach (Orders item in order11)
             {
                 if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
                 {
-                    item.Status = "19";
+                    item.Status = OrderType. 未於訂單開始前付款;
                 }
             }
-            List<Orders> order12 = ordes.Where(x => x.Status == "12").ToList();
+            List<Orders> order12 = ordes.Where(x => x.Status == OrderType. 已付款).ToList();
             foreach (Orders item in order12)
             {
                 if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
                 {
-                    item.Status = "22";
+                    item.Status = OrderType. 服務進行中;
                 }
             }
             db.SaveChanges();
 
-            var order = db.Orders.Where(x => x.AttendantId == id).Where(x => x.Status == "11" || x.Status == "12").ToList();
+            var order = db.Orders.Where(x => x.AttendantId == id).Where(x => x.Status == OrderType. 待付款 || x.Status == OrderType. 已付款).ToList();
 
             if (order.Count == 0)
             {
@@ -231,7 +231,7 @@ namespace Care_UP.Controllers
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                    OrderStatus = Utility.OrderStatus(x.Status)
+                    OrderStatus = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString()
                 });
                 return Ok(orders);
             }
@@ -243,7 +243,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult MemberGet22(int id)
         {
-            List<Orders> ordes = db.Orders.Where(x => x.Elders.MemberId == id).Where(x => x.Status == "11" || x.Status == "22").ToList();
+            List<Orders> ordes = db.Orders.Where(x => x.Elders.MemberId == id).Where(x => x.Status == OrderType. 待付款 || x.Status == OrderType. 服務進行中).ToList();
             if (ordes.Count == 0)
             {
                 return Ok(new
@@ -251,26 +251,26 @@ namespace Care_UP.Controllers
                     message = "尚無進行中訂單"
                 });
             }
-            List<Orders> to22 = ordes.Where(x => x.Status == "12").ToList();
+            List<Orders> to22 = ordes.Where(x => x.Status == OrderType. 已付款).ToList();
             foreach (Orders item in to22)
             {
                 if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
                 {
-                    item.Status = "22";
+                    item.Status = OrderType. 服務進行中;
                 }
             }
 
-            List<Orders> to13 = ordes.Where(x => x.Status == "22").ToList();
+            List<Orders> to13 = ordes.Where(x => x.Status == OrderType. 服務進行中).ToList();
             foreach (Orders item in to13)
             {
                 if (DateTime.Compare(DateTime.Now, item.EndDate) > 0)
                 {
-                    item.Status = "13";
+                    item.Status = OrderType. 已完成;
                 }
             }
             db.SaveChanges();
 
-            var order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == "22").ToList();
+            var order = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == OrderType. 服務進行中).ToList();
             if (order.Count == 0)
             {
                 return Ok(new {message = "尚無進行中訂單"});
@@ -283,7 +283,7 @@ namespace Care_UP.Controllers
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                    OrderStatus = Utility.OrderStatus(x.Status)
+                    OrderStatus = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString()
                 });
                 return Ok(orders);
             }
@@ -292,7 +292,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet22(int id)
         {
-            List<Orders> ordes = db.Orders.Where(x => x.AttendantId == id).Where(x => x.Status == "12" || x.Status == "22").ToList();
+            List<Orders> ordes = db.Orders.Where(x => x.AttendantId == id).Where(x => x.Status == OrderType. 已付款 || x.Status == OrderType. 服務進行中).ToList();
             if (ordes.Count == 0)
             {
                 return Ok(new
@@ -300,26 +300,26 @@ namespace Care_UP.Controllers
                     message = "尚無進行中訂單"
                 });
             }
-            List<Orders> to22 = ordes.Where(x => x.Status == "12").ToList();
+            List<Orders> to22 = ordes.Where(x => x.Status == OrderType. 已付款).ToList();
             foreach (Orders item in to22)
             {
                 if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
                 {
-                    item.Status = "22";
+                    item.Status = OrderType. 服務進行中;
                 }
             }
 
-            List<Orders> to13 = ordes.Where(x => x.Status == "22").ToList();
+            List<Orders> to13 = ordes.Where(x => x.Status == OrderType. 服務進行中).ToList();
             foreach (Orders item in to13)
             {
                 if (DateTime.Compare(DateTime.Now, item.EndDate) > 0)
                 {
-                    item.Status = "13";
+                    item.Status = OrderType. 已完成;
                 }
             }
             db.SaveChanges();
 
-            var order = db.Orders.Where(x => x.AttendantId == id && x.Status == "22")
+            var order = db.Orders.Where(x => x.AttendantId == id && x.Status == OrderType. 服務進行中)
                 .ToList();
             if (order.Count == 0)
             {
@@ -336,7 +336,7 @@ namespace Care_UP.Controllers
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                    OrderStatus = Utility.OrderStatus(x.Status)
+                    OrderStatus = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString()
                 }); 
                 return Ok(orders);
             }
@@ -347,8 +347,8 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult MemberGet13(int id)
         {
-            List<Orders> orders = db.Orders.Where(x => x.Elders.MemberId == id && x.Comment == null)
-                .Where(x => x.Status == "13" || x.Status == "02").ToList();
+            List<Orders> orders = db.Orders.Where(x => x.Elders.MemberId == id && x.Star == null)
+                .Where(x => x.Status == OrderType. 已完成 || x.Status == OrderType. 已完成).ToList();
             if (orders.Count == 0)
             {
                 return Ok(new
@@ -362,7 +362,7 @@ namespace Care_UP.Controllers
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
                 startTime = x.StartDate.ToString("yyyy-MM-dd"),
                 endTime = x.EndDate.ToString("yyyy-MM-dd"),
-                status = Utility.OrderStatus(x.Status)
+                status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString()
             });
             return Ok(new
             {
@@ -373,7 +373,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet13(int id)
         {
-            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id && x.Status == "13").ToList();
+            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id && x.Status == OrderType.待評價).ToList();
             if (orders.Count == 0)
             {
                 return Ok(new
@@ -388,7 +388,7 @@ namespace Care_UP.Controllers
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
                 startTime = x.StartDate.ToString("yyyy-MM-dd"),
                 endTime = x.EndDate.ToString("yyyy-MM-dd"),
-                status = Utility.Attendant04Status(x.Status)
+                status = "待匯款"
             });
             return Ok(order);
         }
@@ -399,7 +399,7 @@ namespace Care_UP.Controllers
         public IHttpActionResult MemberFinish(int id)
         {
             List<Orders> orders = db.Orders.Where(x => x.Elders.MemberId == id)
-                .Where(x => x.Status == "01"|| x.Status == "02" || x.Status == "03" || x.Status == "04" || x.Status == "05")
+                .Where(x => x.Status == OrderType. 已取消|| x.Status == OrderType. 已完成 || x.Status == OrderType. 中斷 || x.Status == OrderType. 待退款 || x.Status == OrderType. 照服員拒接)
                 .ToList();
             if (orders.Count==0)
             {
@@ -413,7 +413,7 @@ namespace Care_UP.Controllers
             {
                 x,
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
-                status = Utility.OrderStatus(x.Status)
+                status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
             });
 
             return Ok(new
@@ -426,7 +426,7 @@ namespace Care_UP.Controllers
         public IHttpActionResult AttendantsFinish(int id)
         {
             List<Orders> orders = db.Orders.Where(x => x.AttendantId == id)
-                .Where(x => x.Status == "01" || x.Status == "02" || x.Status == "03" || x.Status == "04" || x.Status == "05")
+                .Where(x => x.Status == OrderType. 已取消 || x.Status == OrderType. 已完成 || x.Status == OrderType. 中斷 || x.Status == OrderType. 待退款 || x.Status == OrderType. 照服員拒接)
                 .ToList();
             if (orders.Count == 0)
             {
@@ -440,7 +440,7 @@ namespace Care_UP.Controllers
             {
                 x,
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
-                status = Utility.Attendant04Status(x.Status)
+                status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString()
             });
 
             return Ok(new
@@ -484,7 +484,7 @@ namespace Care_UP.Controllers
         public IHttpActionResult OrderAccept(int id)
         {
             Orders order = db.Orders.Find(id);
-            order.Status = "11";
+            order.Status = OrderType. 待付款;
             order.EditDate = DateTime.Now;
             db.SaveChanges();
             return Ok(new { message = "已接受此訂單" });
@@ -498,7 +498,7 @@ namespace Care_UP.Controllers
             {
                 Orders order = db.Orders.Find(orderReject.Id);
                 order.Cancel = orderReject.Cancel;
-                order.Status = "05";
+                order.Status = OrderType. 照服員拒接;
                 order.EditDate = DateTime.Now;
                 db.SaveChanges();
                 return Ok(new { message = "已拒絕此訂單" });
@@ -587,7 +587,6 @@ namespace Care_UP.Controllers
             Orders orders = db.Orders.Find(FillinComment.Id);
             orders.Comment = FillinComment.Comment;
             orders.Star = FillinComment.Star;
-            orders.Status = "13";
             orders.EditDate = DateTime.Now;
             db.Entry(orders).State = EntityState.Modified;
             db.SaveChanges();

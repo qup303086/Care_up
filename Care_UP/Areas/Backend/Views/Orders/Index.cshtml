@@ -11,10 +11,10 @@
 <h2>Index</h2>
 @using (Html.BeginForm())
 {
-    <div>
+    <!--<div>
         <label for="Order">訂單搜尋:</label>
-        @Html.DropDownList("Order", new SelectList(UIhelper.OrdeResult(ViewBag.order)), "請選擇"@*,new {@class="from-control"}*@)
-    </div>
+        Html.DropDownList("Order", new SelectList(UIhelper.OrdeResult(ViewBag.order)), "請選擇"-->@*,new {@class="from-control"}*@<!--)
+    </div>-->
 
     <div>
         <label>日期搜尋:</label>
@@ -113,6 +113,6 @@
 
 </table>
 <div>
-    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
+    @*@Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)*@
 
 </div>
