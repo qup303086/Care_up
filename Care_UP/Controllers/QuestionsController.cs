@@ -18,9 +18,19 @@ namespace Care_UP.Controllers
 
 
         [Route("Quiz")]
-
-        public IHttpActionResult Quiz(int MemberID)
+        [HttpPost]
+        public IHttpActionResult Quiz(Question quiz)
         {
+            if (string.IsNullOrWhiteSpace(quiz.Quiz))
+            {
+                return Ok(new
+                {
+                    message = "提問沒填喔"
+                });
+            }
+            quiz.InitDateTime =DateTime.Now;
+            db.Questions.Add(quiz);
+            db.SaveChanges();
             return Ok();
         }
 
