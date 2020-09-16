@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace Care_UP.Models
 {
@@ -13,10 +14,12 @@ namespace Care_UP.Models
         [Display(Name = "編號")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
+        
+       
         [Display(Name = "提問編號")]
         public int QuestionId { get; set; }
         [ForeignKey("QuestionId")]
+        [JsonIgnore]
         public virtual  Question Question { set; get; }
         
         [Display(Name = "照服員姓名")]

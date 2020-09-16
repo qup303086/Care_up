@@ -141,7 +141,7 @@ namespace Care_UP.Controllers
 
             }
             members.PasswordSalt = Utility.CreateSalt();
-            members.Password = Utility.GenerateHashWithSalt(members.Password, members.PasswordSalt);
+            members.Password = Utility.GenerateHashWithSalt(password.Password, members.PasswordSalt);
             db.Entry(members).State = EntityState.Modified;
             db.SaveChanges();
 
@@ -160,7 +160,7 @@ namespace Care_UP.Controllers
 
             }
             attendants.PasswordSalt = Utility.CreateSalt();
-            attendants.Password = Utility.GenerateHashWithSalt(attendants.Password, attendants.PasswordSalt);
+            attendants.Password = Utility.GenerateHashWithSalt(password.Password, attendants.PasswordSalt);
             db.Entry(attendants).State = EntityState.Modified;
             db.SaveChanges();
 

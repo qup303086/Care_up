@@ -587,7 +587,7 @@ namespace Care_UP.Controllers
             Orders orders = db.Orders.Find(FillinComment.Id);
             orders.Comment = FillinComment.Comment;
             orders.Star = FillinComment.Star;
-            orders.Status = "02";
+            orders.Status = "13";
             orders.EditDate = DateTime.Now;
             db.Entry(orders).State = EntityState.Modified;
             db.SaveChanges();
