@@ -212,7 +212,8 @@ namespace Care_UP.Controllers
 
             if (formdata["ServiceTime"] != null)
             {
-                attendant.ServiceTime = formdata["ServiceTime"];
+                int serviceTime = Convert.ToInt32(formdata["ServiceTime"]);
+                attendant.ServiceTime = (ServiceTime)serviceTime;
             }
             else
             {
@@ -228,7 +229,8 @@ namespace Care_UP.Controllers
                 return Ok(new { message = "未填寫履歷" });
             }
 
-            attendant.Status = formdata["Status"];
+            int status =Convert.ToInt32( formdata["Status"]);
+            attendant.Status = (Whether) status;
 
             attendant.EditDate = DateTime.Now;
             db.SaveChanges();

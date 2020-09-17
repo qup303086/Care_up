@@ -16,8 +16,8 @@ namespace Care_UP.Models
 
     public enum Whether
     {
-        是 = 01,
-        否 = 02,
+        否 = 1,
+        是 = 2,
     }
     public enum OrderType
     {
@@ -36,7 +36,7 @@ namespace Care_UP.Models
     }
     public enum ServiceTime
     {
-        白天= 01,
+        白天 = 01,
         傍晚 = 02,
         凌晨 = 03,
     }
