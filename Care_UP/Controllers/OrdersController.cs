@@ -88,13 +88,16 @@ namespace Care_UP.Controllers
                 }
             }
             
-            var orders = order.Select(x => new
-            {
-                x,
-                startDate = x.StartDate.ToString("yyyy-MM-dd"),
-                endDate = x.EndDate.ToString("yyyy-MM-dd"),
-                OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
-            });
+            //var orders = order.Select(x => new
+            //{
+            //    x,
+            //    startDate = x.StartDate.ToString("yyyy-MM-dd"),
+            //    endDate = x.EndDate.ToString("yyyy-MM-dd"),
+            //    OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
+            //});
+            //return Ok(orders);
+
+            var orders = order.Count();
             return Ok(orders);
 
         }
@@ -413,6 +416,7 @@ namespace Care_UP.Controllers
             {
                 x,
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
+                serviceTime = x.Attendants.ServiceTime,
                 status = Utility.OrderStatus(x.Status)
             });
 
