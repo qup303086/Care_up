@@ -31,7 +31,7 @@ namespace Care_UP.Controllers
 
             List<Orders> allOrderses = db.Orders.ToList();
             
-            var attendants = attendant.Where(x => x.Status == Whether.否).Select(x => new
+            var attendants = attendant.Where(x => x.Status == Whether.是).Select(x => new
             {
                 attendantId = x.Id,
                 name = x.Name,
@@ -40,8 +40,8 @@ namespace Care_UP.Controllers
                 photo = x.Photo,
                 file = x.File,
                 服務項目 = Utility.Service(x.Service),
-                服務時段 = Enum.Parse(typeof(ServiceTime), x.Status.ToString()).ToString(),
-                count = allOrderses.Where(z=>z.AttendantId==x.Id).Where(z=>z.Comment!=null&&z.Star!=null).Count(),
+                服務時段 =Utility.Servicetime(x.ServiceTime.ToString()),
+                count = allOrderses.Where(z => z.AttendantId == x.Id).Where(z => z.Comment != null && z.Star != null).Count(),
                 star = Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average())
             }).ToList();
 

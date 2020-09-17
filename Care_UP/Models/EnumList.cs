@@ -16,8 +16,8 @@ namespace Care_UP.Models
 
     public enum Whether
     {
-        是 = 01,
-        否 = 02,
+        否 = 1,
+        是 = 2,
     }
     public enum OrderType
     {
