@@ -214,7 +214,6 @@ namespace Care_UP.Controllers
             {
                 int serviceTime = Convert.ToInt32(formdata["ServiceTime"]);
                 attendant.ServiceTime = (ServiceTime)serviceTime;
-
             }
             else
             {
@@ -231,7 +230,6 @@ namespace Care_UP.Controllers
             }
 
             int status =Convert.ToInt32( formdata["Status"]);
-            //Enum.Parse(typeof(Whether),status.ToString());
             attendant.Status = (Whether) status;
 
             attendant.EditDate = DateTime.Now;

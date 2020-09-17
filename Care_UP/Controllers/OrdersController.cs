@@ -65,6 +65,13 @@ namespace Care_UP.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單成立" });
         }
 
+        
+
+
+
+
+
+
 
 
         [Route("MemberOrder01")]
@@ -416,6 +423,8 @@ namespace Care_UP.Controllers
             {
                 x,
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
+                startTime = x.StartDate.ToString("yyyy-MM-dd"),
+                endTime = x.EndDate.ToString("yyyy-MM-dd"),
                 status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
                 serviceTime =Utility.Servicetime(Enum.Parse(typeof(ServiceTime), x.Attendants.ServiceTime.ToString()).ToString())
 
@@ -445,6 +454,8 @@ namespace Care_UP.Controllers
             {
                 x,
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
+                startTime = x.StartDate.ToString("yyyy-MM-dd"),
+                endTime = x.EndDate.ToString("yyyy-MM-dd"),
                 status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
                 serviceTime = Utility.Servicetime(Enum.Parse(typeof(ServiceTime), x.Attendants.ServiceTime.ToString()).ToString())
 
