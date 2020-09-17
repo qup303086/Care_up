@@ -88,13 +88,16 @@ namespace Care_UP.Controllers
                 }
             }
             
-            var orders = order.Select(x => new
-            {
-                x,
-                startDate = x.StartDate.ToString("yyyy-MM-dd"),
-                endDate = x.EndDate.ToString("yyyy-MM-dd"),
-                OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
-            });
+            //var orders = order.Select(x => new
+            //{
+            //    x,
+            //    startDate = x.StartDate.ToString("yyyy-MM-dd"),
+            //    endDate = x.EndDate.ToString("yyyy-MM-dd"),
+            //    OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
+            //});
+            //return Ok(orders);
+
+            var orders = order.Count();
             return Ok(orders);
 
         }
@@ -414,6 +417,8 @@ namespace Care_UP.Controllers
                 x,
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
                 status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
+                serviceTime =Utility.Servicetime(Enum.Parse(typeof(ServiceTime), x.Attendants.ServiceTime.ToString()).ToString())
+
             });
 
             return Ok(new
@@ -440,7 +445,9 @@ namespace Care_UP.Controllers
             {
                 x,
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
-                status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString()
+                status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
+                serviceTime = Utility.Servicetime(Enum.Parse(typeof(ServiceTime), x.Attendants.ServiceTime.ToString()).ToString())
+
             });
 
             return Ok(new
@@ -471,7 +478,7 @@ namespace Care_UP.Controllers
                 order,
                 initTime = order.InitDate.Value.ToString("yyyy-MM-dd"),
                 AttendantsService = Utility.Service(order.Attendants.Service),
-                AttendantsServiceTime =Enum.Parse(typeof(ServiceTime), order.Attendants.ServiceTime.ToString()).ToString(),
+                AttendantsServiceTime =Utility.Servicetime(Enum.Parse(typeof(ServiceTime), order.Attendants.ServiceTime.ToString()).ToString()),
                 date,
                 EldersBody = Utility.EldersBody(order.Elders.Body),
                 EldersEquipment = Utility.EldersEquipment(order.Elders.Equipment),
@@ -609,5 +616,7 @@ namespace Care_UP.Controllers
         {
             return db.Orders.Count(e => e.Id == id) > 0;
         }
+
+        
     }
 }

@@ -167,12 +167,26 @@ namespace Care_UP.Controllers
 
             var allcomment = orders.Where(x => x.Star != null && x.Comment != null).Select(comments => new
             {
-                memeber =  comments.Elders.Members.Email.Substring(0,4)+"xxxxxxx",
+                memeber =MemberPrivacy(comments.Elders.Members.Email),
                 star = comments.Star,
-                comment = comments.Comment
+                comment = comments.Comment,
+                date = comments.InitDate.Value.ToString("yyyy-MM-dd HH:ss")
             }).ToList();
 
-            var quiz = db.Questions.Include(x=>x.QuestionAnswers).Where(x=>x.AttendantId==id).ToList();
+            var allquiz = db.Questions.Include(x => x.QuestionAnswers).Where(x => x.AttendantId == id).ToList();
+
+            var quiz = allquiz.Select(x=>new
+            {
+                memeber = MemberPrivacy(x.MemberAccount),
+                quiz = x.Quiz,
+                date = x.InitDateTime.Value.ToString("yyyy-MM-dd HH:ss"),
+                reply = x.QuestionAnswers.Select(y =>new
+                {
+                    attendantName = y.Attendant,
+                    attendantReply = y.Answer,
+                    replytime = y.ReplyTime.Value.ToString("yyyy-MM-dd HH:ss")
+                })
+            }).ToList();
 
             return Request.CreateResponse(HttpStatusCode.OK, new
             {
@@ -200,6 +214,13 @@ namespace Care_UP.Controllers
         private bool AttendantsExists(int id)
         {
             return db.Attendants.Count(e => e.Id == id) > 0;
+        }
+
+        private string MemberPrivacy(string email)
+        {
+            string[] aaa = email.Split('@');
+            string privacy = aaa[0].Substring(0, 4) + "*****@" + aaa[01];
+            return privacy;
         }
     }
 }

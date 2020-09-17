@@ -36,7 +36,7 @@ namespace Care_UP.Models
     }
     public enum ServiceTime
     {
-        白天= 01,
+        白天 = 01,
         傍晚 = 02,
         凌晨 = 03,
     }
