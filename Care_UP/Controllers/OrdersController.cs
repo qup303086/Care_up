@@ -66,6 +66,7 @@ namespace Care_UP.Controllers
         }
 
 
+
         [Route("MemberOrderStatus")]
         [HttpGet]
         public IHttpActionResult MemberOrderStatus(int id)//家屬id
@@ -243,6 +244,7 @@ namespace Care_UP.Controllers
         }
 
 
+
         [Route("MemberOrder01")]
         [HttpGet]
         public IHttpActionResult MemberGet10(int id)
@@ -270,7 +272,8 @@ namespace Care_UP.Controllers
                 x,
                 startDate = x.StartDate.ToString("yyyy-MM-dd"),
                 endDate = x.EndDate.ToString("yyyy-MM-dd"),
-                OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
+                OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
+                count = order.Count
             });
             return Ok(orders);
 
@@ -301,7 +304,8 @@ namespace Care_UP.Controllers
                 x,
                 startDate = x.StartDate.ToString("yyyy-MM-dd"),
                 endDate = x.EndDate.ToString("yyyy-MM-dd"),
-                OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
+                OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
+                count = order.Count
             });
             return Ok(orders);
 
@@ -356,7 +360,8 @@ namespace Care_UP.Controllers
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                    status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString()
+                    status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
+                    count = order.Count
                 });
                 return Ok(orders);
             }
@@ -408,7 +413,8 @@ namespace Care_UP.Controllers
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                    OrderStatus = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString()
+                    OrderStatus = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
+                    count = order.Count
                 });
                 return Ok(orders);
             }
@@ -460,7 +466,8 @@ namespace Care_UP.Controllers
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                    OrderStatus = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString()
+                    OrderStatus = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
+                    count = order.Count
                 });
                 return Ok(orders);
             }
@@ -513,7 +520,8 @@ namespace Care_UP.Controllers
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                    OrderStatus = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString()
+                    OrderStatus = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
+                    count = order.Count
                 });
                 return Ok(orders);
             }
@@ -539,7 +547,8 @@ namespace Care_UP.Controllers
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
                 startTime = x.StartDate.ToString("yyyy-MM-dd"),
                 endTime = x.EndDate.ToString("yyyy-MM-dd"),
-                status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString()
+                status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
+                count = orders.Count
             });
             return Ok(new
             {
@@ -565,7 +574,8 @@ namespace Care_UP.Controllers
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
                 startTime = x.StartDate.ToString("yyyy-MM-dd"),
                 endTime = x.EndDate.ToString("yyyy-MM-dd"),
-                status = "待匯款"
+                status = "待匯款",
+                count = orders.Count
             });
             return Ok(order);
         }
@@ -594,8 +604,8 @@ namespace Care_UP.Controllers
                 startTime = x.StartDate.ToString("yyyy-MM-dd"),
                 endTime = x.EndDate.ToString("yyyy-MM-dd"),
                 status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
-                serviceTime = Utility.Servicetime(Enum.Parse(typeof(ServiceTime), x.Attendants.ServiceTime.ToString()).ToString())
-
+                serviceTime = Utility.Servicetime(Enum.Parse(typeof(ServiceTime), x.Attendants.ServiceTime.ToString()).ToString()),
+                count = orders.Count
             });
 
             return Ok(new
@@ -625,7 +635,8 @@ namespace Care_UP.Controllers
                 startTime = x.StartDate.ToString("yyyy-MM-dd"),
                 endTime = x.EndDate.ToString("yyyy-MM-dd"),
                 status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
-                serviceTime = Utility.Servicetime(Enum.Parse(typeof(ServiceTime), x.Attendants.ServiceTime.ToString()).ToString())
+                serviceTime = Utility.Servicetime(Enum.Parse(typeof(ServiceTime), x.Attendants.ServiceTime.ToString()).ToString()),
+                count = orders.Count
 
             });
 
