@@ -65,92 +65,96 @@ namespace Care_UP.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單成立" });
         }
 
+
         [Route("MemberOrderStatus")]
         [HttpGet]
         public IHttpActionResult MemberOrderStatus(int id)//家屬id
         {
-            List<Orders> order1 = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == OrderType.等待照服員確認訂單).ToList();
-            if (order1.Count != 0)
-            {
-                foreach (Orders item in order1)
-                {
-                    //訂單的開始日期前3天還不接==拒接
-                    if (DateTime.Compare(DateTime.Now, item.StartDate.AddDays(-3)) > 0)
-                    {
-                        item.Status = OrderType.照服員拒接;
-                    }
-                }
-
-            }
-            var order1c = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == OrderType.等待照服員確認訂單).ToList();
+            int[] status = new int[5];
+            List<Orders> orderID = db.Orders.Where(x => x.Elders.MemberId == id).ToList();
 
 
-            List<Orders> order2 = db.Orders.Where(x => x.Elders.MemberId == id).Where(x => x.Status == OrderType.待付款 || x.Status == OrderType.已付款).ToList();
-            if (order2.Count != 0)
-            {
-                List<Orders> order11 = order2.Where(x => x.Status == OrderType.待付款).ToList();
-                foreach (Orders item in order11)
-                {
-                    if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
-                    {
-                        item.Status = OrderType.未於訂單開始前付款;
-                    }
-                }
-                List<Orders> order12 = order2.Where(x => x.Status == OrderType.已付款).ToList();
-                foreach (Orders item in order12)
-                {
-                    if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
-                    {
-                        item.Status = OrderType.服務進行中;
-                    }
-                }
-            }
-            var order2c = db.Orders.Where(x => x.Elders.MemberId == id).Where(x => x.Status == OrderType.待付款 || x.Status == OrderType.已付款).ToList();
+            var order1 = orderID.Where(x => x.Status == OrderType.等待照服員確認訂單).ToList();
+            //if (order1.Count != 0)
+            //{
+            //    foreach (Orders item in order1)
+            //    {
+            //        //訂單的開始日期前3天還不接==拒接
+            //        if (DateTime.Compare(DateTime.Now, item.StartDate.AddDays(-3)) > 0)
+            //        {
+            //            item.Status = OrderType.照服員拒接;
+            //        }
+            //    }
+            //    var orderIDs1 = order1.Where(x => x.Status == OrderType.等待照服員確認訂單).ToList();
+            //    status[0] = orderIDs1.Count;
+            //}
+            //else
+            //{
+            //    status[0] = order1.Count;
+            //}
+            status[0] = order1.Count;
+
+            var order2 = orderID.Where(x => x.Status == OrderType.待付款 || x.Status == OrderType.已付款).ToList();
+            //if (order2.Count != 0)
+            //{
+            //    var order11 = order2.Where(x => x.Status == OrderType.待付款).ToList();
+            //    foreach (Orders item in order11)
+            //    {
+            //        if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
+            //        {
+            //            item.Status = OrderType.未於訂單開始前付款;
+            //        }
+            //    }
+            //    var order12 = order2.Where(x => x.Status == OrderType.已付款).ToList();
+            //    foreach (Orders item in order12)
+            //    {
+            //        if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
+            //        {
+            //            item.Status = OrderType.服務進行中;
+            //        }
+            //    }
+            //}
+            status[1] = order2.Count;
 
 
-            List<Orders> order3 = db.Orders.Where(x => x.Elders.MemberId == id).Where(x => x.Status == OrderType.待付款 || x.Status == OrderType.服務進行中).ToList();
-            if (order3.Count != 0)
-            {
-                List<Orders> to22 = order3.Where(x => x.Status == OrderType.已付款).ToList();
-                foreach (Orders item in to22)
-                {
-                    if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
-                    {
-                        item.Status = OrderType.服務進行中;
-                    }
-                }
+            var order3 = orderID.Where(x => x.Elders.MemberId == id).Where(x => x.Status == OrderType.待付款 || x.Status == OrderType.服務進行中).ToList();
+            //if (order3.Count != 0)
+            //{
+            //    List<Orders> to22 = order3.Where(x => x.Status == OrderType.已付款).ToList();
+            //    foreach (Orders item in to22)
+            //    {
+            //        if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
+            //        {
+            //            item.Status = OrderType.服務進行中;
+            //        }
+            //    }
 
-                List<Orders> to13 = order3.Where(x => x.Status == OrderType.服務進行中).ToList();
-                foreach (Orders item in to13)
-                {
-                    if (DateTime.Compare(DateTime.Now, item.EndDate) > 0)
-                    {
-                        item.Status = OrderType.已完成;
-                    }
-                }
-                db.Orders.AddRange(to22);
-                db.Orders.AddRange(to13);
-            }
-            var order3c = db.Orders.Where(x => x.Elders.MemberId == id && x.Status == OrderType.服務進行中).ToList();
+            //    List<Orders> to13 = order3.Where(x => x.Status == OrderType.服務進行中).ToList();
+            //    foreach (Orders item in to13)
+            //    {
+            //        if (DateTime.Compare(DateTime.Now, item.EndDate) > 0)
+            //        {
+            //            item.Status = OrderType.已完成;
+            //        }
+            //    }
+            //}
+            status[2] = order3.Count;
 
 
-            List<Orders> orders4 = db.Orders.Where(x => x.Elders.MemberId == id && x.Star == null)
+            var order4 = orderID.Where(x => x.Star == null)
                 .Where(x => x.Status == OrderType.已完成 || x.Status == OrderType.已完成).ToList();
+            status[3] = order4.Count;
 
 
-            List<Orders> orders5 = db.Orders.Where(x => x.Elders.MemberId == id)
-                .Where(x => x.Star != null)
-                .Where(x => x.Status == OrderType.已取消 || x.Status == OrderType.已完成 || x.Status == OrderType.中斷 || x.Status == OrderType.待退款 || x.Status == OrderType.照服員拒接)
-                .ToList();
+            var order5 = orderID.Where(x => x.Star != null)
+                 .Where(x => x.Status == OrderType.已取消 || x.Status == OrderType.已完成 || x.Status == OrderType.中斷 || x.Status == OrderType.待退款 || x.Status == OrderType.照服員拒接)
+                 .ToList();
+            status[4] = order5.Count;
 
-            db.SaveChanges();
+            //db.SaveChanges();
             return Ok(new
             {
-                MemberOrder01 = order1c.Count,
-                MemberOrder02 = order2c.Count,
-                MemberOrder03 = order3c.Count,
-                MemberOrder04 = orders4.Count,
-                MemberOrder05 = orders5.Count
+                count = status
             });
         }
 
@@ -158,78 +162,85 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsOrderStatus(int id) //照服員id
         {
-            List<Orders> order1 = db.Orders.Where(x => x.AttendantId == id && x.Status == OrderType.等待照服員確認訂單).ToList();
-            if (order1.Count != 0)
-            {
-                foreach (Orders item in order1)
-                {
-                    if (DateTime.Compare(DateTime.Now, item.StartDate.AddDays(-3)) > 0)
-                    {
-                        item.Status = OrderType.照服員拒接;
-                    }
-                }
-            }
+            int[] status = new int[5];
+            List<Orders> orderID= db.Orders.Where(x => x.AttendantId == id).ToList();
+
+            var order1 = orderID.Where(x =>x.Status == OrderType.等待照服員確認訂單).ToList();
+            //if (order1.Count != 0)
+            //{
+            //    foreach (Orders item in order1)
+            //    {
+            //        if (DateTime.Compare(DateTime.Now, item.StartDate.AddDays(-3)) > 0)
+            //        {
+            //            item.Status = OrderType.照服員拒接;
+            //        }
+            //    }
+            //}
+            status[0] = order1.Count;
 
 
-            List<Orders> orders2 = db.Orders.Where(x => x.AttendantId == id).Where(x => x.Status == OrderType.待付款 || x.Status == OrderType.已付款).ToList();
-            if (orders2.Count != 0)
-            {
-                List<Orders> order11 = orders2.Where(x => x.Status == OrderType.待付款).ToList();
-                foreach (Orders item in order11)
-                {
-                    if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
-                    {
-                        item.Status = OrderType.未於訂單開始前付款;
-                    }
-                }
-                List<Orders> order12 = orders2.Where(x => x.Status == OrderType.已付款).ToList();
-                foreach (Orders item in order12)
-                {
-                    if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
-                    {
-                        item.Status = OrderType.服務進行中;
-                    }
-                }
-            }
+            var orders2 = orderID.Where(x => x.Status == OrderType.待付款 || x.Status == OrderType.已付款).ToList();
+            //if (orders2.Count != 0)
+            //{
+            //    List<Orders> order11 = orders2.Where(x => x.Status == OrderType.待付款).ToList();
+            //    foreach (Orders item in order11)
+            //    {
+            //        if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
+            //        {
+            //            item.Status = OrderType.未於訂單開始前付款;
+            //        }
+            //    }
+            //    List<Orders> order12 = orders2.Where(x => x.Status == OrderType.已付款).ToList();
+            //    foreach (Orders item in order12)
+            //    {
+            //        if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
+            //        {
+            //            item.Status = OrderType.服務進行中;
+            //        }
+            //    }
+            //}
+            status[1] = orders2.Count;
 
 
-            List<Orders> orders3 = db.Orders.Where(x => x.AttendantId == id).Where(x => x.Status == OrderType.已付款 || x.Status == OrderType.服務進行中).ToList();
-            if (orders3.Count != 0)
-            {
-                List<Orders> to22 = orders3.Where(x => x.Status == OrderType.已付款).ToList();
-                foreach (Orders item in to22)
-                {
-                    if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
-                    {
-                        item.Status = OrderType.服務進行中;
-                    }
-                }
+            var orders3 = orderID.Where(x => x.Status == OrderType.已付款 || x.Status == OrderType.服務進行中).ToList();
+            //if (orders3.Count != 0)
+            //{
+            //    List<Orders> to22 = orders3.Where(x => x.Status == OrderType.已付款).ToList();
+            //    foreach (Orders item in to22)
+            //    {
+            //        if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
+            //        {
+            //            item.Status = OrderType.服務進行中;
+            //        }
+            //    }
 
-                List<Orders> to13 = orders3.Where(x => x.Status == OrderType.服務進行中).ToList();
-                foreach (Orders item in to13)
-                {
-                    if (DateTime.Compare(DateTime.Now, item.EndDate) > 0)
-                    {
-                        item.Status = OrderType.已完成;
-                    }
-                }
-            }
-
-
-            List<Orders> orders4 = db.Orders.Where(x => x.AttendantId == id && x.Status == OrderType.待評價).ToList();
+            //    List<Orders> to13 = orders3.Where(x => x.Status == OrderType.服務進行中).ToList();
+            //    foreach (Orders item in to13)
+            //    {
+            //        if (DateTime.Compare(DateTime.Now, item.EndDate) > 0)
+            //        {
+            //            item.Status = OrderType.已完成;
+            //        }
+            //    }
+            //}
+            status[2] = orders3.Count;
 
 
-            List<Orders> orders5 = db.Orders.Where(x => x.AttendantId == id)
+            var orders4 = orderID.Where(x => x.Status == OrderType.待評價).ToList();
+            status[3] = orders4.Count;
+
+
+            var orders5 = orderID
                 .Where(x => x.Status == OrderType.已取消 || x.Status == OrderType.已完成 || x.Status == OrderType.中斷 || x.Status == OrderType.待退款 || x.Status == OrderType.照服員拒接)
                 .ToList();
+            status[4] = orders5.Count;
 
-            db.SaveChanges();
+            //db.SaveChanges();
             return Ok(new
             {
-
+                count = status
             });
         }
-
 
 
         [Route("MemberOrder01")]
