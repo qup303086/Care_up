@@ -17,7 +17,7 @@ namespace Care_UP.Models
             Dictionary<string, Object> claim = new Dictionary<string, Object>();//payload 需透過token傳遞的資料
             claim.Add("ID", id);
             claim.Add("Email", email);
-            claim.Add("Exp", DateTime.Now.AddSeconds(Convert.ToInt32("600")).ToString());//Token 時效設定600秒
+            claim.Add("Exp", DateTime.Now.AddSeconds(Convert.ToInt32("6000")).ToString());//Token 時效設定600秒
             var payload = claim;
             var token = Jose.JWT.Encode(payload, Encoding.UTF8.GetBytes(secret), JwsAlgorithm.HS512);//產生token
             return token;

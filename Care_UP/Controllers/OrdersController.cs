@@ -264,7 +264,7 @@ namespace Care_UP.Controllers
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                    status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
+                    status = (OrderType)x.Status
                     
                 });
                 return Ok(new
@@ -321,7 +321,7 @@ namespace Care_UP.Controllers
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                    OrderStatus = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
+                    OrderStatus = (OrderType)x.Status
                 });
                 return Ok(new
                 {
@@ -466,8 +466,7 @@ namespace Care_UP.Controllers
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
                 startTime = x.StartDate.ToString("yyyy-MM-dd"),
                 endTime = x.EndDate.ToString("yyyy-MM-dd"),
-                status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
-                
+                status ="待評價"
             });
             return Ok(new
             {
