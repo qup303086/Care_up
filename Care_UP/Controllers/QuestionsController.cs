@@ -27,7 +27,7 @@ namespace Care_UP.Controllers
                     message = "提問沒填喔"
                 });
             }
-            quiz.InitDateTime =DateTime.Now;
+            quiz.InitDateTime = DateTime.Now;
             db.Questions.Add(quiz);
             db.SaveChanges();
             return Ok(new
@@ -40,16 +40,16 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGetQuiz(int id)
         {
-            List<Question> quizList = db.Questions.Include(x=>x.QuestionAnswers).Where(x=>x.AttendantId==id).ToList();
+            List<Question> quizList = db.Questions.Include(x => x.QuestionAnswers).Where(x => x.AttendantId == id).ToList();
 
-            if (quizList.Count==0)
+            if (quizList.Count == 0)
             {
                 return Ok(new
                 {
                     message = "還沒有提問喔"
                 });
             }
-           
+
 
             return Ok(quizList);
         }
@@ -65,7 +65,13 @@ namespace Care_UP.Controllers
                     message = "回覆沒填喔"
                 });
             }
-            questionAnswer.ReplyTime=DateTime.Now;
+
+            Question question = db.Questions.FirstOrDefault(x => x.Id == questionAnswer.QuestionId);
+
+            Attendants attendant = db.Attendants.FirstOrDefault(x => x.Id == question.AttendantId);
+
+            questionAnswer.Attendant = attendant.Name;
+            questionAnswer.ReplyTime = DateTime.Now;
             db.QuestionAnswers.Add(questionAnswer);
             db.SaveChanges();
             return Ok(new
