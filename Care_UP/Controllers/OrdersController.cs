@@ -76,69 +76,14 @@ namespace Care_UP.Controllers
 
 
             var order1 = orderID.Where(x => x.Status == OrderType.等待照服員確認訂單).ToList();
-            //if (order1.Count != 0)
-            //{
-            //    foreach (Orders item in order1)
-            //    {
-            //        //訂單的開始日期前3天還不接==拒接
-            //        if (DateTime.Compare(DateTime.Now, item.StartDate.AddDays(-3)) > 0)
-            //        {
-            //            item.Status = OrderType.照服員拒接;
-            //        }
-            //    }
-            //    var orderIDs1 = order1.Where(x => x.Status == OrderType.等待照服員確認訂單).ToList();
-            //    status[0] = orderIDs1.Count;
-            //}
-            //else
-            //{
-            //    status[0] = order1.Count;
-            //}
             status[0] = order1.Count;
 
+
             var order2 = orderID.Where(x => x.Status == OrderType.待付款 || x.Status == OrderType.已付款).ToList();
-            //if (order2.Count != 0)
-            //{
-            //    var order11 = order2.Where(x => x.Status == OrderType.待付款).ToList();
-            //    foreach (Orders item in order11)
-            //    {
-            //        if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
-            //        {
-            //            item.Status = OrderType.未於訂單開始前付款;
-            //        }
-            //    }
-            //    var order12 = order2.Where(x => x.Status == OrderType.已付款).ToList();
-            //    foreach (Orders item in order12)
-            //    {
-            //        if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
-            //        {
-            //            item.Status = OrderType.服務進行中;
-            //        }
-            //    }
-            //}
             status[1] = order2.Count;
 
 
             var order3 = orderID.Where(x => x.Elders.MemberId == id).Where(x => x.Status == OrderType.待付款 || x.Status == OrderType.服務進行中).ToList();
-            //if (order3.Count != 0)
-            //{
-            //    List<Orders> to22 = order3.Where(x => x.Status == OrderType.已付款).ToList();
-            //    foreach (Orders item in to22)
-            //    {
-            //        if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
-            //        {
-            //            item.Status = OrderType.服務進行中;
-            //        }
-            //    }
-
-            //    List<Orders> to13 = order3.Where(x => x.Status == OrderType.服務進行中).ToList();
-            //    foreach (Orders item in to13)
-            //    {
-            //        if (DateTime.Compare(DateTime.Now, item.EndDate) > 0)
-            //        {
-            //            item.Status = OrderType.已完成;
-            //        }
-            //    }
-            //}
             status[2] = order3.Count;
 
 
@@ -167,63 +112,15 @@ namespace Care_UP.Controllers
             List<Orders> orderID= db.Orders.Where(x => x.AttendantId == id).ToList();
 
             var order1 = orderID.Where(x =>x.Status == OrderType.等待照服員確認訂單).ToList();
-            //if (order1.Count != 0)
-            //{
-            //    foreach (Orders item in order1)
-            //    {
-            //        if (DateTime.Compare(DateTime.Now, item.StartDate.AddDays(-3)) > 0)
-            //        {
-            //            item.Status = OrderType.照服員拒接;
-            //        }
-            //    }
-            //}
+
             status[0] = order1.Count;
 
 
             var orders2 = orderID.Where(x => x.Status == OrderType.待付款 || x.Status == OrderType.已付款).ToList();
-            //if (orders2.Count != 0)
-            //{
-            //    List<Orders> order11 = orders2.Where(x => x.Status == OrderType.待付款).ToList();
-            //    foreach (Orders item in order11)
-            //    {
-            //        if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
-            //        {
-            //            item.Status = OrderType.未於訂單開始前付款;
-            //        }
-            //    }
-            //    List<Orders> order12 = orders2.Where(x => x.Status == OrderType.已付款).ToList();
-            //    foreach (Orders item in order12)
-            //    {
-            //        if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
-            //        {
-            //            item.Status = OrderType.服務進行中;
-            //        }
-            //    }
-            //}
             status[1] = orders2.Count;
 
 
             var orders3 = orderID.Where(x => x.Status == OrderType.已付款 || x.Status == OrderType.服務進行中).ToList();
-            //if (orders3.Count != 0)
-            //{
-            //    List<Orders> to22 = orders3.Where(x => x.Status == OrderType.已付款).ToList();
-            //    foreach (Orders item in to22)
-            //    {
-            //        if (DateTime.Compare(DateTime.Now, item.StartDate) > 0)
-            //        {
-            //            item.Status = OrderType.服務進行中;
-            //        }
-            //    }
-
-            //    List<Orders> to13 = orders3.Where(x => x.Status == OrderType.服務進行中).ToList();
-            //    foreach (Orders item in to13)
-            //    {
-            //        if (DateTime.Compare(DateTime.Now, item.EndDate) > 0)
-            //        {
-            //            item.Status = OrderType.已完成;
-            //        }
-            //    }
-            //}
             status[2] = orders3.Count;
 
 
@@ -273,9 +170,12 @@ namespace Care_UP.Controllers
                 startDate = x.StartDate.ToString("yyyy-MM-dd"),
                 endDate = x.EndDate.ToString("yyyy-MM-dd"),
                 OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                count = order.Count
             });
-            return Ok(orders);
+            return Ok(new
+            {
+                orders,
+                count = orders.Count()
+            });
 
         }
 
@@ -305,9 +205,13 @@ namespace Care_UP.Controllers
                 startDate = x.StartDate.ToString("yyyy-MM-dd"),
                 endDate = x.EndDate.ToString("yyyy-MM-dd"),
                 OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                count = order.Count
+                
             });
-            return Ok(orders);
+            return Ok(new
+            {
+                orders,
+                count =  orders.Count()
+            });
 
         }
 
@@ -361,9 +265,13 @@ namespace Care_UP.Controllers
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
                     status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
-                    count = order.Count
+                    
                 });
-                return Ok(orders);
+                return Ok(new
+                {
+                    orders,
+                   count= orders.Count()
+                });
             }
         }
         [Route("AttendantsOrder02")]
@@ -414,9 +322,12 @@ namespace Care_UP.Controllers
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
                     OrderStatus = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
-                    count = order.Count
                 });
-                return Ok(orders);
+                return Ok(new
+                {
+                    orders,
+                    count = orders.Count()
+                });
             }
         }
 
@@ -467,9 +378,13 @@ namespace Care_UP.Controllers
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
                     OrderStatus = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
-                    count = order.Count
+                    
                 });
-                return Ok(orders);
+                return Ok(new
+                {
+                    orders,
+                    count =  orders.Count()
+                });
             }
         }
         [Route("AttendantsOrder03")]
@@ -521,9 +436,13 @@ namespace Care_UP.Controllers
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
                     OrderStatus = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
-                    count = order.Count
+             
                 });
-                return Ok(orders);
+                return Ok(new
+                {
+                    orders,
+                    count = orders.Count()
+                });
             }
         }
 
@@ -548,11 +467,12 @@ namespace Care_UP.Controllers
                 startTime = x.StartDate.ToString("yyyy-MM-dd"),
                 endTime = x.EndDate.ToString("yyyy-MM-dd"),
                 status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
-                count = orders.Count
+                
             });
             return Ok(new
             {
-                order
+                order,
+                count = order.Count()
             });
         }
         [Route("AttendantsOrder04")]
@@ -575,9 +495,12 @@ namespace Care_UP.Controllers
                 startTime = x.StartDate.ToString("yyyy-MM-dd"),
                 endTime = x.EndDate.ToString("yyyy-MM-dd"),
                 status = "待匯款",
-                count = orders.Count
             });
-            return Ok(order);
+            return Ok(new
+            {
+                order,
+                count = order.Count()
+            });
         }
 
 
@@ -605,12 +528,13 @@ namespace Care_UP.Controllers
                 endTime = x.EndDate.ToString("yyyy-MM-dd"),
                 status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
                 serviceTime = Utility.Servicetime(Enum.Parse(typeof(ServiceTime), x.Attendants.ServiceTime.ToString()).ToString()),
-                count = orders.Count
+       
             });
 
             return Ok(new
             {
-                order
+                order,
+                count = order.Count()
             });
         }
         [Route("AttendantsOrder05")]
@@ -636,13 +560,14 @@ namespace Care_UP.Controllers
                 endTime = x.EndDate.ToString("yyyy-MM-dd"),
                 status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
                 serviceTime = Utility.Servicetime(Enum.Parse(typeof(ServiceTime), x.Attendants.ServiceTime.ToString()).ToString()),
-                count = orders.Count
+       
 
             });
 
             return Ok(new
             {
-                order
+                order,
+                count = order.Count()
             });
         }
 
