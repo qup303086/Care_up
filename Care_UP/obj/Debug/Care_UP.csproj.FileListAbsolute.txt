@@ -111,10 +111,10 @@ C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.金流.resou
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.carerecord去掉writetime.resources
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.增加QA用的資料表.resources
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.orders增加備註.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.因應列舉改動.resources
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.GenerateResource.cache
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.CoreCompileInputs.cache
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.CopyComplete
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.dll
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.pdb
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csprojAssemblyReference.cache
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.test.resources

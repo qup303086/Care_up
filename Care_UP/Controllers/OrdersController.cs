@@ -65,6 +65,13 @@ namespace Care_UP.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單成立" });
         }
 
+        
+
+
+
+
+
+
 
 
         [Route("MemberOrder01")]
@@ -88,13 +95,16 @@ namespace Care_UP.Controllers
                 }
             }
             
-            var orders = order.Select(x => new
-            {
-                x,
-                startDate = x.StartDate.ToString("yyyy-MM-dd"),
-                endDate = x.EndDate.ToString("yyyy-MM-dd"),
-                OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
-            });
+            //var orders = order.Select(x => new
+            //{
+            //    x,
+            //    startDate = x.StartDate.ToString("yyyy-MM-dd"),
+            //    endDate = x.EndDate.ToString("yyyy-MM-dd"),
+            //    OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd")
+            //});
+            //return Ok(orders);
+
+            var orders = order.Count();
             return Ok(orders);
 
         }
@@ -375,7 +385,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet13(int id)
         {
-            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id && x.Status == OrderType.待評價).ToList();
+            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id && x.Status == OrderType.照服員待收款).ToList();
             if (orders.Count == 0)
             {
                 return Ok(new
@@ -415,7 +425,11 @@ namespace Care_UP.Controllers
             {
                 x,
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
+                startTime = x.StartDate.ToString("yyyy-MM-dd"),
+                endTime = x.EndDate.ToString("yyyy-MM-dd"),
                 status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
+                serviceTime =Utility.Servicetime(Enum.Parse(typeof(ServiceTime), x.Attendants.ServiceTime.ToString()).ToString())
+
             });
 
             return Ok(new
@@ -442,7 +456,11 @@ namespace Care_UP.Controllers
             {
                 x,
                 initTime = x.InitDate.Value.ToString("yyyy-MM-dd"),
-                status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString()
+                startTime = x.StartDate.ToString("yyyy-MM-dd"),
+                endTime = x.EndDate.ToString("yyyy-MM-dd"),
+                status = Enum.Parse(typeof(OrderType), x.Status.ToString()).ToString(),
+                serviceTime = Utility.Servicetime(Enum.Parse(typeof(ServiceTime), x.Attendants.ServiceTime.ToString()).ToString())
+
             });
 
             return Ok(new
@@ -473,7 +491,7 @@ namespace Care_UP.Controllers
                 order,
                 initTime = order.InitDate.Value.ToString("yyyy-MM-dd"),
                 AttendantsService = Utility.Service(order.Attendants.Service),
-                AttendantsServiceTime =Enum.Parse(typeof(ServiceTime), order.Attendants.ServiceTime.ToString()).ToString(),
+                AttendantsServiceTime =Utility.Servicetime(Enum.Parse(typeof(ServiceTime), order.Attendants.ServiceTime.ToString()).ToString()),
                 date,
                 EldersBody = Utility.EldersBody(order.Elders.Body),
                 EldersEquipment = Utility.EldersEquipment(order.Elders.Equipment),
@@ -520,7 +538,7 @@ namespace Care_UP.Controllers
             {
                 return Ok(new
                 {
-                    message = "照護日製沒填喔"
+                    message = "照護日誌沒填喔"
                 });
             }
             List<CareRecords> Records = db.CareRecords.Where(x => x.OrdersID == careRecords.OrdersID).ToList();
@@ -611,5 +629,7 @@ namespace Care_UP.Controllers
         {
             return db.Orders.Count(e => e.Id == id) > 0;
         }
+
+        
     }
 }

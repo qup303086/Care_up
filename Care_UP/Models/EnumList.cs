@@ -16,15 +16,15 @@ namespace Care_UP.Models
 
     public enum Whether
     {
-        是 = 01,
-        否 = 02,
+        否 = 1,
+        是 = 2,
     }
     public enum OrderType
     {
         等待照服員確認訂單=10,
         待付款=11,
         已付款=12,
-        待評價 = 13,
+        照服員待收款 = 13,
         未於訂單開始前付款 = 19,
         服務進行中=22,
         已取消=01, 
@@ -36,7 +36,7 @@ namespace Care_UP.Models
     }
     public enum ServiceTime
     {
-        白天= 01,
+        白天 = 01,
         傍晚 = 02,
         凌晨 = 03,
     }

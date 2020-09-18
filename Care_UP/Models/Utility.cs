@@ -124,7 +124,7 @@ namespace Care_UP.Models
             return a;
         }
 
-        public static string ServiceTime(string timeCode)
+        public static string ServiceTimeOld(string timeCode)
         {
             switch (timeCode)
             {
@@ -355,6 +355,24 @@ namespace Care_UP.Models
                 return 0;
             }
             return Math.Round(averge.Value, 1, MidpointRounding.AwayFromZero);
+        }
+
+        public static string Servicetime(string time)
+        {
+            string a = "";
+            switch (time)
+            {
+                case "白天":
+                    a = "(09:00-18:00)";
+                    break;
+                case "傍晚":
+                    a = "(15:00-23:00)";
+                    break;
+                case "凌晨":
+                    a = "(23:00-07:00)";
+                    break;
+            }
+            return time + a;
         }
     }
 }

@@ -4,24 +4,30 @@
 @model MvcPaging.IPagedList<Care_UP.Models.Orders>
 
 @{
+
     ViewBag.Title = "Index";
     Layout = "~/Areas/Backend/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>訂單</h2>
 @using (Html.BeginForm())
 {
-    <!--<div>
-        <label for="Order">訂單搜尋:</label>
-        Html.DropDownList("Order", new SelectList(UIhelper.OrdeResult(ViewBag.order)), "請選擇"-->@*,new {@class="from-control"}*@<!--)
-    </div>-->
-
     <div>
-        <label>日期搜尋:</label>
+        <label for="Order">訂單搜尋:</label>
+        @Html.DropDownList("Order", new SelectList(Enum.GetValues(typeof(OrderType))), "請選擇", new { @class = "from-control" })
+
+        <label>關鍵字搜尋:</label>
+        <input type="text" name="keyword" value="" />
+
+        <label>訂單建立日期搜尋:</label>
         <input type="date" name="date_start" value="" />
         <input type="date" name="date_end" value="" />
+        <label>訂單開始結束搜尋:</label>
+        <input type="date" name="starttime" value="" />
+        <input type="date" name="endtime" value="" />
+
+        <input type="submit" value="送出" />
     </div>
-    <input type="submit" value="送出" />
 }
 <table class="table">
     <tr>
@@ -38,30 +44,18 @@
             @Html.DisplayNameFor(model => model.FirstOrDefault().EndDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().StopDate)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Total)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Comment)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Star)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().Cancel)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().InitDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstOrDefault().EditDate)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.FirstOrDefault().Status)
         </th>
-        <th></th>
+        <th>
+            撥款
+        </th>
+
     </tr>
 
     @foreach (var item in Model)
@@ -80,39 +74,36 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StopDate)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Total)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Comment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Star)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cancel)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.InitDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EditDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
                 @*@UIhelper.OrdeResult(item.Status)*@
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @if (item.Status == OrderType.照服員待收款)
+                {
+                    <a href="@Url.Action("Finish", "Orders", new {id = item.Id})" class="btn btn-warning btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                        <span class="text">付款</span>
+                    </a>
+                }
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "Orders", new { id = item.Id })" class="btn btn-info btn-circle">
+                    <i class="fas fa-info-circle"></i>
+                </a>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id },new {@class= "btn btn - info btn - circle "})*@
             </td>
         </tr>
     }
 
 </table>
-<div>
-    @*@Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)*@
-
+<div class="paginate_button page-item">
+    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
 </div>
