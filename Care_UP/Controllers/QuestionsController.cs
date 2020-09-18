@@ -42,6 +42,21 @@ namespace Care_UP.Controllers
         {
             List<Question> quizList = db.Questions.Include(x => x.QuestionAnswers).Where(x => x.AttendantId == id).ToList();
 
+            var quizLists = quizList.Select(x => new
+            {
+                x.Id,
+                x.AttendantId,
+                MemberAccount = ShowSearchController.MemberPrivacy(x.MemberAccount),
+                x.Quiz,
+                InitDateTime = x.InitDateTime.Value.ToString("yyyy-MM-dd HH:mm"),
+                QuestionAnswers = x.QuestionAnswers.Select(y=>new
+                {
+                    y.Attendant,
+                    y.Answer,
+                    ReplyTime = y.ReplyTime.Value.ToString("yyyy-MM-dd HH:mm"),
+                })
+                });
+
             if (quizList.Count == 0)
             {
                 return Ok(new
@@ -51,7 +66,7 @@ namespace Care_UP.Controllers
             }
 
 
-            return Ok(quizList);
+            return Ok(quizLists);
         }
 
         [Route("QuizReply")]
