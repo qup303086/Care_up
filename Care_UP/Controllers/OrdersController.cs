@@ -265,7 +265,9 @@ namespace Care_UP.Controllers
             {
                 if (DateTime.Compare(DateTime.Now, item.EndDate) > 0)
                 {
-                    item.Status = OrderType. 已完成;
+                    OrderType orders = (OrderType) 02;
+
+                    item.Status = orders;
                 }
             }
             db.SaveChanges();

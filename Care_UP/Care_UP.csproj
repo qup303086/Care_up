@@ -244,6 +244,10 @@
     <Compile Include="Migrations\202009150917176_orders增加備註.Designer.cs">
       <DependentUpon>202009150917176_orders增加備註.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009170222125_test.cs" />
+    <Compile Include="Migrations\202009170222125_test.Designer.cs">
+      <DependentUpon>202009170222125_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
     <Compile Include="Models\BankInfoModel.cs" />
@@ -413,6 +417,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009150917176_orders增加備註.resx">
       <DependentUpon>202009150917176_orders增加備註.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009170222125_test.resx">
+      <DependentUpon>202009170222125_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

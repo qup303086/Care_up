@@ -212,7 +212,7 @@ namespace Care_UP.Controllers
 
             if (formdata["ServiceTime"] != null)
             {
-                attendant.ServiceTime = formdata["ServiceTime"];
+                //attendant.ServiceTime = formdata["ServiceTime"];
             }
             else
             {
@@ -228,7 +228,7 @@ namespace Care_UP.Controllers
                 return Ok(new { message = "未填寫履歷" });
             }
 
-            attendant.Status = formdata["Status"];
+            //attendant.Status = formdata["Status"];
 
             attendant.EditDate = DateTime.Now;
             db.SaveChanges();
