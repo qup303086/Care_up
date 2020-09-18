@@ -264,8 +264,7 @@ namespace Care_UP.Controllers
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                    status = (OrderType)x.Status
-                    
+                    OrderStatus =x.Status.ToString()
                 });
                 return Ok(new
                 {
@@ -321,7 +320,7 @@ namespace Care_UP.Controllers
                     startDate = x.StartDate.ToString("yyyy-MM-dd"),
                     endDate = x.EndDate.ToString("yyyy-MM-dd"),
                     OrderInitDate = x.InitDate?.ToString("yyyy-MM-dd"),
-                    OrderStatus = (OrderType)x.Status
+                    OrderStatus = x.Status.ToString()
                 });
                 return Ok(new
                 {
@@ -452,7 +451,7 @@ namespace Care_UP.Controllers
         public IHttpActionResult MemberGet13(int id)
         {
             List<Orders> orders = db.Orders.Where(x => x.Elders.MemberId == id && x.Star == null)
-                .Where(x => x.Status == OrderType.已完成 || x.Status == OrderType.已完成).ToList();
+                .Where(x => x.Status == OrderType.已完成 || x.Status == OrderType.待評價).ToList();
             if (orders.Count == 0)
             {
                 return Ok(new
@@ -508,7 +507,6 @@ namespace Care_UP.Controllers
         public IHttpActionResult MemberFinish(int id)
         {
             List<Orders> orders = db.Orders.Where(x => x.Elders.MemberId == id)
-                .Where(x => x.Star != null)
                 .Where(x => x.Status == OrderType.已取消 || x.Status == OrderType.已完成 || x.Status == OrderType.中斷 || x.Status == OrderType.待退款 || x.Status == OrderType.照服員拒接)
                 .ToList();
             if (orders.Count == 0)
@@ -596,7 +594,8 @@ namespace Care_UP.Controllers
                 date,
                 EldersBody = Utility.EldersBody(order.Elders.Body),
                 EldersEquipment = Utility.EldersEquipment(order.Elders.Equipment),
-                EldersServiceItems = Utility.Service(order.Attendants.Service)
+                EldersServiceItems = Utility.Service(order.Attendants.Service),
+                OrderStatus = order.Status.ToString()
             });
         }
 

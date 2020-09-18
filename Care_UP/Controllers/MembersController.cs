@@ -193,6 +193,7 @@ namespace Care_UP.Controllers
                         }
                         else
                         {
+                            
                             string newToken = new Token().GenerateToken(login.Id, login.Email);
                             return Request.CreateResponse(HttpStatusCode.OK, new
                             {
@@ -249,6 +250,8 @@ namespace Care_UP.Controllers
                                 message = "登入成功",
                                 memeber.Id,
                                 login.Email,
+                                memeber.Photo,
+                                memeber.File,
                                 token = newToken
                             });
                         }
