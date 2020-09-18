@@ -212,8 +212,10 @@ namespace Care_UP.Controllers
 
             if (formdata["ServiceTime"] != null)
             {
+
                 int serviceTime = Convert.ToInt32(formdata["ServiceTime"]);
                 attendant.ServiceTime = (ServiceTime)serviceTime;
+
             }
             else
             {

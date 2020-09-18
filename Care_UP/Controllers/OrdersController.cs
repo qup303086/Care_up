@@ -124,7 +124,7 @@ namespace Care_UP.Controllers
             status[2] = orders3.Count;
 
 
-            var orders4 = orderID.Where(x => x.Status == OrderType.待評價).ToList();
+            var orders4 = orderID.Where(x => x.Status == OrderType.照服員待收款).ToList();
             status[3] = orders4.Count;
 
 
@@ -358,7 +358,9 @@ namespace Care_UP.Controllers
             {
                 if (DateTime.Compare(DateTime.Now, item.EndDate) > 0)
                 {
+
                     item.Status = OrderType.已完成;
+
                 }
             }
             db.SaveChanges();
@@ -451,7 +453,7 @@ namespace Care_UP.Controllers
         public IHttpActionResult MemberGet13(int id)
         {
             List<Orders> orders = db.Orders.Where(x => x.Elders.MemberId == id && x.Star == null)
-                .Where(x => x.Status == OrderType.已完成 || x.Status == OrderType.待評價).ToList();
+                .Where(x => x.Status == OrderType.已完成 || x.Status == OrderType.照服員待收款).ToList();
             if (orders.Count == 0)
             {
                 return Ok(new
@@ -477,7 +479,7 @@ namespace Care_UP.Controllers
         [HttpGet]
         public IHttpActionResult AttendantsGet13(int id)
         {
-            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id && x.Status == OrderType.待評價).ToList();
+            List<Orders> orders = db.Orders.Where(x => x.AttendantId == id && x.Status == OrderType.照服員待收款).ToList();
             if (orders.Count == 0)
             {
                 return Ok(new
@@ -638,7 +640,7 @@ namespace Care_UP.Controllers
             {
                 return Ok(new
                 {
-                    message = "照護日製沒填喔"
+                    message = "照護日誌沒填喔"
                 });
             }
             List<CareRecords> Records = db.CareRecords.Where(x => x.OrdersID == careRecords.OrdersID).ToList();
