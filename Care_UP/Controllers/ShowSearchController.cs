@@ -31,7 +31,7 @@ namespace Care_UP.Controllers
 
             List<Orders> allOrderses = db.Orders.ToList();
             
-            var attendants = attendant.Where(x => x.Status == Whether.否).Select(x => new
+            var attendants = attendant.Where(x => x.Status == Whether.是).Select(x => new
             {
                 attendantId = x.Id,
                 name = x.Name,
@@ -40,8 +40,8 @@ namespace Care_UP.Controllers
                 photo = x.Photo,
                 file = x.File,
                 服務項目 = Utility.Service(x.Service),
-                服務時段 = Enum.Parse(typeof(ServiceTime), x.Status.ToString()).ToString(),
-                count = allOrderses.Where(z=>z.AttendantId==x.Id).Where(z=>z.Comment!=null&&z.Star!=null).Count(),
+                服務時段 =Utility.Servicetime(x.ServiceTime.ToString()),
+                count = allOrderses.Where(z => z.AttendantId == x.Id).Where(z => z.Comment != null && z.Star != null).Count(),
                 star = Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average())
             }).ToList();
 
@@ -81,12 +81,12 @@ namespace Care_UP.Controllers
                 photo = x.Photo,
                 file = x.File,
                 服務項目 = Utility.Service(x.Service),
+
                 服務時段 = Enum.Parse(typeof(ServiceTime), x.Status.ToString()).ToString(),
 
                 count = allOrderses.Where(z => z.AttendantId == x.Id).Where(z => z.Comment != null && z.Star != null).Count(),
                 star =Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average()) 
                 }).ToList();
-
 
             return Ok(new
             {
@@ -173,20 +173,7 @@ namespace Care_UP.Controllers
                 date = comments.InitDate.Value.ToString("yyyy-MM-dd HH:ss")
             }).ToList();
 
-            var allquiz = db.Questions.Include(x => x.QuestionAnswers).Where(x => x.AttendantId == id).ToList();
-
-            var quiz = allquiz.Select(x=>new
-            {
-                memeber = MemberPrivacy(x.MemberAccount),
-                quiz = x.Quiz,
-                date = x.InitDateTime.Value.ToString("yyyy-MM-dd HH:ss"),
-                reply = x.QuestionAnswers.Select(y =>new
-                {
-                    attendantName = y.Attendant,
-                    attendantReply = y.Answer,
-                    replytime = y.ReplyTime.Value.ToString("yyyy-MM-dd HH:ss")
-                })
-            }).ToList();
+         
 
             return Request.CreateResponse(HttpStatusCode.OK, new
             {
@@ -197,7 +184,6 @@ namespace Care_UP.Controllers
                 已被預約的日期 = date,
                 area,
                 allcomment,
-                quiz
             });
         }
 
@@ -216,7 +202,7 @@ namespace Care_UP.Controllers
             return db.Attendants.Count(e => e.Id == id) > 0;
         }
 
-        private string MemberPrivacy(string email)
+        public static string MemberPrivacy(string email)
         {
             string[] aaa = email.Split('@');
             string privacy = aaa[0].Substring(0, 4) + "*****@" + aaa[01];

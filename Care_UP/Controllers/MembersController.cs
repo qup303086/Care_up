@@ -68,6 +68,7 @@ namespace Care_UP.Controllers
                 attendants.Password = Utility.GenerateHashWithSalt(attendants.Password, attendants.PasswordSalt);//密碼+密碼鹽
                 attendants.InitDate = DateTime.Now;
                 attendants.Status = Whether.否;
+                attendants.ServiceTime = ServiceTime.白天;
                 db.Attendants.Add(attendants);
 
                 db.SaveChanges();
@@ -192,6 +193,7 @@ namespace Care_UP.Controllers
                         }
                         else
                         {
+                            
                             string newToken = new Token().GenerateToken(login.Id, login.Email);
                             return Request.CreateResponse(HttpStatusCode.OK, new
                             {
@@ -248,6 +250,8 @@ namespace Care_UP.Controllers
                                 message = "登入成功",
                                 memeber.Id,
                                 login.Email,
+                                memeber.Photo,
+                                memeber.File,
                                 token = newToken
                             });
                         }
