@@ -16,35 +16,56 @@ namespace Care_UP.Areas.Backend.Controllers
     {
         private Model1 db = new Model1();
 
-        private const int DefaultPagerSize = 5;
+        private const int DefaultPagerSize = 10;
 
         // GET: admin/Members
-        public ActionResult Index(int? page,OrderView orderView) //int 接頁數第?頁
+        public ActionResult Index(int? page) //int 接頁數第?頁
         {
 
-            var result = db.Orders.AsQueryable();
+            var result = db.Orders.OrderByDescending(x=>x.InitDate).AsQueryable();
             int user_page = page.HasValue ? page.Value - 1 : 0;
             OrderType? order = Session["order"] != null ? (OrderType?)Session["order"] : null;
+            string keyword = Session["keyword"] != null ? Session["keyword"].ToString() : null;
             DateTime? date_start = Session["date_start"] != null ? (DateTime?)Session["date_start"] : null;
             DateTime? date_end = Session["date_end"] != null ? (DateTime?)Session["date_end"] : null;
 
+            DateTime? starttime = Session["starttime"] != null ? (DateTime?)Session["starttime"] : null;
+            DateTime? endtime = Session["endtime"] != null ? (DateTime?)Session["endtime"] : null;
 
             //Where(x=>x.Status=="13"||x.Status=="02"); 
             if (order.HasValue)
             {
-                //result = result.Where(x => x.Status == );
+                result = result.Where(x => x.Status == order);
             }
-            if (date_start.HasValue && date_end.HasValue) //起始 結束都要有值(結束時間一定要多加一天)
+            if (!string.IsNullOrEmpty(keyword))
             {
-                date_end = date_end.Value.AddDays(1); //系統預設起始時間是從0:00 開始算EX:搜尋8/1-8/3 搜尋結果會是8/1 0:00 - 8/3 0:00
+                result = result.Where(x => x.Elders.Name.Contains(keyword)||x.Attendants.Email.Contains(keyword));//Contains =SQL like %%
+            }
+
+            if (date_start.HasValue && date_end.HasValue) 
+            {
+                date_end = date_end.Value.AddDays(1); 
                 result = result.Where(x => x.InitDate >= date_start && x.InitDate <= date_end);
             }
-            return View(result.ToList().ToPagedList(user_page, DefaultPagerSize));
+            if (starttime.HasValue && endtime.HasValue) 
+            {
+                endtime = endtime.Value.AddDays(1); 
+                result = result.Where(x => x.StartDate >= starttime && x.EndDate <= endtime);
+            }
+
+            //var status = statusview;
+            //var pay = payview;
+            //if (status=="照服員待收款"||status=="服務進行中")
+            //{
+
+            //}
+            return View(result.ToPagedList(user_page, DefaultPagerSize));
         }
 
         [HttpPost]
-        public ActionResult Index(OrderType? order, DateTime? date_start, DateTime? date_end)
+        public ActionResult Index(OrderType? order,string keyword, DateTime? date_start, DateTime? date_end)
         {
+            Session["keyword"] = keyword;
             Session["order"] = order;
             Session["date_start"] = date_start;
             Session["date_end"] = date_end;
@@ -105,8 +126,8 @@ namespace Care_UP.Areas.Backend.Controllers
             return View(orders);
         }
 
-        // GET: Backend/Orders/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: Backend/Orders/Finish/5
+        public ActionResult Finish(int? id)
         {
             if (id == null)
             {
@@ -120,13 +141,14 @@ namespace Care_UP.Areas.Backend.Controllers
             return View(orders);
         }
 
-        // POST: Backend/Orders/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Backend/Orders/Finish/5
+        [HttpPost, ActionName("Finish")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult FinishConfirmed(int id)
         {
             Orders orders = db.Orders.Find(id);
-            db.Orders.Remove(orders);
+            db.Entry(orders).State = EntityState.Modified;
+            orders.Status = OrderType.已完成;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

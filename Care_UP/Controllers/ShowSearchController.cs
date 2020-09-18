@@ -81,12 +81,12 @@ namespace Care_UP.Controllers
                 photo = x.Photo,
                 file = x.File,
                 服務項目 = Utility.Service(x.Service),
+
                 服務時段 = Enum.Parse(typeof(ServiceTime), x.Status.ToString()).ToString(),
 
                 count = allOrderses.Where(z => z.AttendantId == x.Id).Where(z => z.Comment != null && z.Star != null).Count(),
                 star =Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average()) 
                 }).ToList();
-
 
             return Ok(new
             {

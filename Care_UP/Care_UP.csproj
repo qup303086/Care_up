@@ -244,14 +244,15 @@
     <Compile Include="Migrations\202009150917176_orders增加備註.Designer.cs">
       <DependentUpon>202009150917176_orders增加備註.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\202009170604306_因應列舉改動.cs" />
     <Compile Include="Migrations\202009170604306_因應列舉改動.Designer.cs">
       <DependentUpon>202009170604306_因應列舉改動.cs</DependentUpon>
+
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
     <Compile Include="Models\BankInfoModel.cs" />
-    <Compile Include="Models\OrderView.cs" />
     <Compile Include="Models\QuestionAnswer.cs" />
     <Compile Include="Models\FillinCommentView.cs" />
     <Compile Include="Models\OrderReject.cs" />
@@ -326,7 +327,7 @@
     <Content Include="Areas\Backend\Views\web.config" />
     <Content Include="Areas\Backend\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Backend\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Backend\Views\Orders\Delete.cshtml" />
+    <Content Include="Areas\Backend\Views\Orders\Finish.cshtml" />
     <Content Include="Areas\Backend\Views\Orders\Details.cshtml" />
     <Content Include="Areas\Backend\Views\Orders\Edit.cshtml" />
     <Content Include="Areas\Backend\Views\Orders\Index.cshtml" />
@@ -418,8 +419,10 @@
     <EmbeddedResource Include="Migrations\202009150917176_orders增加備註.resx">
       <DependentUpon>202009150917176_orders增加備註.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\202009170604306_因應列舉改動.resx">
       <DependentUpon>202009170604306_因應列舉改動.cs</DependentUpon>
+
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

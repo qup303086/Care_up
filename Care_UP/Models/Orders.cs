@@ -29,10 +29,12 @@ namespace Care_UP.Models
         public virtual Attendants Attendants { set; get; }
 
         [Required(ErrorMessage = "{0}必填")]
+        [DisplayFormat(DataFormatString = "{0:yyyy年MM月dd日}")]
         [Display(Name = "開始日期")]
         public DateTime StartDate { set; get; }
 
         [Required(ErrorMessage = "{0}必填")]
+        [DisplayFormat(DataFormatString = "{0:yyyy年MM月dd日}")]
         [Display(Name = "結束日期")]
         public DateTime EndDate { set; get; }
 
@@ -55,6 +57,7 @@ namespace Care_UP.Models
         public string Cancel { get; set; }
 
         [Display(Name = "建立時間")]
+        [DisplayFormat(DataFormatString = "{0:yyyy年MM月dd日}")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? InitDate { get; set; }
 
