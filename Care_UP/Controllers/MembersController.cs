@@ -193,8 +193,8 @@ namespace Care_UP.Controllers
                         }
                         else
                         {
-                            
-                            string newToken = new Token().GenerateToken(login.Id, login.Email);
+                           
+                            string newToken = new Token().GenerateToken(memeber.Id, login.Email,"m");
                             return Request.CreateResponse(HttpStatusCode.OK, new
                             {
                                 message = "登入成功",
@@ -244,7 +244,7 @@ namespace Care_UP.Controllers
                         }
                         else
                         {
-                            string newToken = new Token().GenerateToken(memeber.Id, login.Email);
+                            string newToken = new Token().GenerateToken(memeber.Id, login.Email,"a");
                             return Request.CreateResponse(HttpStatusCode.OK, new
                             {
                                 message = "登入成功",

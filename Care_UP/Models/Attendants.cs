@@ -77,5 +77,7 @@ namespace Care_UP.Models
         public Whether Status { get; set; }
 
         public ICollection<Locations> Locationses { get; set; }
+
+        
     }
 }
