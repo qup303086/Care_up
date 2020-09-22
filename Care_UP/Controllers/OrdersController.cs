@@ -36,6 +36,21 @@ namespace Care_UP.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new { result = "訂單取消成功" });
         }
 
+        [Route("InterruptOrder")]
+        [HttpPatch]
+        public IHttpActionResult InterruptOrder(int Id)
+        {
+            Orders orders = db.Orders.Find(Id);
+
+            orders.Status = OrderType.中斷;
+            orders.EditDate = DateTime.Now;
+            db.SaveChanges();
+            return Ok(new
+            {
+                message = "進行中訂單已中斷"
+            });
+        }
+
         // POST: api/Orders
         [ResponseType(typeof(Orders))]
         [Route("AddOrder")]
@@ -541,7 +556,7 @@ namespace Care_UP.Controllers
         public IHttpActionResult AttendantsFinish(int id)
         {
             List<Orders> orders = db.Orders.Where(x => x.AttendantId == id)
-                .Where(x => x.Status == OrderType.已取消 || x.Status == OrderType.已完成 || x.Status == OrderType.中斷 || x.Status == OrderType.待退款 || x.Status == OrderType.照服員拒接)
+                .Where(x => x.Status == OrderType.已完成 || x.Status == OrderType.中斷 || x.Status == OrderType.待退款 || x.Status == OrderType.照服員拒接)
                 .ToList();
             if (orders.Count == 0)
             {

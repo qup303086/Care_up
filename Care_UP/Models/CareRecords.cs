@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,6 +18,7 @@ namespace Care_UP.Models
       public int OrdersID { get; set; }
         [ForeignKey("OrdersID")]
         [Display(Name = "訂單編號")]
+        [JsonIgnore]
         public virtual Orders Orders { set; get; }
 
         [Required(ErrorMessage = "{0}必填")]

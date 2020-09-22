@@ -60,7 +60,7 @@ namespace Care_UP.Controllers
             List<Locations> locationses = db.Locations.Where(x => x.CityId == Id).ToList();
 
             List<Attendants> attendant = db.Attendants.Include(x => x.Locationses)
-                .Where(x => x.Locationses.Where(y => y.CityId == Id).Count() > 0).ToList();
+                .Where(x => x.Locationses.Where(y => y.CityId == Id).Count() > 0).Where(x=>x.Status==Whether.是).ToList();
 
             if (attendant.Count == 0)
             {
@@ -72,7 +72,7 @@ namespace Care_UP.Controllers
 
             List<Orders> allOrderses = db.Orders.ToList();
 
-            var attendants = attendant.Where(x => x.Status == Whether.否).Select(x => new
+            var attendants = attendant.Select(x => new
             {
                 attendantId = x.Id,
                 name = x.Name,
@@ -82,11 +82,13 @@ namespace Care_UP.Controllers
                 file = x.File,
                 服務項目 = Utility.Service(x.Service),
 
-                服務時段 = Enum.Parse(typeof(ServiceTime), x.Status.ToString()).ToString(),
+                服務時段 = Utility.Servicetime(x.ServiceTime.ToString()),
 
                 count = allOrderses.Where(z => z.AttendantId == x.Id).Where(z => z.Comment != null && z.Star != null).Count(),
-                star =Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average()) 
-                }).ToList();
+
+                star = Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average())
+
+            }).ToList();
 
             return Ok(new
             {
@@ -100,7 +102,7 @@ namespace Care_UP.Controllers
         public IHttpActionResult Location(int Id)
         {
             List<Attendants> attendant = db.Attendants.Include(x => x.Locationses)
-                .Where(x => x.Locationses.Where(y => y.Id == Id).Count() > 0).ToList();
+                .Where(x => x.Locationses.Where(y => y.Id == Id).Count() > 0).Where(x => x.Status == Whether.是).ToList();
             if (attendant.Count == 0)
             {
                 return Ok(new
@@ -110,7 +112,7 @@ namespace Care_UP.Controllers
             }
             List<Orders> allOrderses = db.Orders.ToList();
 
-            var attendants = attendant.Where(x=>x.Status== Whether.否).Select(x => new
+            var attendants = attendant.Select(x => new
             {
                 attendantId = x.Id,
                 name = x.Name,
@@ -119,7 +121,7 @@ namespace Care_UP.Controllers
                 photo = x.Photo,
                 file = x.File,
                 服務項目 = Utility.Service(x.Service),
-                服務時段 = Enum.Parse(typeof(ServiceTime), x.Status.ToString()).ToString(),
+                服務時段 =Utility.Servicetime(x.ServiceTime.ToString()),
                 count = allOrderses.Where(z => z.AttendantId == x.Id).Where(z => z.Comment != null && z.Star != null).Count(),
                 star = Utility.Star(allOrderses.Where(y => y.AttendantId == x.Id).Select(y => y.Star).Average())
             }).ToList();
