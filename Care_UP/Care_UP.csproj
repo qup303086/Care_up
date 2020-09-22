@@ -272,7 +272,6 @@
     <Compile Include="Models\Members.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\Orders.cs" />
-    <Compile Include="Models\TokenPayload.cs" />
     <Compile Include="Models\TradeInfo.cs" />
     <Compile Include="Models\Utility.cs" />
     <Compile Include="Models\Util\CryptoUtil.cs" />
