@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 
 namespace Care_UP.Models
 {
@@ -26,6 +28,7 @@ namespace Care_UP.Models
         public int AttendantId { get; set; }
         [ForeignKey(" AttendantId")]
         [Display(Name = "照服員ID")]
+       
         public virtual Attendants Attendants { set; get; }
 
         [Required(ErrorMessage = "{0}必填")]
@@ -70,6 +73,9 @@ namespace Care_UP.Models
         [Display(Name = "備註")]
         public string Remark { get; set; }
 
+        
         public virtual ICollection<CareRecords> CareRecordses { set; get; }
+     
+
     }
 }

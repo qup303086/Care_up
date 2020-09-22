@@ -9,7 +9,6 @@ namespace Care_UP.Models
     {
         public int ID { get; set; }
 
-
-        public  string Identity { get; set; }
+        public string Identity { get; set; }
     }
 }

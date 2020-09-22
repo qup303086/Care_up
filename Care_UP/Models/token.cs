@@ -33,7 +33,7 @@ namespace Care_UP.Models
                 Encoding.UTF8.GetBytes(secret),
                 JwsAlgorithm.HS512);
             TokenPayload tokenPayload = new TokenPayload();
-            tokenPayload.ID =Convert.ToInt32(jwtObject["ID"]);
+            tokenPayload.ID = Convert.ToInt32(jwtObject["ID"]);
             tokenPayload.Identity = jwtObject["Identity"].ToString();
             return tokenPayload;
         }

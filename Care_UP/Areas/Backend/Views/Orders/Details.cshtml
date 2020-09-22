@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Areas/Backend/Views/Shared/_Layout.cshtml";
+    int? salary = 0;
 }
 
 <h2>Details</h2>
@@ -51,13 +52,15 @@
             @Html.DisplayFor(model => model.StopDate)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Total)
-        </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.Total)
+        薪水
         </dd>
+        <dt>
+            @{
+                salary =Model.Attendants.Salary*Model.CareRecordses.Count;
+            }
+            @salary
+        </dt>
 
         <dt>
             @Html.DisplayNameFor(model => model.Comment)
