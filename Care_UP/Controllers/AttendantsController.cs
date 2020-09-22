@@ -27,8 +27,20 @@ namespace Care_UP.Controllers
 
         [System.Web.Http.Route("AttendantDetails")]
         [System.Web.Http.HttpGet]
+        //[JwtAuthFilter]
         public IHttpActionResult AttendantDetails(int Id)
         {
+            //string token = Request.Headers.Authorization.Parameter;
+            //Token jwtAuthUtil = new Token();
+            //TokenPayload tokenPayload= jwtAuthUtil.GetToken(token);
+            //if (tokenPayload.Identity!="a"|| tokenPayload.ID != Id )
+            //{
+            //    return Ok(new
+            //    {
+            //        message = "非法操作"
+            //    });
+            //}
+            
             List<Cities> cities = db.Cities.ToList();
             List<Locations> locationses = db.Locations.ToList();
 

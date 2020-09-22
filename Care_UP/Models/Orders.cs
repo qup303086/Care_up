@@ -13,7 +13,7 @@ namespace Care_UP.Models
     /// <summary>
     /// 開始日期 結束日期不用getdate
     /// </summary>
-    public class Orders : IEnumerable
+    public class Orders
     {
         [Key]
         [Display(Name = "編號")]
@@ -75,9 +75,7 @@ namespace Care_UP.Models
 
         
         public virtual ICollection<CareRecords> CareRecordses { set; get; }
-        public IEnumerator GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+     
+
     }
 }
