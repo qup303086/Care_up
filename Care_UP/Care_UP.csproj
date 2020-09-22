@@ -244,11 +244,9 @@
     <Compile Include="Migrations\202009150917176_orders增加備註.Designer.cs">
       <DependentUpon>202009150917176_orders增加備註.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Migrations\202009170604306_因應列舉改動.cs" />
     <Compile Include="Migrations\202009170604306_因應列舉改動.Designer.cs">
       <DependentUpon>202009170604306_因應列舉改動.cs</DependentUpon>
-
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Atom.cs" />
@@ -419,10 +417,8 @@
     <EmbeddedResource Include="Migrations\202009150917176_orders增加備註.resx">
       <DependentUpon>202009150917176_orders增加備註.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="Migrations\202009170604306_因應列舉改動.resx">
       <DependentUpon>202009170604306_因應列舉改動.cs</DependentUpon>
-
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
