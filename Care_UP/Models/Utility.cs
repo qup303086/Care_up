@@ -375,9 +375,6 @@ namespace Care_UP.Models
             return time + a;
         }
 
-        public static TokenPayload TokenPayload(string token)
-        {
-            return;
-        }
+  
     }
 }
