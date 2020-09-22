@@ -40,8 +40,7 @@ namespace Care_UP.Controllers
             //        message = "非法操作"
             //    });
             //}
-
-
+            
             List<Cities> cities = db.Cities.ToList();
             List<Locations> locationses = db.Locations.ToList();
 
