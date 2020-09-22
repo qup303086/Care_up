@@ -69,5 +69,7 @@ namespace Care_UP.Models
 
         [Display(Name = "備註")]
         public string Remark { get; set; }
+
+        public virtual ICollection<CareRecords> CareRecordses { set; get; }
     }
 }
