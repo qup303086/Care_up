@@ -25,7 +25,18 @@ namespace Care_UP.Models
             var token = Jose.JWT.Encode(payload, Encoding.UTF8.GetBytes(secret), JwsAlgorithm.HS512);//產生token
             return token;
         }
-
+        public TokenPayload GetToken(string token)
+        {
+            string secret = "careUpppp";//加解密的key,如果不一樣會無法成功解密
+            var jwtObject = Jose.JWT.Decode<Dictionary<string, Object>>(
+                token,
+                Encoding.UTF8.GetBytes(secret),
+                JwsAlgorithm.HS512);
+            TokenPayload tokenPayload = new TokenPayload();
+            tokenPayload.ID = Convert.ToInt32(jwtObject["ID"]);
+            tokenPayload.Identity = jwtObject["Identity"].ToString();
+            return tokenPayload;
+        }
 
     }
     #endregion
