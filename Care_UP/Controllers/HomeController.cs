@@ -12,6 +12,8 @@ namespace Care_UP.Controllers
         {
             ViewBag.Title = "Home Page";
 
+            //return RedirectPermanent("http://careup.rocket-coding.com/index.html#/");//要測本地要註解掉
+
             return View();
         }
     }

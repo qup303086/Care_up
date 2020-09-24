@@ -1,3 +1,21 @@
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.GoSQL.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.fix.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.password.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.attendeant.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.attendeant_edit.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.attendant_edit0930.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.Elder_edit.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations._0903Elder_phone.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.edit部分model.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.editSalary.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.照員地區多對多.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.金流.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.carerecord去掉writetime.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.增加QA用的資料表.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.orders增加備註.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.因應列舉改動.resources
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.GenerateResource.cache
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.CoreCompileInputs.cache
 C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\Care_UP.dll.config
 C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\Care_UP.dll
 C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\Care_UP.pdb
@@ -96,27 +114,11 @@ C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\zh-Hant\System.Web.Razor.resources.dl
 C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\zh-Hant\System.Web.WebPages.resources.dll
 C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\zh-Hant\System.Web.WebPages.Deployment.resources.dll
 C:\Users\qup30\Desktop\Care_UP\Care_UP\bin\zh-Hant\System.Web.WebPages.Razor.resources.dll
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.GoSQL.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.fix.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.password.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.attendeant.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.attendeant_edit.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.attendant_edit0930.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.Elder_edit.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations._0903Elder_phone.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.edit部分model.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.editSalary.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.照員地區多對多.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.金流.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.carerecord去掉writetime.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.增加QA用的資料表.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.orders增加備註.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.Migrations.因應列舉改動.resources
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.GenerateResource.cache
-C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.CoreCompileInputs.cache
+C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csprojAssemblyReference.cache
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csproj.CopyComplete
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.dll
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.pdb
+<<<<<<< HEAD
 C:\Users\user\Desktop\Care_up\Care_UP\bin\Care_UP.dll.config
 C:\Users\user\Desktop\Care_up\Care_UP\bin\Care_UP.dll
 C:\Users\user\Desktop\Care_up\Care_UP\bin\Care_UP.pdb
@@ -238,3 +240,5 @@ C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.csproj.CopyComplete
 C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.dll
 C:\Users\user\Desktop\Care_up\Care_UP\obj\Debug\Care_UP.pdb
 C:\Users\qup30\Desktop\Care_UP\Care_UP\obj\Debug\Care_UP.csprojAssemblyReference.cache
+=======
+>>>>>>> master
