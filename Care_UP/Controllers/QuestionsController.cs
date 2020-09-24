@@ -41,7 +41,7 @@ namespace Care_UP.Controllers
         public IHttpActionResult AttendantsGetQuiz(int id)
         {
             List<Question> quizList = db.Questions.Include(x => x.QuestionAnswers).Where(x => x.AttendantId == id).ToList();
-          
+            
             if (quizList.Count == 0)
             {
                 return Ok(new
