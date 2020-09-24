@@ -167,7 +167,7 @@ namespace Care_UP.Controllers
                 }
             }
 
-            var allcomment = orders.Where(x => x.Star != null && x.Comment != null).Select(comments => new
+            var allcomment = orders.OrderByDescending(x=>x.EditDate).Where(x => x.Star != null && x.Comment != null).Select(comments => new
             {
                 memeber =MemberPrivacy(comments.Elders.Members.Email),
                 star = comments.Star,
