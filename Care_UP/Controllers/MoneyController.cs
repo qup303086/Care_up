@@ -30,6 +30,7 @@ namespace Care_UP.Controllers
             MerchantID = "MS113893343",
             HashKey = "6gfdegvpE7wwJ2zKz9GpxxVCijHgFPvz",
             HashIV = "Cxyx7qJ1IdkQNyFP",
+
             ReturnURL = "http://careup.rocket-coding.com/", //給前台
             NotifyURL = "http://careup.rocket-coding.com/SpgatewayNotify", //隱藏執行欄位 給資料庫
             CustomerURL = "http://yourWebsitUrl/Bank/SpgatewayNotify",
