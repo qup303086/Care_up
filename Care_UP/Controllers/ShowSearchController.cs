@@ -208,13 +208,13 @@ namespace Care_UP.Controllers
         {
             string[] aaa = email.Split('@');
             string privacy = "";
-            if (aaa[0].Length<4)
+            if (aaa[0].Length < 4)
             {
-                 privacy = aaa[0].Substring(0, 1) + "*****@" + aaa[01];
+                privacy = aaa[0].Substring(0, 1) + "*****@" + aaa[01];
             }
             else
             {
-                 privacy = aaa[0].Substring(0, 4) + "*****@" + aaa[01];
+                privacy = aaa[0].Substring(0, 4) + "*****@" + aaa[01];
 
             }
             return privacy;
