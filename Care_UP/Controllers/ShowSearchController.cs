@@ -207,7 +207,16 @@ namespace Care_UP.Controllers
         public static string MemberPrivacy(string email)
         {
             string[] aaa = email.Split('@');
-            string privacy = aaa[0].Substring(0, 4) + "*****@" + aaa[01];
+            string privacy = "";
+            if (aaa[0].Length < 4)
+            {
+                privacy = aaa[0].Substring(0, 1) + "*****@" + aaa[01];
+            }
+            else
+            {
+                privacy = aaa[0].Substring(0, 4) + "*****@" + aaa[01];
+
+            }
             return privacy;
         }
     }
